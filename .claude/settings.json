@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npm test *)",
+      "Bash(npx tsc *)",
+      "Bash(npx eslint *)",
+      "Bash(npx prettier *)",
+      "Bash(npx remotion *)",
+      "Bash(node node_modules/@remotion/cli/remotion-cli.js *)",
+      "Bash(ffmpeg *)",
+      "Bash(ffprobe *)",
+      "PowerShell(npm run *)",
+      "PowerShell(npm test *)",
+      "PowerShell(npx tsc *)",
+      "PowerShell(npx eslint *)",
+      "PowerShell(npx prettier *)",
+      "PowerShell(npx remotion *)",
+      "PowerShell(ffmpeg *)",
+      "PowerShell(ffprobe *)",
+      "Edit(src/**)",
+      "Edit(scripts/**)",
+      "Edit(tests/**)",
+      "Edit(data/**)",
+      "Edit(docs/**)",
+      "Edit(public/assets/**)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Bash(cat .env*)",
+      "PowerShell(Get-Content .env*)",
+      "Bash(git push *)",
+      "PowerShell(git push *)"
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "id": "sp01",
+  "title": "Kerja Keras Punya Arah",
+  "brand": {
+    "name": "SHIFU PO",
+    "descriptor": "FENG SHUI & BAZI",
+    "sealGlyph": "風",
+    "handle": null
+  },
+  "claims": [
+    {
+      "text": "Lebih dari 3.000 klien telah dibantu (angka dari website Shifu Po).",
+      "reviewed": false
+    },
+    {
+      "text": "BaZi membaca empat pilar kelahiran: tahun, bulan, hari, dan jam lahir.",
+      "reviewed": false
+    }
+  ],
+  "scenes": [
+    {
+      "type": "hook",
+      "vo": "Kerja keras tiap hari, hasilnya begitu-begitu saja?",
+      "voHighlight": ["Kerja keras", "begitu-begitu"],
+      "lines": [
+        { "text": "KERJA KERAS,", "cueWord": "keras" },
+        { "text": "HASIL BEGITU-BEGITU SAJA?", "cueWord": "begitu-begitu" }
+      ]
+    },
+    {
+      "type": "insight",
+      "vo": "Bukan kurang usaha. Arahnya yang belum tepat.",
+      "voHighlight": ["Arahnya"],
+      "lines": [
+        { "text": "BUKAN KURANG USAHA.", "cueWord": "usaha" },
+        { "text": "ARAHNYA BELUM TEPAT.", "cueWord": "Arahnya", "accent": "ARAHNYA" }
+      ],
+      "lockCueWord": "Arahnya"
+    },
+    {
+      "type": "bazi",
+      "vo": "Lewat BaZi, Shifu Po membaca empat pilar kelahiran Anda: tahun, bulan, hari, jam.",
+      "voHighlight": ["BaZi", "empat pilar"],
+      "title": { "text": "BAZI", "cueWord": "BaZi" },
+      "subtitle": "4 PILAR KELAHIRAN",
+      "shifuCueWord": "Shifu",
+      "pillars": [
+        { "glyph": "年", "label": "TAHUN", "cueWord": "tahun" },
+        { "glyph": "月", "label": "BULAN", "cueWord": "bulan" },
+        { "glyph": "日", "label": "HARI", "cueWord": "hari" },
+        { "glyph": "時", "label": "JAM", "cueWord": "jam" }
+      ]
+    },
+    {
+      "type": "fengshui",
+      "vo": "Lalu menyelaraskan energi rumah dan usaha, tanpa bongkar total.",
+      "voHighlight": ["energi rumah", "bongkar total"],
+      "title": { "text": "SELARASKAN ENERGI RUMAH & USAHA", "cueWord": "rumah" },
+      "stamp": { "text": "TANPA BONGKAR TOTAL", "cueWord": "tanpa" }
+    },
+    {
+      "type": "proof",
+      "vo": "Lebih dari tiga ribu klien sudah merasakannya.",
+      "voHighlight": ["tiga ribu klien"],
+      "count": { "value": 3000, "suffix": "+", "label": "KLIEN TELAH DIBANTU", "cueWord": "tiga" }
+    },
+    {
+      "type": "cta",
+      "vo": "Konsultasi via WhatsApp, supaya kerja keras Anda punya arah.",
+      "voHighlight": ["WhatsApp", "punya arah"],
+      "button": { "text": "Konsultasi via WhatsApp", "cueWord": "WhatsApp" },
+      "tagline": { "text": "Supaya kerja keras Anda punya arah.", "accent": "arah.", "cueWord": "arah" }
+    }
+  ]
+}
