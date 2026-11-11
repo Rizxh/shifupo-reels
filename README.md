@@ -15,6 +15,7 @@ Ada dua format episode, dipilih lewat field `format` di JSON episode:
 | Episode | Format | Isi |
 |---|---|---|
 | SP01 "Kerja Keras Punya Arah" | `story` (default), komposisi `Reel` | 6 scene, 28 detik, animasi tinta 2D. Planning `docs/PLAN-SP01.md` |
+| SP03 "Usaha Jalan, Pelanggan Sepi" | `popout` + foto asli | 4 scene, 19 detik, Feng Shui Bisnis. Pertama kali memakai logo dan foto asli dari shifupofengshui.com di dalam bingkai. Planning `docs/sp03/PLAN.md` |
 | SP02 "Rezeki Lewat" | `popout`, komposisi `PopReel` | 4 scene, 15 detik, ilusi 4D / keluar layar: koi, luo pan, koin, Shifu Po, dan tombol menembus bingkai lak ke arah penonton. Planning `docs/sp02/PLAN.md` |
 
 ---
@@ -171,8 +172,8 @@ shifupo-reels/
 ├─ public/
 │  ├─ assets/
 │  │  ├─ shifu/             Foto Shifu Po (dari Anda)
-│  │  ├─ brand/             Logo resmi (opsional)
-│  │  ├─ 2d/                Aset 2D raster (PNG/WebP) per episode atau umum
+│  │  ├─ brand/             Logo resmi (logo-shifupo-red.png)
+│  │  ├─ 2d/                Aset 2D raster per episode (2d/sp03/) atau umum (2d/common/site/: foto asli dari situs, lihat SOURCES.md)
 │  │  └─ 3d/                Hasil render 3D (urutan PNG transparan)
 │  └─ audio/
 │     ├─ sfx/               SFX hasil npm run sfx

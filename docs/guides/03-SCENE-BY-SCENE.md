@@ -89,6 +89,8 @@ Episode dengan `"format": "popout"` (contoh SP02) memakai komposisi `PopReel`. S
 | `front` | Benda yang sudah keluar | Menimpa bingkai. Benda dengan z ≥ 0, wajib punya bayangan (`shadowOf`) |
 | `overlay` | Teks HTML, angka dan tombol yang diproyeksikan | Pakai `planeStyle`; dipotong jendela selama z < 0 |
 
+Jenis scene popout: `chart` (grafik turun, panah terjun keluar), `leap` (koi melompat), `turn` (luo pan keluar, jarum terkunci), `count` (koin meledak, angka menembus bingkai), `cta` (tombol keluar; Shifu condong keluar atau `figure: "none"`). Urutannya bebas asal dibuka `chart`/`leap` dan diakhiri `cta`. Setiap scene boleh memakai `photo` asli di dalam jendela.
+
 Aturan utama: semua posisi lewat `project()` di `src/lib/space.ts`, benda menembus bidang bingkai hanya saat proyeksinya masih di dalam jendela, dan setiap momen keluar memberi `popKicks` (kamera tersentak mundur). Aturan lengkap ada di `docs/sp02/PLAN.md` bagian 6.
 
 ## 5. Mengecek satu scene

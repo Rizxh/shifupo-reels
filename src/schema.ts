@@ -127,16 +127,20 @@ type CheckedScene = {
 
 const checkScenes =
   <S extends CheckedScene>(
-    order: readonly string[],
+    // A fixed order, or a rule returning what is wrong with the order.
+    order: readonly string[] | ((types: string[]) => string | null),
     cuesOf: (scene: S) => string[],
   ) =>
   (episode: { scenes: S[] }, ctx: z.RefinementCtx) => {
-    const actual = episode.scenes.map((s) => s.type).join(",");
-    if (actual !== order.join(",")) {
-      ctx.addIssue({
-        code: "custom",
-        message: `scenes must be in this order: ${order.join(", ")}`,
-      });
+    const types = episode.scenes.map((s) => s.type);
+    const problem =
+      typeof order === "function"
+        ? order(types)
+        : types.join(",") === order.join(",")
+          ? null
+          : `scenes must be in this order: ${order.join(", ")}`;
+    if (problem) {
+      ctx.addIssue({ code: "custom", message: problem });
     }
     episode.scenes.forEach((scene, i) => {
       for (const cue of cuesOf(scene)) {
@@ -175,11 +179,17 @@ const checkScenes =
 
 const checkEpisode = checkScenes<Scene>(SCENE_ORDER, sceneCues);
 
+// Path under public/ of a real file (checked by tests/assets.test.ts).
+const assetPath = z.string().regex(/^assets\/[\w./-]+\.(png|jpe?g|webp)$/);
+
 const brandSchema = z.object({
   name: text,
   descriptor: text,
   sealGlyph: text,
   handle: z.string().nullable(),
+  // Official logo image; when set, the pop-out CTA shows it instead of the
+  // name set in type.
+  logo: assetPath.optional(),
 });
 const claimsSchema = z.array(z.object({ text, reviewed: z.boolean() }));
 const episodeId = z.string().regex(/^sp\d{2,}$/);
@@ -227,10 +237,25 @@ export type ReelProps = z.infer<typeof reelPropsSchema>;
 // Pop-out format (sp02): a lacquer frame in the middle of the screen and
 // objects that break out of it toward the viewer (docs/sp02/PLAN.md).
 
+// A real photo shown inside the frame's window instead of the drawn world.
+const photo = assetPath.optional();
+
+// A sales chart falls inside the window and its arrow plunges out of the
+// frame on the plunge cue.
+const chart = z.object({
+  type: z.literal("chart"),
+  vo,
+  voHighlight,
+  photo,
+  lines: z.array(cued).length(2),
+  plungeCueWord: cueWord,
+});
+
 const leap = z.object({
   type: z.literal("leap"),
   vo,
   voHighlight,
+  photo,
   lines: z.array(cued).length(2),
   // The koi breaks out of the frame on this word.
   leapCueWord: cueWord,
@@ -240,6 +265,7 @@ const turn = z.object({
   type: z.literal("turn"),
   vo,
   voHighlight,
+  photo,
   lines: z.array(cued.extend({ accent: text.optional() })).length(2),
   lockCueWord: cueWord,
 });
@@ -248,6 +274,7 @@ const count = z.object({
   type: z.literal("count"),
   vo,
   voHighlight,
+  photo,
   kickerCueWord: cueWord,
   count: z.object({
     value: z.number().int().positive(),
@@ -261,11 +288,16 @@ const popCta = z.object({
   type: z.literal("cta"),
   vo,
   voHighlight,
+  photo,
   shifuCueWord: cueWord,
+  // "lean": Shifu Po leans out of the window; "none": the photo inside the
+  // window already shows him.
+  figure: z.enum(["lean", "none"]).default("lean"),
   button: cued,
 });
 
 export const popSceneSchema = z.discriminatedUnion("type", [
+  chart,
   leap,
   turn,
   count,
@@ -277,10 +309,14 @@ export type PopSceneOf<T extends PopScene["type"]> = Extract<
   { type: T }
 >;
 
-export const POP_SCENE_ORDER = ["leap", "turn", "count", "cta"] as const;
+// A pop-out reel opens on any break-out scene and always ends on the CTA.
+export const POP_OPENERS = ["chart", "leap"] as const;
+export const POP_SCENES = { min: 3, max: 5 } as const;
 
 export const popSceneCues = (scene: PopScene): string[] => {
   switch (scene.type) {
+    case "chart":
+      return [...scene.lines.map((l) => l.cueWord), scene.plungeCueWord];
     case "leap":
       return [...scene.lines.map((l) => l.cueWord), scene.leapCueWord];
     case "turn":
@@ -292,7 +328,26 @@ export const popSceneCues = (scene: PopScene): string[] => {
   }
 };
 
-const checkPopEpisode = checkScenes<PopScene>(POP_SCENE_ORDER, popSceneCues);
+// Scene order rule for pop-out reels: an opener first, the CTA last and
+// only there, each scene type at most once (their ids and clips are keyed
+// by type), between POP_SCENES.min and .max scenes.
+const popOrderProblem = (types: string[]): string | null => {
+  if (types.length < POP_SCENES.min || types.length > POP_SCENES.max) {
+    return `a pop-out reel has ${POP_SCENES.min} to ${POP_SCENES.max} scenes`;
+  }
+  if (!(POP_OPENERS as readonly string[]).includes(types[0])) {
+    return `a pop-out reel opens with one of: ${POP_OPENERS.join(", ")}`;
+  }
+  if (types.indexOf("cta") !== types.length - 1) {
+    return "a pop-out reel ends with its only cta scene";
+  }
+  if (new Set(types).size !== types.length) {
+    return "each pop-out scene type appears at most once";
+  }
+  return null;
+};
+
+const checkPopEpisode = checkScenes<PopScene>(popOrderProblem, popSceneCues);
 
 export const popEpisodeBase = z.object({
   id: episodeId,

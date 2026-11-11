@@ -31,6 +31,7 @@ import { cameraAt, WINDOW } from "../lib/space";
 import { cueFrame, type Beat } from "../lib/timeline";
 import type { PopReelProps, PopScene } from "../schema";
 import {
+  chartCrossing,
   FrontPetals,
   leapCrossing,
   popKicks,
@@ -61,6 +62,15 @@ const popHits = (scenes: PopScene[], beats: Beat[], fps: number): Hit[] => {
       hits.push({ name: "whoosh", at: whooshPeakAt(beat.startFrame + 8) });
     }
     switch (scene.type) {
+      case "chart": {
+        const cross = chartCrossing(scene, cue);
+        hits.push({ name: "gong", at: 0, gain: 0.7 });
+        hits.push({ name: "thump", at: text(cue(scene.lines[0].cueWord)) });
+        hits.push({ name: "pop", at: text(cue(scene.lines[1].cueWord)) });
+        hits.push({ name: "whoosh", at: whooshPeakAt(cross + 4), gain: 1.2 });
+        hits.push({ name: "stamp", at: cross + 14, gain: 0.9 });
+        break;
+      }
       case "leap": {
         const cross = leapCrossing(scene, beat.startFrame, cue);
         hits.push({ name: "gong", at: 0, gain: 0.7 });

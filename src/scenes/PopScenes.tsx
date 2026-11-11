@@ -4,13 +4,16 @@
 //   front   - in front of the frame plane, over the frame
 //   overlay - HTML on top (headlines, projected count and button)
 
-import { staticFile } from "remotion";
+import { evolvePath } from "@remotion/paths";
+import { Img, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { Sparkles } from "../components/Fx";
 import {
   BlurFilter,
   CoinBurst,
   FrontPetals,
   GoldRoomInside,
+  Arrow,
+  PhotoInside,
   Ingot,
   KoiAt,
   MountainsInside,
@@ -24,7 +27,7 @@ import { RobedFigure } from "../components/Shifu";
 import { WhatsAppButton } from "../components/Brand";
 import { HeadlineLine, HeadlineStack, Kicker } from "../components/Text";
 import { hasStaticFile } from "../lib/assets";
-import { COLORS, FONTS, HEADLINE, POP, SHIFU } from "../lib/brand";
+import { COLORS, FONTS, HEADLINE, POP, SAFE_AREA, SHIFU } from "../lib/brand";
 import {
   breathe,
   clamp01,
@@ -106,6 +109,217 @@ const TEXT_SHADOW_SOFTNESS = 2.4;
 // Clip for HTML that is still behind the frame plane.
 const windowClip = (cam: Camera, z: number): string | undefined =>
   z < 0 ? cssPolygon(quadAt(cam, WINDOW, 0)) : undefined;
+
+// ---------------------------------------------------------------------------
+// Chart scene: a sales line falls across a business photo inside the window,
+// and on the plunge cue its arrow dives out of the frame toward the viewer.
+
+const CHART = {
+  z: -260,
+  // Points as fractions of the window, left to right; it ends low (sales
+  // falling) but still inside the window, where the arrow takes over.
+  points: [
+    [0.08, 0.32],
+    [0.22, 0.24],
+    [0.35, 0.36],
+    [0.48, 0.3],
+    [0.6, 0.46],
+    [0.72, 0.52],
+    [0.8, 0.62],
+  ] as const,
+  lineWidth: 11,
+  nodeRadius: 11,
+  gridLines: 4,
+  photoDim: 0.42,
+  arrowLength: 230,
+  plungeLead: 4,
+  plungeFrames: 24,
+  // The arrow first shoots toward the viewer (depth eases out), then falls
+  // out of the bottom of the screen (height eases in, like gravity).
+  plungeTo: { x: WINDOW.cx - 40, y: 1900 },
+  plungeZ: 700,
+  // Below this many px of motion per frame the arrow keeps the heading of
+  // the chart's last segment instead of a jittery motion direction.
+  headingMinSpeed: 6,
+} as const;
+
+const chartPoint = (i: number) => ({
+  x: WINDOW.left + CHART.points[i][0] * (WINDOW.right - WINDOW.left),
+  y: WINDOW.top + CHART.points[i][1] * (WINDOW.bottom - WINDOW.top),
+});
+
+const arrowWorld = (f: number, plungeAt: number) => {
+  const from = chartPoint(CHART.points.length - 1);
+  const t = prog(
+    f,
+    plungeAt - CHART.plungeLead,
+    plungeAt - CHART.plungeLead + CHART.plungeFrames,
+    (v) => v,
+  );
+  const fall = EASE.in(t);
+  return {
+    x: lerp(from.x, CHART.plungeTo.x, fall),
+    y: lerp(from.y, CHART.plungeTo.y, fall),
+    z: lerp(CHART.z, CHART.plungeZ, EASE.out(t)),
+  };
+};
+
+const arrowCrossing = (plungeAt: number): number => {
+  const from = plungeAt - CHART.plungeLead;
+  for (let f = from; f <= from + CHART.plungeFrames; f++) {
+    if (arrowWorld(f, plungeAt).z >= 0) {
+      return f;
+    }
+  }
+  return plungeAt;
+};
+
+const chartLayers = (scene: PopSceneOf<"chart">, ctx: PopCtx): Layers => {
+  const { frame, start, end, cue, cam } = ctx;
+  const plungeAt = cue(scene.plungeCueWord);
+  const pts = CHART.points.map((_, i) => {
+    const w = chartPoint(i);
+    return project(cam, w.x, w.y, CHART.z);
+  });
+  const d = `M ${pts.map((p) => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(" L ")}`;
+  const drawn = prog(frame, start + 4, plungeAt - CHART.plungeLead, EASE.inOut);
+  const evolved = evolvePath(drawn, d);
+  const grid = Array.from({ length: CHART.gridLines }, (_, i) => {
+    const y =
+      WINDOW.top +
+      ((i + 1) / (CHART.gridLines + 1)) * (WINDOW.bottom - WINDOW.top);
+    const a = project(cam, WINDOW.left, y, CHART.z);
+    const b = project(cam, WINDOW.right, y, CHART.z);
+    return `M ${a.x.toFixed(1)} ${a.y.toFixed(1)} L ${b.x.toFixed(1)} ${b.y.toFixed(1)}`;
+  });
+
+  const w = arrowWorld(frame, plungeAt);
+  const p = project(cam, w.x, w.y, w.z);
+  const nextW = arrowWorld(frame + 2, plungeAt);
+  const q = project(cam, nextW.x, nextW.y, nextW.z);
+  const last = pts[pts.length - 1];
+  const prev = pts[pts.length - 2];
+  const moving = frame >= plungeAt - CHART.plungeLead;
+  const speed = Math.hypot(q.x - p.x, q.y - p.y) / 2;
+  const heading =
+    (moving && speed > CHART.headingMinSpeed
+      ? Math.atan2(q.y - p.y, q.x - p.x)
+      : Math.atan2(last.y - prev.y, last.x - prev.x)) * DEG;
+  const look = nearLook(p);
+  const shadow = shadowOf(cam, w.x, w.y, w.z);
+  const arrowShown = drawn >= 1 || moving;
+  const arrow =
+    !arrowShown || look.opacity <= 0 ? null : (
+      <g>
+        <defs>
+          {shadow ? <BlurFilter id="arrow-sh" sd={shadow.blur} /> : null}
+          {look.blur > 0 ? <BlurFilter id="arrow-dof" sd={look.blur} /> : null}
+        </defs>
+        {shadow ? (
+          <g
+            transform={placeAt(shadow.p, 1, heading)}
+            opacity={shadow.opacity * look.opacity}
+            filter="url(#arrow-sh)"
+          >
+            <Arrow length={CHART.arrowLength} color={COLORS.ink} />
+          </g>
+        ) : null}
+        <g
+          transform={placeAt(p, 1, heading)}
+          opacity={look.opacity}
+          filter={look.blur > 0 ? "url(#arrow-dof)" : undefined}
+        >
+          <Arrow length={CHART.arrowLength} color={COLORS.seal} />
+        </g>
+      </g>
+    );
+
+  return {
+    inside: (
+      <>
+        {scene.photo ? (
+          <PhotoInside
+            cam={cam}
+            frame={frame}
+            start={start}
+            src={scene.photo}
+            dim={CHART.photoDim}
+          />
+        ) : (
+          <GoldRoomInside cam={cam} frame={frame} />
+        )}
+        {grid.map((g, i) => (
+          <path
+            key={i}
+            d={g}
+            stroke={COLORS.paper}
+            strokeWidth={2}
+            opacity={0.28}
+          />
+        ))}
+        <path
+          d={d}
+          fill="none"
+          stroke={COLORS.ink}
+          strokeWidth={CHART.lineWidth + 8}
+          strokeLinejoin="round"
+          strokeLinecap="round"
+          strokeDasharray={evolved.strokeDasharray}
+          strokeDashoffset={evolved.strokeDashoffset}
+        />
+        <path
+          d={d}
+          fill="none"
+          stroke={COLORS.gold}
+          strokeWidth={CHART.lineWidth}
+          strokeLinejoin="round"
+          strokeLinecap="round"
+          strokeDasharray={evolved.strokeDasharray}
+          strokeDashoffset={evolved.strokeDashoffset}
+        />
+        {pts.map((pt, i) =>
+          drawn >= i / (pts.length - 1) ? (
+            <circle
+              key={i}
+              cx={pt.x}
+              cy={pt.y}
+              r={CHART.nodeRadius * pt.k}
+              fill={COLORS.goldLight}
+              stroke={COLORS.ink}
+              strokeWidth={4}
+            />
+          ) : null,
+        )}
+        {w.z < 0 ? arrow : null}
+      </>
+    ),
+    front: w.z >= 0 ? arrow : null,
+    overlay: (
+      <HeadlineStack>
+        <HeadlineLine
+          text={scene.lines[0].text}
+          cue={cue(scene.lines[0].cueWord)}
+          out={end}
+          variant="slam"
+          size={POP.type.headline}
+        />
+        <HeadlineLine
+          text={scene.lines[1].text}
+          cue={cue(scene.lines[1].cueWord)}
+          out={end}
+          size={POP.type.headline}
+          accent={scene.lines[1].text.split(" ").pop()}
+        />
+      </HeadlineStack>
+    ),
+  };
+};
+
+// The frame the chart arrow crosses the plane (for sound and camera).
+export const chartCrossing = (
+  scene: PopSceneOf<"chart">,
+  cue: PopCtx["cue"],
+): number => arrowCrossing(cue(scene.plungeCueWord));
 
 // ---------------------------------------------------------------------------
 // Scene 1: the gold koi leaps out of the night pond on the leap cue.
@@ -218,7 +432,16 @@ const leapLayers = (scene: PopSceneOf<"leap">, ctx: PopCtx): Layers => {
   return {
     inside: (
       <>
-        <PondInside cam={cam} frame={frame} />
+        {scene.photo ? (
+          <PhotoInside
+            cam={cam}
+            frame={frame}
+            start={start}
+            src={scene.photo}
+          />
+        ) : (
+          <PondInside cam={cam} frame={frame} />
+        )}
         <Ripples
           cam={cam}
           frame={frame}
@@ -361,7 +584,16 @@ const turnLayers = (scene: PopSceneOf<"turn">, ctx: PopCtx): Layers => {
   return {
     inside: (
       <>
-        <MountainsInside cam={cam} frame={frame} />
+        {scene.photo ? (
+          <PhotoInside
+            cam={cam}
+            frame={frame}
+            start={start}
+            src={scene.photo}
+          />
+        ) : (
+          <MountainsInside cam={cam} frame={frame} />
+        )}
         {l.z < 0 ? disc : null}
       </>
     ),
@@ -412,6 +644,8 @@ const COUNT = {
   crossFrames: 12,
   // The flying number fades out over this many frames at the scene end.
   fadeFrames: 6,
+  // A photo behind the coins is darkened this much so the gold reads.
+  photoDim: 0.35,
   y: WINDOW.cy - 10,
 } as const;
 
@@ -437,7 +671,17 @@ const countLayers = (scene: PopSceneOf<"count">, ctx: PopCtx): Layers => {
   return {
     inside: (
       <>
-        <GoldRoomInside cam={cam} frame={frame} />
+        {scene.photo ? (
+          <PhotoInside
+            cam={cam}
+            frame={frame}
+            start={start}
+            src={scene.photo}
+            dim={COUNT.photoDim}
+          />
+        ) : (
+          <GoldRoomInside cam={cam} frame={frame} />
+        )}
         <Ingot cam={cam} frame={frame} start={start} burstAt={burstAt} />
         <CoinBurst cam={cam} frame={frame} at={burstAt} side="inside" />
       </>
@@ -565,6 +809,36 @@ const ShifuFigure: React.FC<{ fan: number; shadowFilter?: string }> = ({
   );
 };
 
+// The official logo in the headline column: rises out of a blur with a
+// small overshoot, then breathes.
+const BrandLogo: React.FC<{ src: string; start: number }> = ({
+  src,
+  start,
+}) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const t = springAt(frame, start, fps, SPRING.pop);
+  if (frame < start) {
+    return null;
+  }
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: SAFE_AREA.x,
+        top: HEADLINE.top,
+        width: POP.logoWidth,
+        opacity: Math.min(1, t * 1.5),
+        transform: `translateY(${((1 - t) * 40).toFixed(1)}px) scale(${breathe(frame, fps, 0.008).toFixed(4)})`,
+        transformOrigin: "0% 50%",
+        filter: `blur(${(Math.max(0, 1 - t * 1.4) * 10).toFixed(1)}px)`,
+      }}
+    >
+      <Img src={staticFile(src)} style={{ width: "100%", display: "block" }} />
+    </div>
+  );
+};
+
 const ctaLayers = (scene: PopSceneOf<"cta">, ctx: PopCtx): Layers => {
   const { frame, fps, start, cue, cam, brand } = ctx;
   const enter = cue(scene.shifuCueWord) - HEADLINE.leadFrames;
@@ -574,8 +848,9 @@ const ctaLayers = (scene: PopSceneOf<"cta">, ctx: PopCtx): Layers => {
   const shadow = shadowOf(cam, s.x, s.y, s.z);
   const fan = Math.sin(frame / 22);
   const scale = breathe(frame, fps, 0.006);
+  const leaning = scene.figure === "lean";
   const figure = (key: string) =>
-    frame < enter ? null : (
+    frame < enter || !leaning ? null : (
       <g key={key} transform={placeAt(p, scale, s.rot)}>
         <ShifuFigure fan={fan} />
       </g>
@@ -585,12 +860,21 @@ const ctaLayers = (scene: PopSceneOf<"cta">, ctx: PopCtx): Layers => {
   return {
     inside: (
       <>
-        <MountainsInside cam={cam} frame={frame} lift={70} opacity={0.8} />
+        {scene.photo ? (
+          <PhotoInside
+            cam={cam}
+            frame={frame}
+            start={start}
+            src={scene.photo}
+          />
+        ) : (
+          <MountainsInside cam={cam} frame={frame} lift={70} opacity={0.8} />
+        )}
         {figure("inside")}
       </>
     ),
     front:
-      s.z >= 0 && frame >= enter ? (
+      leaning && s.z >= 0 && frame >= enter ? (
         <>
           <defs>
             <clipPath id="cta-above-sill">
@@ -626,20 +910,24 @@ const ctaLayers = (scene: PopSceneOf<"cta">, ctx: PopCtx): Layers => {
       ) : null,
     overlay: (
       <>
-        <HeadlineStack>
-          <Kicker
-            text={brand.descriptor}
-            start={start + 6}
-            out={Number.POSITIVE_INFINITY}
-          />
-          <HeadlineLine
-            text={brand.name}
-            cue={enter + HEADLINE.leadFrames}
-            out={Number.POSITIVE_INFINITY}
-            size={POP.type.brand}
-            accent={brand.name.split(" ").pop()}
-          />
-        </HeadlineStack>
+        {brand.logo ? (
+          <BrandLogo src={brand.logo} start={start + 4} />
+        ) : (
+          <HeadlineStack>
+            <Kicker
+              text={brand.descriptor}
+              start={start + 6}
+              out={Number.POSITIVE_INFINITY}
+            />
+            <HeadlineLine
+              text={brand.name}
+              cue={enter + HEADLINE.leadFrames}
+              out={Number.POSITIVE_INFINITY}
+              size={POP.type.brand}
+              accent={brand.name.split(" ").pop()}
+            />
+          </HeadlineStack>
+        )}
         {frame >= btnAt - 3 ? (
           <div
             style={{
@@ -672,6 +960,8 @@ const ctaLayers = (scene: PopSceneOf<"cta">, ctx: PopCtx): Layers => {
 
 export const popLayers = (scene: PopScene, ctx: PopCtx): Layers => {
   switch (scene.type) {
+    case "chart":
+      return chartLayers(scene, ctx);
     case "leap":
       return leapLayers(scene, ctx);
     case "turn":
@@ -691,6 +981,8 @@ export const popKicks = (
   fps: number,
 ): number[] => {
   switch (scene.type) {
+    case "chart":
+      return [arrowCrossing(cue(scene.plungeCueWord))];
     case "leap":
       return [koiCrossing(start, cue(scene.leapCueWord))];
     case "turn":
@@ -698,6 +990,9 @@ export const popKicks = (
     case "count":
       return [cue(scene.count.cueWord) - 2 + COUNT.crossFrames];
     case "cta": {
+      if (scene.figure === "none") {
+        return [cue(scene.button.cueWord)];
+      }
       const enter = cue(scene.shifuCueWord) - HEADLINE.leadFrames;
       let lean = enter;
       while (shifuWorld(lean, fps, enter).z < 0 && lean < enter + 60) {

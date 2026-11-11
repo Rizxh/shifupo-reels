@@ -1,0 +1,64 @@
+{
+  "id": "sp03",
+  "format": "popout",
+  "title": "Usaha Jalan, Pelanggan Sepi",
+  "brand": {
+    "name": "SHIFU PO",
+    "descriptor": "BUSINESS, LOVE & LIFE",
+    "sealGlyph": "風",
+    "handle": null,
+    "logo": "assets/brand/logo-shifupo-red.png"
+  },
+  "claims": [
+    { "text": "850+ properti telah ditangani", "reviewed": false },
+    {
+      "text": "Posisi meja dan pintu usaha yang belum selaras sebagai kemungkinan penyebab usaha sepi",
+      "reviewed": false
+    }
+  ],
+  "scenes": [
+    {
+      "type": "chart",
+      "vo": "Usaha sudah jalan, tapi pelanggan tetap sepi?",
+      "voHighlight": ["sepi"],
+      "photo": "assets/2d/sp03/kantor-blocks.jpg",
+      "lines": [
+        { "text": "USAHA JALAN,", "cueWord": "jalan" },
+        { "text": "PELANGGAN SEPI?", "cueWord": "pelanggan" }
+      ],
+      "plungeCueWord": "sepi"
+    },
+    {
+      "type": "turn",
+      "vo": "Bisa jadi, posisi meja dan pintu usaha Anda belum selaras.",
+      "voHighlight": ["meja dan pintu"],
+      "photo": "assets/2d/sp03/consult-temple.jpg",
+      "lines": [
+        { "text": "MEJA & PINTU", "cueWord": "meja" },
+        { "text": "BELUM SELARAS", "cueWord": "belum", "accent": "SELARAS" }
+      ],
+      "lockCueWord": "selaras"
+    },
+    {
+      "type": "count",
+      "vo": "Shifu Po sudah menangani lebih dari delapan ratus lima puluh properti.",
+      "voHighlight": ["delapan ratus lima puluh properti"],
+      "kickerCueWord": "Shifu",
+      "count": {
+        "value": 850,
+        "suffix": "+",
+        "label": "PROPERTI DITANGANI",
+        "cueWord": "delapan"
+      }
+    },
+    {
+      "type": "cta",
+      "vo": "Konsultasi bisnis Anda sekarang via WhatsApp.",
+      "voHighlight": ["WhatsApp"],
+      "photo": "assets/2d/sp03/consult-red-black.jpg",
+      "shifuCueWord": "Konsultasi",
+      "figure": "none",
+      "button": { "text": "Konsultasi via WhatsApp", "cueWord": "WhatsApp" }
+    }
+  ]
+}

@@ -78,6 +78,13 @@ Where it differs from this file, this file wins:
 
 - `story` (default, sp01): `Reel`, scenes in `src/scenes/Scenes.tsx`.
 - `popout` (sp02): `PopReel`, scenes in `src/scenes/PopScenes.tsx`. A lacquer frame on the plane z = 0 and objects that break out of it. Every position goes through the camera in `src/lib/space.ts`; rules in `docs/sp02/PLAN.md` part 6. Minimum length is enforced by stretching the final hold (`POP_PACING`).
+  - Scene order is a rule, not a list: opens with `chart` or `leap`, ends with its only `cta`, 3–5 scenes, each type once.
+  - Any popout scene may set `photo` (a real photo inside the window instead of the drawn world); the CTA may set `figure: "none"` when that photo already shows Shifu Po.
+  - `brand.logo` (any format) points at the official logo; the popout CTA shows it instead of the typed name.
+
+## Real brand assets
+
+From the brand's own site (`public/assets/2d/common/site/SOURCES.md`): official logo `public/assets/brand/logo-shifupo-red.png`, consultation photos and service cards. Crop per episode into `public/assets/2d/<id>/` (window aspect about 1.45:1). Never use the client logos, client testimonial photos or reels from that site. `tests/assets.test.ts` fails on any episode path that does not exist.
 
 ## Guides
 

@@ -161,4 +161,6 @@ export const POP = {
   koiScale: 1.7,
   shifu: { x: 770, baseY: 1350, height: 820 },
   button: { x: 540, y: 1100 },
+  // Width of the official logo in the CTA headline column.
+  logoWidth: 560,
 } as const;

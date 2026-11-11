@@ -3,7 +3,7 @@
 // Everything is placed through the camera in src/lib/space.ts.
 
 import { noise2D } from "@remotion/noise";
-import { random } from "remotion";
+import { random, staticFile } from "remotion";
 import { COLORS, FONTS, POP, VIDEO } from "../lib/brand";
 import { breathe, drift, EASE, prog } from "../lib/motion";
 import {
@@ -435,6 +435,94 @@ export const MountainsInside: React.FC<{
         </AtDepth>
       ))}
     </g>
+  );
+};
+
+// A real photo inside the window (assets from the brand's own site): set
+// back behind the plane, with a slow push-in and drift (Ken Burns), a warm
+// paper grade and a soft ink vignette so it sits in the ink-and-gold world.
+const PHOTO = {
+  z: -480,
+  oversize: 1.32,
+  bleed: 70,
+  pushPerFrame: 0.0008,
+  driftPx: 26,
+  grade: 0.16,
+  vignette: 0.55,
+};
+
+export const PhotoInside: React.FC<{
+  cam: Camera;
+  frame: number;
+  start: number;
+  src: string;
+  dim?: number;
+}> = ({ cam, frame, start, src, dim = 0 }) => {
+  const push = 1 + Math.max(0, frame - start) * PHOTO.pushPerFrame;
+  const dx = drift(`photo-x-${src}`, frame, 0.004) * PHOTO.driftPx;
+  const dy = drift(`photo-y-${src}`, frame, 0.004) * PHOTO.driftPx * 0.5;
+  const w = WINDOW.right - WINDOW.left;
+  const h = WINDOW.bottom - WINDOW.top;
+  return (
+    <g>
+      <defs>
+        <radialGradient id="photo-vignette" cx="50%" cy="50%" r="70%">
+          <stop offset="0.55" stopColor={COLORS.ink} stopOpacity={0} />
+          <stop
+            offset="1"
+            stopColor={COLORS.ink}
+            stopOpacity={PHOTO.vignette}
+          />
+        </radialGradient>
+      </defs>
+      <rect width={W} height={H} fill={COLORS.ink} />
+      <AtDepth cam={cam} z={PHOTO.z} oversize={PHOTO.oversize * push}>
+        <image
+          href={staticFile(src)}
+          x={WINDOW.left - PHOTO.bleed + dx}
+          y={WINDOW.top - PHOTO.bleed + dy}
+          width={w + PHOTO.bleed * 2}
+          height={h + PHOTO.bleed * 2}
+          preserveAspectRatio="xMidYMid slice"
+        />
+      </AtDepth>
+      <rect
+        width={W}
+        height={H}
+        fill={COLORS.paperDeep}
+        opacity={PHOTO.grade}
+        style={{ mixBlendMode: "multiply" }}
+      />
+      {dim > 0 ? (
+        <rect width={W} height={H} fill={COLORS.ink} opacity={dim} />
+      ) : null}
+      <rect
+        x={WINDOW.left}
+        y={WINDOW.top}
+        width={w}
+        height={h}
+        fill="url(#photo-vignette)"
+      />
+    </g>
+  );
+};
+
+// A bold arrow drawn around (0, 0) pointing along +x, `length` long.
+export const Arrow: React.FC<{ length: number; color: string }> = ({
+  length,
+  color,
+}) => {
+  const l = length / 2;
+  const t = length * 0.09;
+  const head = length * 0.3;
+  return (
+    <path
+      d={`M ${-l} ${-t} L ${l - head} ${-t} L ${l - head} ${-t * 2.6} L ${l} 0 L ${l - head} ${t * 2.6} L ${l - head} ${t} L ${-l} ${t} Z`}
+      fill={color}
+      stroke={COLORS.ink}
+      strokeWidth={5}
+      strokeLinejoin="round"
+    />
   );
 };
 

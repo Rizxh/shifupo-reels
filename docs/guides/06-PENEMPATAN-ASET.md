@@ -11,8 +11,9 @@ Sebelumnya: [05-ASET-3D.md](05-ASET-3D.md) · Lanjut ke: [07-ANIMASI.md](07-ANIM
 | Folder | Isi | Ikut ke Git |
 |---|---|---|
 | `public/assets/shifu/` | `shifu.png` (wajib), `shifu-fan.png` (opsional) | Ya |
-| `public/assets/brand/` | Logo resmi (`logo.svg` atau `logo.png`), kalau berbeda dari stempel 風 bawaan | Ya |
+| `public/assets/brand/` | Logo resmi `logo-shifupo-red.png` (PNG transparan 1500×476), dipakai lewat `brand.logo` di JSON episode | Ya |
 | `public/assets/2d/common/` | Aset raster yang dipakai banyak episode | Ya |
+| `public/assets/2d/common/site/` | Foto asli dari shifupofengshui.com (konsultasi, kartu layanan) + `SOURCES.md` | Ya |
 | `public/assets/2d/<id>/` | Aset raster khusus satu episode, misalnya `2d/sp02/` | Ya |
 | `public/assets/3d/<nama>/` | Urutan PNG hasil render 3D + `README.md` | Ya (jaga ukurannya) |
 | `public/audio/sfx/` | SFX hasil `npm run sfx` | Ya |
@@ -27,6 +28,14 @@ staticFile("assets/2d/sp02/lantern-red.png")
 ```
 
 Path yang dipakai di lebih dari satu tempat menjadi konstanta di `src/lib/brand.ts` (contohnya `SHIFU.photo`). Untuk aset yang mungkin belum ada, cek dengan `hasStaticFile()` dan sediakan cadangan vektor.
+
+### Foto asli di dalam bingkai (format popout)
+
+Di episode `popout`, setiap scene boleh punya `"photo": "assets/2d/<id>/nama.jpg"`. Foto itu mengisi jendela bingkai menggantikan dunia gambar, dengan gerak Ken Burns, grading hangat, dan vignette tinta.
+
+- Potong dulu ke rasio jendela (sekitar 1,45 : 1), lebar 1600 px, JPG kualitas 3, simpan di `public/assets/2d/<id>/`. Contoh: `ffmpeg -i sumber.jpg -vf "crop=1920:1320:0:980,scale=1600:-2" -q:v 3 hasil.jpg`.
+- Wajah penting diletakkan di tengah atas foto, karena benda yang keluar bingkai biasanya lewat di tengah bawah.
+- Path yang salah langsung menggagalkan `npm test` (`tests/assets.test.ts`).
 
 ## 2. Peta frame 1080 × 1920
 
