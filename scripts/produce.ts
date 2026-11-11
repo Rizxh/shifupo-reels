@@ -21,6 +21,7 @@ import { REEL } from "../src/lib/timing";
 import {
   formatMb,
   loadEpisode,
+  missingElevenLabsVars,
   OUT_DIR,
   probeMedia,
   PUBLIC_DIR,
@@ -93,8 +94,8 @@ const main = async () => {
   }
   const draft = values.draft;
   const wanted = (step: Step) => STEPS.indexOf(step) >= STEPS.indexOf(from);
-  // Only the presence of .env is checked; its contents are never read here.
-  const hasKey = existsSync(path.join(ROOT, ".env"));
+  // Only whether the ElevenLabs variables are filled in; values never print.
+  const hasKey = missingElevenLabsVars().length === 0;
 
   if (hasKey && wanted("tts")) await script("scripts/tts.ts", [id]);
   const voiced = episode.scenes.every((_, i) =>

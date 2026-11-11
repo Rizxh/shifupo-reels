@@ -8,6 +8,7 @@
     "node": "^20.19.0 || ^22.13.0 || >=24"
   },
   "scripts": {
+    "setup": "tsx scripts/setup.ts",
     "studio": "remotion studio",
     "tts": "tsx scripts/tts.ts",
     "vo-level": "tsx scripts/vo-level.ts",
@@ -19,7 +20,8 @@
     "produce": "tsx scripts/produce.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src scripts tests && tsc --noEmit"
+    "lint": "eslint src scripts tests && tsc --noEmit",
+    "check": "vitest run && npm run lint"
   },
   "allowScripts": {
     "esbuild": false

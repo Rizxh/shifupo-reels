@@ -26,11 +26,29 @@ Remotion project for **Shifu Po (Feng Shui & BaZi consultant)** promotional Inst
 
 ## Commands
 
+- `npm run setup`: first-run check (Node, ffmpeg, `.env` filled or not, SFX, Shifu photo); creates `.env` from `.env.example` if missing
 - `npm run studio`: preview in Remotion Studio
 - `npm run produce -- sp01 [--draft] [--from <step>]`: whole pipeline (TTS, VO levels, SFX, render, loudness, whisper check) to `out/sp01_final.mp4` plus `out/sp01_report.md` and a frame sheet. Without `.env` it renders without VO on estimated timing.
 - `npm run tts -- sp01`, `npm run vo-level -- sp01`, `npm run sfx`, `npm run render -- sp01 [--draft]`, `npm run postprocess -- sp01`
 - `npm run stills -- sp01 40 165 385 --scale 1`: full-size frames for checks
-- `npm test`, `npm run lint`
+- `npm test`, `npm run lint`, `npm run check` (test + lint + typecheck; must pass before a commit)
+
+## Guides
+
+Step-by-step guides (Indonesian) in `docs/guides/`; follow the one for the step you are on:
+
+| Step | Guide |
+|---|---|
+| Idea | `01-PLANNING-IDE.md` |
+| Content, episode JSON | `02-PLANNING-KONTEN.md` |
+| Scene by scene, adding a scene type | `03-SCENE-BY-SCENE.md` |
+| 2D assets | `04-ASET-2D.md` |
+| 3D assets (pre-rendered PNG sequences only) | `05-ASET-3D.md` |
+| Asset folders and frame placement | `06-PENEMPATAN-ASET.md` |
+| Animation | `07-ANIMASI.md` |
+| QA, clean and precise result | `08-QA-HASIL-BERSIH.md` |
+
+Asset folders: `public/assets/shifu/`, `brand/`, `2d/common/`, `2d/<id>/`, `3d/<name>/`.
 
 ## New episodes
 

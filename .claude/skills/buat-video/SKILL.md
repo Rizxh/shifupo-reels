@@ -11,7 +11,9 @@ the user in casual Bahasa Indonesia; on-screen text and VO use "Anda". Code,
 comments and commits stay in English (CLAUDE.md).
 
 Before anything else, read `CLAUDE.md` and `docs/PLAN-SP01.md` (the reference
-plan: structure, motion rules, assets, checks, and the quality bar).
+plan: structure, motion rules, assets, checks, and the quality bar). The
+step guides in `docs/guides/` (01 idea … 08 QA) are the detailed rules for
+each step below; read the one for the step you are on.
 
 ## Phase A: plan (the only stop)
 
@@ -27,7 +29,8 @@ plan: structure, motion rules, assets, checks, and the quality bar).
 3. Write `data/episodes/<id>.json`. If the scene types differ from sp01, add
    the new scene schema in `src/schema.ts` and its scene in
    `src/scenes/Scenes.tsx`, reusing the components in `src/components/`.
-   Validate with `npm test` and `npx tsc --noEmit`.
+   Validate with `npm run check`. Guides: `01-PLANNING-IDE.md`,
+   `02-PLANNING-KONTEN.md`, `03-SCENE-BY-SCENE.md`.
 4. Show the user a short summary (topic, hook line, full VO, scene list,
    estimated length, what needs a human) and ask ONE question with
    AskUserQuestion: "Setuju, langsung produksi" / "Revisi dulu". Loop on
@@ -39,14 +42,17 @@ After the yes, do not ask between steps. Report progress in one line per
 step. Run long commands in the background and wait for them.
 
 1. Build or adapt the scenes. Follow every rule of `docs/PLAN-SP01.md` part 6
-   (anime smooth motion). New illustration components go in
-   `src/components/`, drawn in SVG with brand colors.
+   (anime smooth motion) and `docs/guides/07-ANIMASI.md`. New illustration
+   components go in `src/components/`, drawn in SVG with brand colors
+   (`04-ASET-2D.md`); raster and 3D files go where `06-PENEMPATAN-ASET.md`
+   says (3D only as pre-rendered PNG sequences, `05-ASET-3D.md`).
 2. Draft loop: `npm run produce -- <id> --draft`, then look at
    `out/<id>_draft_sheet.jpg` and full-size stills (`npm run stills -- <id>
    <frames> --scale 1`) of every text card and transition. Check: text inside
    the safe area, text lands on its word, nothing clipped or overlapping the
    subject, no dead-still frames, transitions read as one continuous move,
-   gold and red stay crisp. Fix and repeat, at most three rounds.
+   gold and red stay crisp. Use the full checklist in
+   `docs/guides/08-QA-HASIL-BERSIH.md`. Fix and repeat, at most three rounds.
 3. Final: `npm run produce -- <id>`. Read `out/<id>_report.md`. Fix any
    problem and resume with `--from <step>`.
 4. Deliver with SendUserFile: final mp4, frame sheet, report. Summarize in

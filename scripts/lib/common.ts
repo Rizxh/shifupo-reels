@@ -230,3 +230,21 @@ export const runMain = (main: () => Promise<void>): void => {
     process.exit(1);
   });
 };
+
+export const ELEVENLABS_REQUIRED = [
+  "ELEVENLABS_API_KEY",
+  "ELEVENLABS_VOICE_ID",
+] as const;
+
+// Loads .env into this process (if present) and returns the required
+// ElevenLabs variables that are still empty. Values are never printed.
+export const missingElevenLabsVars = (): string[] => {
+  try {
+    process.loadEnvFile(path.join(ROOT, ".env"));
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code !== "ENOENT") {
+      throw err;
+    }
+  }
+  return ELEVENLABS_REQUIRED.filter((name) => !process.env[name]?.trim());
+};
