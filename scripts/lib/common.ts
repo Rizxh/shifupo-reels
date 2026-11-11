@@ -4,7 +4,7 @@ import { spawn } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { z } from "zod";
-import { episodeSchema, type Episode } from "../../src/schema";
+import { FORMATS, formatOf, type AnyEpisode } from "../../src/schema";
 
 export const ROOT = path.resolve(import.meta.dirname, "..", "..");
 export const PUBLIC_DIR = path.join(ROOT, "public");
@@ -22,14 +22,13 @@ export const episodeFile = (episodeId: string): string =>
   path.join(EPISODES_DIR, `${episodeId}.json`);
 
 // Reads and validates data/episodes/<id>.json.
-export const loadEpisode = (episodeId: string): Episode => {
+export const loadEpisode = (episodeId: string): AnyEpisode => {
   const file = episodeFile(episodeId);
   if (!existsSync(file)) {
     throw new ScriptError(`Episode file not found: ${rel(file)}`);
   }
-  const parsed = episodeSchema.safeParse(
-    JSON.parse(readFileSync(file, "utf8")),
-  );
+  const raw: unknown = JSON.parse(readFileSync(file, "utf8"));
+  const parsed = FORMATS[formatOf(raw)].schema.safeParse(raw);
   if (!parsed.success) {
     throw new ScriptError(`Invalid ${rel(file)}:
 ${z.prettifyError(parsed.error)}`);
@@ -41,6 +40,10 @@ ${z.prettifyError(parsed.error)}`);
   }
   return parsed.data;
 };
+
+// Remotion composition that renders this episode's format.
+export const compositionFor = (episode: AnyEpisode): string =>
+  FORMATS[episode.format ?? "story"].composition;
 
 // What the TTS script needs: one VO line per scene.
 export type VoScript = {

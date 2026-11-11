@@ -10,7 +10,12 @@ Isi naskah, teks layar, dan angka ada di satu file JSON per episode. Satu perint
 | Audio | VO ElevenLabs, SFX sintesis sendiri, akhir −14 LUFS, true peak ≤ −1,5 dB |
 | Teks | Selalu di dalam area aman Instagram (tidak tertutup tombol dan caption IG) |
 
-Episode pertama: **SP01 "Kerja Keras Punya Arah"** (`data/episodes/sp01.json`, planning `docs/PLAN-SP01.md`).
+Ada dua format episode, dipilih lewat field `format` di JSON episode:
+
+| Episode | Format | Isi |
+|---|---|---|
+| SP01 "Kerja Keras Punya Arah" | `story` (default), komposisi `Reel` | 6 scene, 28 detik, animasi tinta 2D. Planning `docs/PLAN-SP01.md` |
+| SP02 "Rezeki Lewat" | `popout`, komposisi `PopReel` | 4 scene, 15 detik, ilusi 4D / keluar layar: koi, luo pan, koin, Shifu Po, dan tombol menembus bingkai lak ke arah penonton. Planning `docs/sp02/PLAN.md` |
 
 ---
 
@@ -98,6 +103,8 @@ Hasilnya:
 | `npm run postprocess -- <id>` | Normalisasi loudness dan kompres sampai ≤ 30 MB |
 | `npm run stills -- <id> 40 165 385 --scale 1` | Render frame tertentu dalam ukuran penuh untuk dicek |
 | `npm run stills -- <id> --every 15` | Lembar frame tiap 15 frame |
+| `npm run review -- <id> [--no-render]` | Review visual: render draft, lalu lembar frame penting per scene (awal, transisi, setiap kata cue, akhir) + catatan checklist di `out/<id>_review.md` |
+| `npm run skills:update` | Pasang / perbarui skill resmi Remotion untuk Claude Code (`.claude/skills/remotion-best-practices`) |
 | `npm run transcribe -- <video>` | Transkrip lokal dengan whisper (model diunduh sekali ke `.whisper/`) |
 | `npm test` | Validasi episode (cue, angka, highlight) dan test pipeline |
 | `npm run check` | Test, lint, dan typecheck sekaligus. Wajib lolos sebelum commit |
@@ -125,7 +132,7 @@ Dengan Claude Code, semua langkah itu dijalankan dari satu prompt:
 /buat-video topik: feng shui kamar tidur untuk jodoh
 ```
 
-Claude menyusun planning (`docs/<id>/PLAN.md`), bertanya **satu kali** (setuju atau revisi), lalu memproduksi sampai video final tanpa berhenti. Claude hanya berhenti kalau butuh aset dari Anda, kunci ElevenLabs, atau ada cek yang tetap gagal setelah tiga kali diperbaiki. Detailnya ada di `.claude/skills/buat-video/SKILL.md`.
+Claude bekerja seperti studio kecil: creative director, penulis naskah, storyboard, desainer aset, animator, QA visual, lalu finishing (lihat `CLAUDE.md`). Claude menyusun planning (`docs/<id>/PLAN.md`), bertanya **satu kali** (setuju atau revisi), lalu memproduksi sampai video final tanpa berhenti. Sebelum render final, Claude wajib menjalankan siklus review visual: render draft, melihat frame penting setiap scene, memperbaiki, lalu mengulang (maksimal 3 putaran). Claude hanya berhenti kalau butuh aset dari Anda, kunci ElevenLabs, atau ada cek yang tetap gagal setelah tiga kali diperbaiki. Detailnya ada di `.claude/skills/buat-video/SKILL.md`.
 
 ---
 
@@ -142,6 +149,7 @@ Semua angka ada di satu tempat. Komponen tidak boleh berisi angka atau teks semb
 | Kecepatan bicara, jeda, durasi min/maks | `src/lib/timing.ts` | `PACING`, `REEL` |
 | Kurva gerak dan pegas | `src/lib/motion.ts` | `EASE.out`, `SPRING.heavy` |
 | Transisi tinta | `src/lib/brand.ts` | `INK_WIPE.frames` |
+| Format keluar layar: bingkai, kamera 3D, bayangan, ukuran | `src/lib/brand.ts` (`POP`), `src/lib/space.ts` | `POP.frame`, `POP.focal`, `POP.sway` |
 | Volume VO, SFX, target loudness | `src/lib/mix.ts`, `src/lib/sfx.ts` | `VO_LEVEL`, `SFX_MIX` |
 | Bentuk SFX | `scripts/sfx.ts` | resep gong, lonceng, whoosh |
 | Model dan voice ElevenLabs | `.env` | `ELEVENLABS_VOICE_ID` |
@@ -153,7 +161,7 @@ Semua angka ada di satu tempat. Komponen tidak boleh berisi angka atau teks semb
 
 ```
 shifupo-reels/
-├─ .claude/                 Izin dan skill /buat-video untuk Claude Code
+├─ .claude/                 Izin, skill /buat-video, dan skill resmi Remotion
 ├─ data/episodes/           Satu JSON per episode (naskah, teks, cue, klaim)
 ├─ docs/
 │  ├─ PLAN-SP01.md          Planning SP01, sekaligus standar kualitas
@@ -172,10 +180,11 @@ shifupo-reels/
 │     └─ <id>/              VO hasil TTS (tidak ikut ke Git)
 ├─ scripts/                 Pipeline: setup, tts, vo-level, sfx, render, postprocess, produce, stills
 ├─ src/
-│  ├─ lib/                  Token brand, timing, gerak, mix, utilitas
+│  ├─ lib/                  Token brand, timing, gerak, mix, kamera 3D (space.ts)
 │  ├─ components/           Aset 2D yang digambar dengan kode (SVG)
-│  ├─ scenes/Scenes.tsx     Enam scene SP01
-│  ├─ compositions/Reel.tsx Dunia latar, transisi, caption, audio
+│  ├─ scenes/Scenes.tsx     Enam scene format story (SP01)
+│  ├─ scenes/PopScenes.tsx  Empat scene format popout (SP02)
+│  ├─ compositions/         Reel.tsx (story) dan PopReel.tsx (popout)
 │  └─ schema.ts             Validasi episode
 ├─ tests/                   Test episode dan pipeline
 └─ out/                     Hasil render (tidak ikut ke Git)

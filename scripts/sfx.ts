@@ -42,6 +42,8 @@ const RECIPES: Record<SfxName, string> = {
   pop: `aevalsrc='0.6*sin(2*PI*(520*t+(480/40)*(1-exp(-40*t))))*exp(-42*t)':d=0.1:${S}[out]`,
   // Sparkle: a cluster of high bells with a slow tremolo.
   shimmer: `aevalsrc='(0.22*sin(2*PI*2093*t)+0.18*sin(2*PI*2637*t)+0.14*sin(2*PI*3136*t)+0.1*sin(2*PI*4186*t))*(0.6+0.4*sin(2*PI*11*t))*sin(PI*t/1.2)':d=1.2:${S}[out]`,
+  // Water splash: a burst of filtered noise with two rising bubble blips.
+  splash: `anoisesrc=d=0.7:c=pink:seed=12:a=0.9,highpass=f=500,lowpass=f=5000,afade=t=in:d=0.005,afade=t=out:st=0.03:d=0.6:curve=exp[a];aevalsrc='0.3*sin(2*PI*(900*t+400*t*t))*exp(-14*t)+0.2*sin(2*PI*(1500*t+900*t*t))*exp(-18*(t-0.08))*gte(t,0.08)':d=0.5:${S}[b];[a][b]amix=inputs=2:normalize=0,alimiter=limit=0.9[out]`,
 };
 
 const main = async () => {

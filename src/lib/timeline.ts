@@ -3,7 +3,7 @@
 // any cue word is spoken.
 
 import { cueWordIndex } from "./cues";
-import type { WordTiming } from "./text";
+import { splitWords, type WordTiming } from "./text";
 import { PACING, secondsToFrames } from "./timing";
 
 // A VO line as measured: its length and word timings relative to its start.
@@ -26,13 +26,19 @@ export type Beat = {
   words: WordTiming[];
 };
 
+// `minFrames` stretches the final hold so a short VO still makes a reel of
+// the minimum length.
 export const layoutBeats = (
   lines: VoLine[],
   fps: number,
+  options: { outroHoldSeconds?: number; minFrames?: number } = {},
 ): { beats: Beat[]; durationInFrames: number } => {
   const leadIn = secondsToFrames(PACING.leadInSeconds, fps);
   const gap = secondsToFrames(PACING.lineGapSeconds, fps);
-  const outro = secondsToFrames(PACING.outroHoldSeconds, fps);
+  const outro = secondsToFrames(
+    options.outroHoldSeconds ?? PACING.outroHoldSeconds,
+    fps,
+  );
   const starts: number[] = [];
   lines.forEach((line, i) => {
     starts.push(
@@ -40,10 +46,12 @@ export const layoutBeats = (
     );
   });
   const last = lines.length - 1;
-  const durationInFrames =
+  const durationInFrames = Math.max(
+    options.minFrames ?? 0,
     lines.length === 0
       ? outro
-      : starts[last] + lines[last].voDurationInFrames + outro;
+      : starts[last] + lines[last].voDurationInFrames + outro,
+  );
   // A scene's picture starts in the middle of the pause before its line.
   const sceneStart = (i: number) =>
     i === 0 ? 0 : starts[i] - Math.ceil(gap / 2);
@@ -73,6 +81,14 @@ export const cueFrame = (beat: Beat, vo: string, cue: string): number => {
   }
   return word.startFrame;
 };
+
+// Length of a VO line estimated from its word count, used until its file
+// exists (the Studio, metadata and review all agree on this).
+export const estimateLineSeconds = (vo: string): number =>
+  Math.max(
+    PACING.estimateMinLineSeconds,
+    splitWords(vo).length / PACING.estimateWordsPerSecond,
+  );
 
 // Words spread evenly over a line, used until the VO file and its timings exist.
 export const evenWordTimings = (

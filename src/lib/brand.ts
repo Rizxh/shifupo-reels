@@ -130,3 +130,35 @@ export const SHIFU = {
 export const LOGO = {
   sealRadius: 118,
 } as const;
+
+// Pop-out format (docs/sp02/PLAN.md): a lacquer frame on the plane z = 0
+// and a camera looking at it, so objects can break out toward the viewer.
+export const POP = {
+  frame: { x: 100, y: 600, width: 880, height: 630, border: 38 },
+  // The window is recessed this far behind the frame face.
+  recess: 46,
+  // Camera focal length in px: a point at depth z scales by f / (f - z).
+  focal: 1500,
+  sway: { yawDeg: 3.2, pitchDeg: 1.8 },
+  // How far the camera pulls back when something breaks out (px of depth).
+  kickDolly: 70,
+  kickFrames: 26,
+  // Shadow of a point at height z falls at (x + z * dx, y + z * dy) on the
+  // frame plane, blurred by z * blur px.
+  shadow: { dx: 0.2, dy: 0.3, blur: 0.03, opacity: 0.34 },
+  // Objects closer than this scale start to blur (depth of field)...
+  dofFromScale: 1.9,
+  dofBlurPerScale: 7,
+  // ...and are gone by this depth, before they reach the camera.
+  nearFade: { from: 760, to: 1060 },
+  type: {
+    headline: 80,
+    label: 56,
+    count: 200,
+    brand: 92,
+  },
+  luopanScale: 0.8,
+  koiScale: 1.7,
+  shifu: { x: 770, baseY: 1350, height: 820 },
+  button: { x: 540, y: 1100 },
+} as const;

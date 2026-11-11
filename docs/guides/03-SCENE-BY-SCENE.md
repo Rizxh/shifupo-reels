@@ -79,6 +79,18 @@ Kalau episode butuh scene yang tidak ada di SP01 (misalnya `palm` untuk garis ta
 
 TypeScript akan menandai setiap `switch` yang lupa diberi `case` baru. Jalankan `npm run check`.
 
+## 4b. Format keluar layar (popout)
+
+Episode dengan `"format": "popout"` (contoh SP02) memakai komposisi `PopReel`. Setiap scene di `src/scenes/PopScenes.tsx` menggambar ke tiga lapis:
+
+| Lapis | Isi | Aturan |
+|---|---|---|
+| `inside` | Dunia di dalam jendela bingkai | Dipotong jendela. Benda dengan z < 0 |
+| `front` | Benda yang sudah keluar | Menimpa bingkai. Benda dengan z ≥ 0, wajib punya bayangan (`shadowOf`) |
+| `overlay` | Teks HTML, angka dan tombol yang diproyeksikan | Pakai `planeStyle`; dipotong jendela selama z < 0 |
+
+Aturan utama: semua posisi lewat `project()` di `src/lib/space.ts`, benda menembus bidang bingkai hanya saat proyeksinya masih di dalam jendela, dan setiap momen keluar memberi `popKicks` (kamera tersentak mundur). Aturan lengkap ada di `docs/sp02/PLAN.md` bagian 6.
+
 ## 5. Mengecek satu scene
 
 ```bash

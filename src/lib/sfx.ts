@@ -15,6 +15,7 @@ export const SFX = {
   coin: "audio/sfx/coin.wav",
   pop: "audio/sfx/pop.wav",
   shimmer: "audio/sfx/shimmer.wav",
+  splash: "audio/sfx/splash.wav",
 } as const;
 
 export type SfxName = keyof typeof SFX;
@@ -34,6 +35,7 @@ export const SFX_MIX: Record<SfxName, number> = {
   coin: 0.16,
   pop: 0.2,
   shimmer: 0.22,
+  splash: 0.34,
 };
 
 // Seconds from the start of whoosh.wav to its loudest point.

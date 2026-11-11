@@ -18,6 +18,43 @@ Remotion project for **Shifu Po (Feng Shui & BaZi consultant)** promotional Inst
 7. Licensing: only commercially licensed BGM, recorded in `public/audio/bgm/LICENSES.md`. Sound effects are synthesized by `npm run sfx`.
 8. Brand comes from the Shifu Po website (`../shifupo-home-v2`): ink, paper, gold, seal red; Plus Jakarta Sans, Cinzel, Noto Serif SC; "Anda".
 
+## Production roles
+
+Work as a small studio, not as a programmer who stops when the code compiles. For every episode, switch through these roles in order:
+
+| Role | Owns | Output |
+|---|---|---|
+| Creative director | Audience, one problem, one promise, format (`story` or `popout`), visual direction | Plan parts 1–2 |
+| Scriptwriter | VO lines, cue words, on-screen text, claims | `data/episodes/<id>.json` |
+| Storyboard artist | Scene actions, connecting objects, camera, sound per beat | Plan part 5 |
+| Asset designer | Reuse first; new SVG components; raster/3D only per `docs/guides/04`–`06` | `src/components/`, `public/assets/` |
+| Motion developer | Scenes, timing on cue words, transitions | `src/scenes/` |
+| Visual QA director | The review loop below | `out/<id>_review.md` filled in |
+| Finisher | Final render, loudness, report | `out/<id>_final.mp4`, `out/<id>_report.md` |
+
+Never invent facts, numbers, logos or assets. Use only official numbers and real files.
+
+## Visual review loop (mandatory)
+
+Valid code is not a good video. A render that finishes is not a finished reel.
+
+1. `npm run review -- <id>`: draft render plus `out/<id>_review.jpg`, the frames that matter for every scene (start, wipe middle, every cue word and a beat after it, middle, end), and `out/<id>_review.md` listing them.
+2. Look at the sheet with the image reader. Open full-size frames (`npm run stills -- <id> <frame> --scale 1`) for every text card, every break-out moment and every transition.
+3. Fill in the checklist and findings in `out/<id>_review.md`; fix the source; run the review again. At most three rounds, then report what still fails.
+4. Only then `npm run produce -- <id>`. Read `out/<id>_report.md` and the final frame sheet before saying it is done.
+
+Never claim a render, a fix or a check succeeded without having looked at its output.
+
+## Official Remotion skill
+
+`.claude/skills/remotion-best-practices` is Remotion's official agent skill (router to all sub-skills: markup, timing, transitions, audio, captions, rendering, docs). Load it before using a Remotion API you have not used in this project. Update it with `npm run skills:update`.
+
+Where it differs from this file, this file wins:
+
+- `/buat-video` renders without asking (the user approved autonomous production); the skill's "only render when explicitly asked" applies to ad-hoc requests.
+- Keep the motion helpers in `src/lib/motion.ts` and the `transform` strings already in use; do not rewrite working scenes to the skill's Studio-editable style.
+- Captions stay the project's own `Caption` component; VO is ElevenLabs, not the skill's defaults.
+
 ## Brand
 
 - Ink `#12100E`, paper `#F8F4EC`, gold `#C9A45C` / `#9C7A35` / `#F1DDA8`, seal red `#A8161D`.
@@ -31,7 +68,16 @@ Remotion project for **Shifu Po (Feng Shui & BaZi consultant)** promotional Inst
 - `npm run produce -- sp01 [--draft] [--from <step>]`: whole pipeline (TTS, VO levels, SFX, render, loudness, whisper check) to `out/sp01_final.mp4` plus `out/sp01_report.md` and a frame sheet. Without `.env` it renders without VO on estimated timing.
 - `npm run tts -- sp01`, `npm run vo-level -- sp01`, `npm run sfx`, `npm run render -- sp01 [--draft]`, `npm run postprocess -- sp01`
 - `npm run stills -- sp01 40 165 385 --scale 1`: full-size frames for checks
+- `npm run review -- <id> [--no-render]`: draft + scene-aware review sheet and notes (the visual review loop)
+- `npm run skills:update`: install/update the official Remotion agent skill
 - `npm test`, `npm run lint`, `npm run check` (test + lint + typecheck; must pass before a commit)
+
+## Episode formats
+
+`format` in the episode JSON picks the schema and composition (`FORMATS` in `src/schema.ts`; scripts call `compositionFor`):
+
+- `story` (default, sp01): `Reel`, scenes in `src/scenes/Scenes.tsx`.
+- `popout` (sp02): `PopReel`, scenes in `src/scenes/PopScenes.tsx`. A lacquer frame on the plane z = 0 and objects that break out of it. Every position goes through the camera in `src/lib/space.ts`; rules in `docs/sp02/PLAN.md` part 6. Minimum length is enforced by stretching the final hold (`POP_PACING`).
 
 ## Guides
 

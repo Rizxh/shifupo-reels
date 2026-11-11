@@ -17,11 +17,13 @@
     "postprocess": "tsx scripts/postprocess.ts",
     "transcribe": "tsx scripts/transcribe.ts",
     "stills": "tsx scripts/stills.ts",
+    "review": "tsx scripts/review.ts",
     "produce": "tsx scripts/produce.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src scripts tests && tsc --noEmit",
-    "check": "vitest run && npm run lint"
+    "check": "vitest run && npm run lint",
+    "skills:update": "tsx scripts/skills-update.ts"
   },
   "allowScripts": {
     "esbuild": false

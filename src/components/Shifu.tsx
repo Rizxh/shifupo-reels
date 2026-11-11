@@ -5,7 +5,7 @@ import { breathe, drift, EASE, prog, springAt, SPRING } from "../lib/motion";
 
 // Placeholder until the real cut-out photo arrives: an ink-robed figure
 // holding a folded fan. Drawn standing on (0, 0), about 1000 px tall.
-const RobedFigure: React.FC<{ fan: number }> = ({ fan }) => (
+export const RobedFigure: React.FC<{ fan: number }> = ({ fan }) => (
   <g>
     <path
       d="M -230 0 C -220 -320, -170 -560, -120 -640 L 120 -640 C 170 -560, 220 -320, 230 0 Z"

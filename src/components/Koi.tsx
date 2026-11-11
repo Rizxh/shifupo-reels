@@ -4,11 +4,33 @@ import { drift } from "../lib/motion";
 
 // A kohaku koi drawn facing +x in three linked parts (head, body, tail). The
 // body and tail bend after the head (follow-through), so it swims.
+export type KoiPalette = {
+  body: string;
+  spot: string;
+  fin: string;
+  // Optional ink outline for koi that sit on the light paper.
+  outline?: string;
+};
+
+const KOHAKU: KoiPalette = {
+  body: COLORS.white,
+  spot: COLORS.koiOrange,
+  fin: COLORS.white,
+};
+
 export const KoiFish: React.FC<{
   phase: number;
   scale?: number;
   seed: string;
-}> = ({ phase, scale = 1, seed }) => {
+  palette?: KoiPalette;
+}> = ({ phase, scale = 1, seed, palette = KOHAKU }) => {
+  const line = palette.outline
+    ? {
+        stroke: palette.outline,
+        strokeWidth: 4,
+        strokeLinejoin: "round" as const,
+      }
+    : {};
   const w = Math.sin(phase);
   const w2 = Math.sin(phase - 0.9);
   const fin = Math.sin(phase * 1.7);
@@ -23,17 +45,19 @@ export const KoiFish: React.FC<{
       <g transform={`translate(-60 0) rotate(${w2 * 18})`}>
         <path
           d="M 0 -20 C -40 -18, -70 -8, -90 0 C -70 8, -40 18, 0 20 Z"
-          fill={COLORS.white}
+          fill={palette.body}
+          {...line}
         />
         <g transform={`translate(-88 0) rotate(${w2 * 22})`}>
           <path
             d="M 0 0 C -20 -30, -60 -46, -86 -40 C -64 -16, -64 16, -86 40 C -60 46, -20 30, 0 0 Z"
-            fill={COLORS.white}
+            fill={palette.fin}
             opacity={0.85}
+            {...line}
           />
           <path
             d="M -6 0 C -24 -22, -56 -34, -76 -32 M -6 0 C -24 22, -56 34, -76 32"
-            stroke={COLORS.koiOrange}
+            stroke={palette.spot}
             strokeWidth={3}
             fill="none"
             opacity={0.5}
@@ -44,7 +68,8 @@ export const KoiFish: React.FC<{
       <g transform={`rotate(${w * 6})`}>
         <path
           d="M 60 -34 C 20 -40, -40 -32, -70 -18 C -78 0, -78 0, -70 18 C -40 32, 20 40, 60 34 Z"
-          fill={COLORS.white}
+          fill={palette.body}
+          {...line}
         />
         {spots.map((s, i) => (
           <ellipse
@@ -53,27 +78,30 @@ export const KoiFish: React.FC<{
             cy={s.y}
             rx={s.r * 1.3}
             ry={s.r}
-            fill={COLORS.koiOrange}
+            fill={palette.spot}
           />
         ))}
         {/* Pectoral fins flap a beat behind. */}
         <path
           d={`M 20 26 C 6 ${50 + fin * 10}, -20 ${58 + fin * 12}, -26 ${44 + fin * 8} Z`}
-          fill={COLORS.white}
+          fill={palette.fin}
           opacity={0.8}
+          {...line}
         />
         <path
           d={`M 20 -26 C 6 ${-50 - fin * 10}, -20 ${-58 - fin * 12}, -26 ${-44 - fin * 8} Z`}
-          fill={COLORS.white}
+          fill={palette.fin}
           opacity={0.8}
+          {...line}
         />
       </g>
       {/* Head. */}
       <path
         d="M 60 -34 C 100 -30, 118 -10, 120 0 C 118 10, 100 30, 60 34 Z"
-        fill={COLORS.white}
+        fill={palette.body}
+        {...line}
       />
-      <ellipse cx={86} cy={-2} rx={22} ry={18} fill={COLORS.koiOrange} />
+      <ellipse cx={86} cy={-2} rx={22} ry={18} fill={palette.spot} />
       <circle cx={104} cy={-16} r={4} fill={COLORS.ink} />
       <circle cx={104} cy={16} r={4} fill={COLORS.ink} />
     </g>

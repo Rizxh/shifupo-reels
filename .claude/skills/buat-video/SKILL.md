@@ -11,11 +11,23 @@ the user in casual Bahasa Indonesia; on-screen text and VO use "Anda". Code,
 comments and commits stay in English (CLAUDE.md).
 
 Before anything else, read `CLAUDE.md` and `docs/PLAN-SP01.md` (the reference
-plan: structure, motion rules, assets, checks, and the quality bar). The
+plan: structure, motion rules, assets, checks, and the quality bar); for a
+`popout` reel also `docs/sp02/PLAN.md`. For Remotion APIs, load the official
+skill `.claude/skills/remotion-best-practices` (project rules win). The
 step guides in `docs/guides/` (01 idea … 08 QA) are the detailed rules for
 each step below; read the one for the step you are on.
 
 ## Phase A: plan (the only stop)
+
+Think as the creative director first (roles: `CLAUDE.md`, "Production
+roles"). Decide, and write down in the plan, before any copy:
+
+- the viewer, their one problem, and the one promise of the reel;
+- the format: `story` (6 scenes, 20–29 s, ink-painting world) or `popout`
+  (4 scenes, ~15 s, objects breaking out of the lacquer frame; ask for it
+  when the user wants "4D", "3D", "keluar layar" or a short punchy reel);
+- the visual idea of every scene in one line, and the one moment per scene
+  that should make a viewer stop scrolling.
 
 1. Pick the next free id (`data/episodes/spNN.json`). Topics come from Shifu
    Po's services (website `../shifupo-home-v2`): BaZi, Feng Shui rumah,
@@ -46,15 +58,19 @@ step. Run long commands in the background and wait for them.
    components go in `src/components/`, drawn in SVG with brand colors
    (`04-ASET-2D.md`); raster and 3D files go where `06-PENEMPATAN-ASET.md`
    says (3D only as pre-rendered PNG sequences, `05-ASET-3D.md`).
-2. Draft loop: `npm run produce -- <id> --draft`, then look at
-   `out/<id>_draft_sheet.jpg` and full-size stills (`npm run stills -- <id>
-   <frames> --scale 1`) of every text card and transition. Check: text inside
+2. Visual review loop (`CLAUDE.md`, "Visual review loop"): run
+   `npm run review -- <id>`, look at `out/<id>_review.jpg` with the image
+   reader, open full-size stills (`npm run stills -- <id> <frames> --scale 1`)
+   of every text card, break-out moment and transition. Check: text inside
    the safe area, text lands on its word, nothing clipped or overlapping the
    subject, no dead-still frames, transitions read as one continuous move,
-   gold and red stay crisp. Use the full checklist in
-   `docs/guides/08-QA-HASIL-BERSIH.md`. Fix and repeat, at most three rounds.
-3. Final: `npm run produce -- <id>`. Read `out/<id>_report.md`. Fix any
-   problem and resume with `--from <step>`.
+   nothing from the previous scene lingering over the next, gold and red stay
+   crisp. Fill in the checklist and findings in `out/<id>_review.md`
+   (full list: `docs/guides/08-QA-HASIL-BERSIH.md`). Fix and review again, at
+   most three rounds.
+3. Final: `npm run produce -- <id>`. Read `out/<id>_report.md` and look at
+   `out/<id>_sheet.jpg`. Fix any problem and resume with `--from <step>`.
+   Never report success without having looked at the output.
 4. Deliver with SendUserFile: final mp4, frame sheet, report. Summarize in
    Indonesian what was made and what still needs a human (claims with
    `reviewed: false`, BGM license, missing assets).

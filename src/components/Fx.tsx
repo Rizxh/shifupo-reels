@@ -113,18 +113,20 @@ export const Sparkles: React.FC<{
 
 // CSS clip-path for an ink blot growing from (cx, cy): a ragged circle whose
 // edge wobbles with noise, so the reveal looks like ink soaking into paper.
-export const inkBlotClip = (
+export const inkBlotPath = (
   frame: number,
   start: number,
   cx: number,
   cy: number,
   seed: string,
+  maxRadius?: number,
 ): string | undefined => {
   const t = prog(frame, start, start + INK_WIPE.frames, EASE.inOut);
   if (t >= 1) {
     return undefined;
   }
-  const maxR = Math.hypot(Math.max(cx, W - cx), Math.max(cy, H - cy)) * 1.15;
+  const maxR =
+    maxRadius ?? Math.hypot(Math.max(cx, W - cx), Math.max(cy, H - cy)) * 1.15;
   const r = maxR * t;
   const pts: string[] = [];
   for (let i = 0; i < INK_WIPE.points; i++) {
@@ -135,7 +137,18 @@ export const inkBlotClip = (
       `${(cx + Math.cos(a) * rr).toFixed(1)} ${(cy + Math.sin(a) * rr).toFixed(1)}`,
     );
   }
-  return `path('M ${pts.join(" L ")} Z')`;
+  return `M ${pts.join(" L ")} Z`;
+};
+
+export const inkBlotClip = (
+  frame: number,
+  start: number,
+  cx: number,
+  cy: number,
+  seed: string,
+): string | undefined => {
+  const d = inkBlotPath(frame, start, cx, cy, seed);
+  return d === undefined ? undefined : `path('${d}')`;
 };
 
 // Soft ink splash ring that rides the edge of an ink wipe.

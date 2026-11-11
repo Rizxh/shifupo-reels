@@ -1,0 +1,59 @@
+{
+  "id": "sp02",
+  "format": "popout",
+  "title": "Rezeki Lewat",
+  "brand": {
+    "name": "SHIFU PO",
+    "descriptor": "FENG SHUI & BAZI",
+    "sealGlyph": "風",
+    "handle": null
+  },
+  "claims": [
+    { "text": "3.000+ klien telah dibantu", "reviewed": false },
+    {
+      "text": "Arah rumah yang belum selaras sebagai kemungkinan penyebab rezeki seret",
+      "reviewed": false
+    }
+  ],
+  "scenes": [
+    {
+      "type": "leap",
+      "vo": "Pernah merasa rezeki lewat begitu saja?",
+      "voHighlight": ["rezeki"],
+      "lines": [
+        { "text": "REZEKI LEWAT", "cueWord": "rezeki" },
+        { "text": "BEGITU SAJA?", "cueWord": "begitu" }
+      ],
+      "leapCueWord": "lewat"
+    },
+    {
+      "type": "turn",
+      "vo": "Bisa jadi, arah rumah Anda belum selaras.",
+      "voHighlight": ["arah rumah"],
+      "lines": [
+        { "text": "ARAH RUMAH", "cueWord": "arah" },
+        { "text": "BELUM SELARAS", "cueWord": "belum", "accent": "SELARAS" }
+      ],
+      "lockCueWord": "selaras"
+    },
+    {
+      "type": "count",
+      "vo": "Shifu Po sudah membantu lebih dari tiga ribu klien.",
+      "voHighlight": ["tiga ribu klien"],
+      "kickerCueWord": "Shifu",
+      "count": {
+        "value": 3000,
+        "suffix": "+",
+        "label": "KLIEN TELAH DIBANTU",
+        "cueWord": "tiga"
+      }
+    },
+    {
+      "type": "cta",
+      "vo": "Konsultasi sekarang via WhatsApp.",
+      "voHighlight": ["WhatsApp"],
+      "shifuCueWord": "Konsultasi",
+      "button": { "text": "Konsultasi via WhatsApp", "cueWord": "WhatsApp" }
+    }
+  ]
+}

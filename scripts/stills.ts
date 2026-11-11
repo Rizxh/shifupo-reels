@@ -9,6 +9,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { parseArgs } from "node:util";
 import {
+  compositionFor,
   loadEpisode,
   OUT_DIR,
   rel,
@@ -56,7 +57,7 @@ const main = async () => {
     const { code } = await run(process.execPath, [
       REMOTION_CLI,
       "render",
-      "Reel",
+      compositionFor(episode),
       path.join(dir, "seq"),
       `--props=${propsFile}`,
       "--sequence",
@@ -105,7 +106,7 @@ const main = async () => {
     const { code } = await run(process.execPath, [
       REMOTION_CLI,
       "still",
-      "Reel",
+      compositionFor(episode),
       out,
       `--frame=${f}`,
       `--props=${propsFile}`,

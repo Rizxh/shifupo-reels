@@ -8,6 +8,7 @@ import path from "node:path";
 import { parseArgs } from "node:util";
 import { REEL } from "../src/lib/timing";
 import {
+  compositionFor,
   loadEpisode,
   OUT_DIR,
   printProblems,
@@ -53,7 +54,7 @@ const main = async () => {
   const { code } = await run(process.execPath, [
     REMOTION_CLI,
     "render",
-    "Reel",
+    compositionFor(episode),
     output,
     `--props=${propsFile}`,
     "--codec=h264",

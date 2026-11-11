@@ -10,12 +10,12 @@ Sebelumnya: [07-ANIMASI.md](07-ANIMASI.md) · Kembali ke: [README](../../README.
 
 ```bash
 npm run check                         # test + lint + typecheck
-npm run produce -- <id> --draft       # render setengah ukuran + lembar frame
+npm run review -- <id>                # draft + lembar frame penting per scene + out/<id>_review.md
 npm run stills -- <id> <frame...> --scale 1   # crop 100% di frame penting
 npm run produce -- <id>               # final + laporan QA
 ```
 
-Ulangi draft → perbaiki → draft maksimal tiga putaran. Kalau masih gagal, berhenti dan laporkan apa yang gagal.
+Ulangi review → perbaiki → review maksimal tiga putaran, dan isi checklist serta temuan di `out/<id>_review.md` setiap putaran. Kalau masih gagal, berhenti dan laporkan apa yang gagal. Jangan pernah menyatakan render atau perbaikan berhasil sebelum melihat hasilnya.
 
 ## 2. Cek otomatis
 
@@ -50,6 +50,7 @@ Frame yang harus dilihat dalam ukuran penuh (`--scale 1`):
 | 8 | Warna | Ada warna di luar palet brand |
 | 9 | Ejaan | Typo atau kapitalisasi tidak konsisten (teks hanya dari JSON, perbaiki di sana) |
 | 10 | Konsistensi | Ukuran judul, jarak, dan posisi kicker sama di semua scene |
+| 11 | Sisa scene lama | Benda atau teks dari scene sebelumnya masih menimpa scene berikutnya setelah transisi |
 
 ## 4. Aturan presisi
 
