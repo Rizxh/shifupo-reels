@@ -11,3 +11,5 @@ Config.setRspack(true);
 Config.setVideoImageFormat("jpeg");
 Config.setOverwriteOutput(true);
 Config.setDefaultPremountInSeconds(2);
+// Live 3D worlds (React Three Fiber) need hardware WebGL in headless Chrome.
+Config.setChromiumOpenGlRenderer("angle");

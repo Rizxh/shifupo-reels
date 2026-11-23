@@ -10,9 +10,11 @@ import {
 import { Bamboo, InkMountains, Paper, Petals } from "../components/Background";
 import { InkSplash, inkBlotClip } from "../components/Fx";
 import { Caption } from "../components/Text";
-import { COLORS, INK_WIPE, SAFE_AREA, STAGE } from "../lib/brand";
+import { ATMOSPHERE, COLORS, INK_WIPE, SAFE_AREA, STAGE, VIDEO } from "../lib/brand";
 import { MIX } from "../lib/mix";
 import { cueFrame, type Beat } from "../lib/timeline";
+import { CONTINUITY } from "../core/timeline/continuity";
+import { LightRays, MistBands, Motes } from "../core/fx/atmosphere";
 import type { ReelProps, Scene } from "../schema";
 import {
   BaziScene,
@@ -40,7 +42,11 @@ const SceneBody: React.FC<{
   brand: ReelProps["brand"];
 }> = ({ scene, beat, brand }) => {
   const cue = (word: string) => cueFrame(beat, scene.vo, word);
-  const common = { start: beat.startFrame, end: beat.endFrame, cue };
+  // Entrances start before the ink wipe reveals the scene (core continuity
+  // rule): the wipe never opens on an empty stage, and the first scene is
+  // already moving at frame 0.
+  const preroll = beat.startFrame === 0 ? CONTINUITY.firstScenePreroll : CONTINUITY.entrancePreroll;
+  const common = { start: beat.startFrame - preroll, end: beat.endFrame, cue };
   switch (scene.type) {
     case "hook":
       return <HookScene scene={scene} {...common} />;
@@ -86,9 +92,13 @@ const World: React.FC<{ beats: Beat[]; scenes: Scene[] }> = ({
   return (
     <>
       <Paper />
+      <LightRays width={VIDEO.width} height={VIDEO.height} seed="world-rays" {...ATMOSPHERE.rays} />
+      <MistBands width={VIDEO.width} height={VIDEO.height} seed="mist-far" {...ATMOSPHERE.mistFar} />
       <InkMountains parallax={frame * 1.2} lift={lift} opacity={mountains} />
+      <MistBands width={VIDEO.width} height={VIDEO.height} seed="mist-near" {...ATMOSPHERE.mistNear} />
       <Bamboo opacity={0.9} />
       <Petals />
+      <Motes width={VIDEO.width} height={VIDEO.height} seed="world-motes" {...ATMOSPHERE.motes} />
     </>
   );
 };
@@ -136,10 +146,16 @@ export const Reel: React.FC<ReelProps> = ({ scenes, beats, brand, debug }) => {
               );
         const fadeOut = last
           ? 1
-          : interpolate(frame, [beat.endFrame, visibleUntil], [1, 0], {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-            });
+          : interpolate(
+              frame,
+              // Stays whole while the next scene's blot grows over it.
+              [beat.endFrame + INK_WIPE.frames * INK_WIPE.holdOutgoing, visibleUntil],
+              [1, 0],
+              {
+                extrapolateLeft: "clamp",
+                extrapolateRight: "clamp",
+              },
+            );
         return (
           <AbsoluteFill
             key={scene.type}

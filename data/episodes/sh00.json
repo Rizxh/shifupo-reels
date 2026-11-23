@@ -1,0 +1,199 @@
+{
+  "id": "sh00",
+  "format": "toon",
+  "title": "Preview Brand Shifu Po (toon)",
+  "series": "Preview",
+  "narration": {
+    "model": "eleven_multilingual_v2",
+    "stability": 0.4,
+    "similarity": 0.9,
+    "exaggeration": 0.35,
+    "speed": 1.1,
+    "tempo": 1.0,
+    "pad": 0.15
+  },
+  "scenes": [
+    {
+      "shot": "office",
+      "seconds": 3.9,
+      "vo": {
+        "text": "Bisnis Pak Hendra sepi tiga bulan, padahal promo jalan terus.",
+        "words": [
+          {
+            "w": "Bisnis",
+            "t": 0.1
+          },
+          {
+            "w": "Pak",
+            "t": 0.44
+          },
+          {
+            "w": "Hendra",
+            "t": 0.78
+          },
+          {
+            "w": "sepi",
+            "t": 1.12
+          },
+          {
+            "w": "tiga",
+            "t": 1.46
+          },
+          {
+            "w": "bulan,",
+            "t": 1.8
+          },
+          {
+            "w": "padahal",
+            "t": 2.14
+          },
+          {
+            "w": "promo",
+            "t": 2.48
+          },
+          {
+            "w": "jalan",
+            "t": 2.82
+          },
+          {
+            "w": "terus.",
+            "t": 3.16
+          }
+        ],
+        "seconds": 3.9
+      }
+    },
+    {
+      "shot": "studio",
+      "seconds": 4.58,
+      "vo": {
+        "text": "Shifu Po membaca BaZi dan feng shui kantornya. Ternyata mejanya membelakangi pintu.",
+        "words": [
+          {
+            "w": "Shifu",
+            "t": 0.1
+          },
+          {
+            "w": "Po",
+            "t": 0.44
+          },
+          {
+            "w": "membaca",
+            "t": 0.78
+          },
+          {
+            "w": "BaZi",
+            "t": 1.12
+          },
+          {
+            "w": "dan",
+            "t": 1.46
+          },
+          {
+            "w": "feng",
+            "t": 1.8
+          },
+          {
+            "w": "shui",
+            "t": 2.14
+          },
+          {
+            "w": "kantornya.",
+            "t": 2.48
+          },
+          {
+            "w": "Ternyata",
+            "t": 2.82
+          },
+          {
+            "w": "mejanya",
+            "t": 3.16
+          },
+          {
+            "w": "membelakangi",
+            "t": 3.5
+          },
+          {
+            "w": "pintu.",
+            "t": 3.84
+          }
+        ],
+        "seconds": 4.58
+      }
+    },
+    {
+      "shot": "front",
+      "seconds": 4.24,
+      "vo": {
+        "text": "Mau bisnis Anda kembali lancar? Konsultasi via WhatsApp dengan Shifu Po.",
+        "words": [
+          {
+            "w": "Mau",
+            "t": 0.1
+          },
+          {
+            "w": "bisnis",
+            "t": 0.44
+          },
+          {
+            "w": "Anda",
+            "t": 0.78
+          },
+          {
+            "w": "kembali",
+            "t": 1.12
+          },
+          {
+            "w": "lancar?",
+            "t": 1.46
+          },
+          {
+            "w": "Konsultasi",
+            "t": 1.8
+          },
+          {
+            "w": "via",
+            "t": 2.14
+          },
+          {
+            "w": "WhatsApp",
+            "t": 2.48
+          },
+          {
+            "w": "dengan",
+            "t": 2.82
+          },
+          {
+            "w": "Shifu",
+            "t": 3.16
+          },
+          {
+            "w": "Po.",
+            "t": 3.5
+          }
+        ],
+        "seconds": 4.24
+      }
+    }
+  ],
+  "captionHighlight": [
+    "sepi",
+    "BaZi",
+    "feng",
+    "shui",
+    "membelakangi",
+    "pintu",
+    "lancar",
+    "Shifu"
+  ],
+  "cta": {
+    "line": "Biar bisnis kembali lancar",
+    "line2": "bersama Shifu Po",
+    "eyebrow": "BISNIS SEPI TANPA SEBAB?",
+    "at": "konsultasi"
+  },
+  "claims": [],
+  "post": {
+    "caption": "Preview brand (tanpa suara)."
+  }
+}

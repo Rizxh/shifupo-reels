@@ -1,0 +1,279 @@
+{
+  "id": "sp08",
+  "format": "quiz",
+  "title": "Kuis Feng Shui Rumah",
+  "host": "goat",
+  "countdownLabel": "JAWAB!",
+  "brand": {
+    "name": "SHIFU PO",
+    "descriptor": "BUSINESS, LOVE & LIFE",
+    "sealGlyph": "風",
+    "handle": null,
+    "logo": "assets/brand/logo-shifupo-red.png"
+  },
+  "claims": [
+    {
+      "text": "Dalam feng shui populer, cermin yang menghadap pintu depan dipercaya memantulkan energi/rezeki keluar",
+      "reviewed": false
+    },
+    {
+      "text": "Tempat tidur dengan kaki lurus ke arah pintu dianjurkan untuk dihindari; kepala bersandar ke dinding solid",
+      "reviewed": false
+    },
+    {
+      "text": "Tanaman hidup yang terawat dianggap membawa energi segar; tanaman mati/kering sebaiknya disingkirkan",
+      "reviewed": false
+    }
+  ],
+  "scenes": [
+    {
+      "type": "hook",
+      "vo": "Kuis feng shui rumah! Bisa jawab tiga soal?",
+      "voHighlight": [
+        "tiga soal?"
+      ],
+      "tone": "excited",
+      "kicker": "RUMAH ANDA",
+      "lines": [
+        {
+          "text": "KUIS FENG SHUI",
+          "cueWord": "Kuis",
+          "accent": "SHUI"
+        }
+      ],
+      "sfx": [
+        {
+          "sound": "chime1",
+          "cueWord": "tiga"
+        }
+      ],
+      "mood": "wow"
+    },
+    {
+      "type": "ask",
+      "vo": "Cermin sebaiknya di mana? A, menghadap pintu. B, di samping pintu.",
+      "voHighlight": [
+        "Cermin"
+      ],
+      "tone": "curious",
+      "kicker": "SOAL 1/3",
+      "question": "Cermin sebaiknya dipasang di mana?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Menghadap pintu depan",
+          "prop": "mirror-door",
+          "cueWord": "A,"
+        },
+        {
+          "key": "B",
+          "text": "Di samping pintu",
+          "prop": "mirror-side",
+          "cueWord": "B,"
+        }
+      ],
+      "holdSeconds": 2.2,
+      "sfx": [
+        {
+          "sound": "pop",
+          "cueWord": "A,"
+        },
+        {
+          "sound": "pop",
+          "cueWord": "B,"
+        }
+      ]
+    },
+    {
+      "type": "reveal",
+      "vo": "Jawabannya B. Cermin menghadap pintu memantulkan rezeki keluar.",
+      "voHighlight": [
+        "memantulkan rezeki"
+      ],
+      "tone": "warm",
+      "lines": [
+        {
+          "text": "REZEKI MEMANTUL",
+          "cueWord": "memantulkan",
+          "accent": "MEMANTUL"
+        }
+      ],
+      "answer": "B",
+      "stamp": {
+        "text": "BENAR!",
+        "cueWord": "Jawabannya"
+      },
+      "mood": "happy",
+      "sfx": [
+        {
+          "sound": "stamp",
+          "cueWord": "Jawabannya"
+        }
+      ]
+    },
+    {
+      "type": "ask",
+      "vo": "Tempat tidur yang dianjurkan? A, kaki ke arah pintu. B, kepala ke dinding.",
+      "voHighlight": [
+        "Tempat tidur"
+      ],
+      "tone": "curious",
+      "kicker": "SOAL 2/3",
+      "question": "Posisi tempat tidur yang dianjurkan?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Kaki lurus ke pintu",
+          "prop": "bed-door",
+          "cueWord": "A,"
+        },
+        {
+          "key": "B",
+          "text": "Kepala ke dinding",
+          "prop": "bed-wall",
+          "cueWord": "B,"
+        }
+      ],
+      "holdSeconds": 2.2,
+      "sfx": [
+        {
+          "sound": "pop",
+          "cueWord": "A,"
+        },
+        {
+          "sound": "pop",
+          "cueWord": "B,"
+        }
+      ]
+    },
+    {
+      "type": "reveal",
+      "vo": "Jawabannya B. Kepala bersandar ke dinding, tidur lebih tenang.",
+      "voHighlight": [
+        "lebih tenang."
+      ],
+      "tone": "thoughtful",
+      "lines": [
+        {
+          "text": "KEPALA KE DINDING",
+          "cueWord": "bersandar",
+          "accent": "DINDING"
+        }
+      ],
+      "answer": "B",
+      "stamp": {
+        "text": "BENAR!",
+        "cueWord": "Jawabannya"
+      },
+      "mood": "wink",
+      "sfx": [
+        {
+          "sound": "stamp",
+          "cueWord": "Jawabannya"
+        }
+      ]
+    },
+    {
+      "type": "ask",
+      "vo": "Tanaman di rumah sebaiknya? A, hidup dan terawat. B, kering sebagai hiasan.",
+      "voHighlight": [
+        "Tanaman"
+      ],
+      "tone": "curious",
+      "kicker": "SOAL 3/3",
+      "question": "Tanaman di dalam rumah sebaiknya?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Tanaman hidup terawat",
+          "prop": "plant-alive",
+          "cueWord": "A,"
+        },
+        {
+          "key": "B",
+          "text": "Tanaman kering",
+          "prop": "plant-dry",
+          "cueWord": "B,"
+        }
+      ],
+      "holdSeconds": 2.2,
+      "sfx": [
+        {
+          "sound": "pop",
+          "cueWord": "A,"
+        },
+        {
+          "sound": "pop",
+          "cueWord": "B,"
+        }
+      ]
+    },
+    {
+      "type": "reveal",
+      "vo": "Jawabannya A. Tanaman hidup membawa energi segar.",
+      "voHighlight": [
+        "energi segar."
+      ],
+      "tone": "excited",
+      "lines": [
+        {
+          "text": "ENERGI SEGAR",
+          "cueWord": "energi",
+          "accent": "SEGAR"
+        }
+      ],
+      "answer": "A",
+      "stamp": {
+        "text": "BENAR!",
+        "cueWord": "Jawabannya"
+      },
+      "mood": "happy",
+      "sfx": [
+        {
+          "sound": "stamp",
+          "cueWord": "Jawabannya"
+        }
+      ]
+    },
+    {
+      "type": "score",
+      "vo": "Berapa skor Anda? Tulis di kolom komentar!",
+      "voHighlight": [
+        "kolom komentar!"
+      ],
+      "tone": "playful",
+      "lines": [
+        {
+          "text": "SKOR ANDA?",
+          "cueWord": "skor",
+          "accent": "ANDA?"
+        }
+      ],
+      "sfx": [
+        {
+          "sound": "pop",
+          "cueWord": "komentar!"
+        }
+      ],
+      "mood": "wink"
+    },
+    {
+      "type": "cta",
+      "vo": "Mau rumah Anda dicek langsung? Konsultasi via WhatsApp.",
+      "voHighlight": [
+        "WhatsApp."
+      ],
+      "tone": "warm",
+      "sfx": [
+        {
+          "sound": "stamp",
+          "cueWord": "Konsultasi"
+        }
+      ],
+      "button": {
+        "text": "Konsultasi via WhatsApp",
+        "cueWord": "WhatsApp."
+      }
+    }
+  ]
+}

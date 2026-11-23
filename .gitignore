@@ -14,3 +14,9 @@ out-*.log
 # Generated voice over (regenerate with `npm run tts -- <id>`).
 public/audio/sp*/
 .whisper/
+
+# Golden-frame references for refactors (local only, see scripts/golden.ts).
+tests/golden/
+
+# Rendered 3D frame sequences (regenerate with npm run render3d).
+public/assets/3d/**/frame_*.png

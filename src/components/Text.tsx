@@ -7,7 +7,11 @@ import {
   SAFE_AREA,
   TYPE,
 } from "../lib/brand";
+import { squashOnImpact, stretchFromSpeed } from "../core/motion/acting";
 import { EASE, prog, springAt, SPRING } from "../lib/motion";
+
+// Peak blur (px) of a slam line at the first frame, fading as it lands.
+const SLAM_SMEAR_PX = 9;
 import {
   highlightMask,
   normalizeWord,
@@ -27,6 +31,8 @@ export const HeadlineLine: React.FC<{
   accent?: string;
   variant?: "rise" | "slam";
   color?: string;
+  // Accent word colour (default gold; parade uses seal red on peach).
+  accentColor?: string;
 }> = ({
   text,
   cue,
@@ -35,6 +41,7 @@ export const HeadlineLine: React.FC<{
   accent,
   variant = "rise",
   color = COLORS.ink,
+  accentColor = COLORS.goldDeep,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -46,6 +53,21 @@ export const HeadlineLine: React.FC<{
   const slam =
     variant === "slam" ? springAt(frame, start, fps, SPRING.snap) : 1;
   const scale = variant === "slam" ? interpolate(slam, [0, 1], [1.45, 1]) : 1;
+  // Slam acting (core/motion/acting): stretched and smeared while it flies in,
+  // squashed for a few frames when it lands, then settled.
+  let squash: [number, number] = [1, 1];
+  let smear = 0;
+  if (variant === "slam") {
+    let land = Infinity;
+    for (let f = start; f < start + 30; f++) {
+      if (springAt(f, start, fps, SPRING.snap) >= 1) {
+        land = f;
+        break;
+      }
+    }
+    squash = frame < land ? stretchFromSpeed((1 - slam) * 30, 0.01, 0.25) : squashOnImpact(frame - land, 0.9, 9);
+    smear = frame < land ? (1 - slam) * SLAM_SMEAR_PX : 0;
+  }
   const accentNorm = accent ? normalizeWord(accent) : null;
   let letterIndex = 0;
   return (
@@ -61,8 +83,9 @@ export const HeadlineLine: React.FC<{
         letterSpacing: HEADLINE.letterSpacing,
         color,
         textShadow: HEADLINE.shadow,
-        transform: `scale(${scale}) translateY(${-exit * 30}px)`,
+        transform: `scale(${scale * squash[0]}, ${scale * squash[1]}) translateY(${-exit * 30}px)`,
         transformOrigin: "0% 50%",
+        filter: smear > 0.3 ? `blur(${smear.toFixed(2)}px)` : undefined,
         opacity: (variant === "slam" ? Math.min(1, slam * 3) : 1) * (1 - exit),
       }}
     >
@@ -92,7 +115,7 @@ export const HeadlineLine: React.FC<{
                   key={c}
                   style={{
                     display: "inline-block",
-                    color: isAccent ? COLORS.goldDeep : undefined,
+                    color: isAccent ? accentColor : undefined,
                     transform:
                       variant === "rise"
                         ? `translateY(${(1 - t) * 0.5}em)`

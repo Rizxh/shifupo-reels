@@ -9,7 +9,7 @@
 // Without a .env (no ElevenLabs key yet) the reel is produced without voice
 // over on estimated timing, and the report says so.
 
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { parseArgs } from "node:util";
 import { z } from "zod";
@@ -17,12 +17,12 @@ import { voAudioPath } from "../src/lib/audio";
 import { LOUDNESS_TARGET } from "../src/lib/mix";
 import { SFX } from "../src/lib/sfx";
 import { splitWords } from "../src/lib/text";
-import { REEL } from "../src/lib/timing";
+import { reelLimits } from "../src/lib/timing";
+import { isVoiced } from "../src/schema";
 import {
   formatMb,
   loadEpisode,
   missingElevenLabsVars,
-  OUT_DIR,
   probeMedia,
   PUBLIC_DIR,
   rel,
@@ -33,6 +33,7 @@ import {
   runMain,
   ScriptError,
 } from "./lib/common";
+import { finalVideoPath, OUT, outPaths } from "./lib/paths";
 import { measureLoudness } from "./lib/loudness";
 import { checkVo } from "./lib/voCheck";
 
@@ -97,10 +98,14 @@ const main = async () => {
   // Only whether the ElevenLabs variables are filled in; values never print.
   const hasKey = missingElevenLabsVars().length === 0;
 
-  if (hasKey && wanted("tts")) await script("scripts/tts.ts", [id]);
-  const voiced = episode.scenes.every((_, i) =>
-    existsSync(path.join(PUBLIC_DIR, voAudioPath(id, i))),
-  );
+  // A music video has no voice over: TTS, VO levels and whisper skip it.
+  const speaks = isVoiced(episode);
+  if (speaks && hasKey && wanted("tts")) await script("scripts/tts.ts", [id]);
+  const voiced =
+    speaks &&
+    episode.scenes.every((_, i) =>
+      existsSync(path.join(PUBLIC_DIR, voAudioPath(id, i))),
+    );
   if (voiced && wanted("vo-level")) await script("scripts/vo-level.ts", [id]);
   if (
     wanted("sfx") &&
@@ -118,8 +123,9 @@ const main = async () => {
   if (!draft && wanted("postprocess"))
     await script("scripts/postprocess.ts", [id]);
 
-  const rendered = path.join(OUT_DIR, `${id}${draft ? "_draft" : ""}.mp4`);
-  const final = draft ? rendered : path.join(OUT_DIR, `${id}_final.mp4`);
+  const rendered = outPaths(id, draft).rendered;
+  const final = draft ? rendered : finalVideoPath(id, episode.title);
+  mkdirSync(OUT.qc, { recursive: true });
   console.log(`\n> QA ${rel(final)}`);
   if (!existsSync(final)) {
     throw new ScriptError(`${rel(final)} not found`);
@@ -129,8 +135,8 @@ const main = async () => {
   if (!draft) {
     problems.push(
       ...reportMedia("Final", final, info, {
-        min: REEL.minSeconds,
-        max: REEL.maxSeconds,
+        min: reelLimits(episode.format).minSeconds,
+        max: reelLimits(episode.format).maxSeconds,
       }),
     );
   }
@@ -151,8 +157,8 @@ const main = async () => {
     }
   }
   let vo: { ratio: number; missing: string[] } | null = null;
-  if (voiced && !draft && wanted("verify")) {
-    const transcript = path.join(OUT_DIR, `${id}.transcript.json`);
+  if (voiced && isVoiced(episode) && !draft && wanted("verify")) {
+    const transcript = outPaths(id).transcript;
     await script("scripts/transcribe.ts", [
       final,
       "--out",
@@ -174,7 +180,7 @@ const main = async () => {
     }
   }
 
-  const sheet = path.join(OUT_DIR, `${id}${draft ? "_draft" : ""}_sheet.jpg`);
+  const sheet = outPaths(id, draft).sheet;
   const rows = Math.ceil(info.durationInSeconds / SHEET_COLUMNS);
   const { code } = await run(
     "ffmpeg",
@@ -197,7 +203,7 @@ const main = async () => {
     problems.push("could not write the frame sheet");
   }
 
-  const report = path.join(OUT_DIR, `${id}${draft ? "_draft" : ""}_report.md`);
+  const report = outPaths(id, draft).report;
   const lines = [
     `# Laporan QA: ${path.basename(final)}`,
     "",
@@ -209,7 +215,9 @@ const main = async () => {
       ? vo
         ? `- Naskah vs suara (whisper): ${(vo.ratio * 100).toFixed(0)}% kata terdengar berurutan${vo.missing.length ? `; tidak terdengar: ${vo.missing.join(", ")}` : ""}`
         : "- Naskah vs suara: tidak dicek (draft)"
-      : "- VO: belum ada (isi .env dengan kunci dan voice ElevenLabs, lalu jalankan ulang). Timing memakai perkiraan.",
+      : isVoiced(episode)
+        ? "- VO: belum ada (isi .env dengan kunci dan voice ElevenLabs, lalu jalankan ulang). Timing memakai perkiraan."
+        : "- Musik video: tanpa VO; durasi dari tabel lirik.",
     `- Lembar frame: ${rel(sheet)}`,
     "",
     problems.length === 0

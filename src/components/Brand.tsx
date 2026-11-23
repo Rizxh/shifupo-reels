@@ -9,7 +9,11 @@ export const LogoPlate: React.FC<{
   glyph: string;
   name: string;
   descriptor: string;
-}> = ({ start, glyph, name, descriptor }) => {
+  // "paper": light lettering for dark or busy backgrounds (cinema CTA).
+  tone?: "ink" | "paper";
+}> = ({ start, glyph, name, descriptor, tone = "ink" }) => {
+  const onDark = tone === "paper";
+  const lift = onDark ? "0 2px 18px rgba(10,7,5,0.85)" : undefined;
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const r = LOGO.sealRadius;
@@ -76,7 +80,8 @@ export const LogoPlate: React.FC<{
             fontWeight: 900,
             fontSize: TYPE.logoName,
             letterSpacing: "0.08em",
-            color: COLORS.ink,
+            color: onDark ? COLORS.paper : COLORS.ink,
+            textShadow: lift,
             lineHeight: 1,
           }}
         >
@@ -88,7 +93,8 @@ export const LogoPlate: React.FC<{
             fontWeight: 800,
             fontSize: TYPE.logoSub,
             letterSpacing: "0.42em",
-            color: COLORS.goldDeep,
+            color: onDark ? COLORS.goldLight : COLORS.goldDeep,
+            textShadow: lift,
             marginTop: 10,
           }}
         >

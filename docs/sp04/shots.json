@@ -1,0 +1,56 @@
+{
+  "fps": 30,
+  "tail": 14,
+  "total": 897,
+  "shots": [
+    {
+      "name": "sp04-hook",
+      "beat": "hook",
+      "start": 0,
+      "end": 152,
+      "frames": 166
+    },
+    {
+      "name": "sp04-context",
+      "beat": "context",
+      "start": 152,
+      "end": 233,
+      "frames": 95
+    },
+    {
+      "name": "sp04-cause",
+      "beat": "cause",
+      "start": 233,
+      "end": 396,
+      "frames": 177
+    },
+    {
+      "name": "sp04-effect",
+      "beat": "effect",
+      "start": 396,
+      "end": 530,
+      "frames": 148
+    },
+    {
+      "name": "sp04-fix",
+      "beat": "fix",
+      "start": 530,
+      "end": 652,
+      "frames": 136
+    },
+    {
+      "name": "sp04-payoff",
+      "beat": "payoff",
+      "start": 652,
+      "end": 771,
+      "frames": 133
+    },
+    {
+      "name": "sp04-cta",
+      "beat": "cta",
+      "start": 771,
+      "end": 897,
+      "frames": 126
+    }
+  ]
+}

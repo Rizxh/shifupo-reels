@@ -82,9 +82,9 @@ npm run produce -- sp01
 
 Hasilnya:
 
-- `out/sp01_final.mp4`: video siap unggah
-- `out/sp01_report.md`: laporan QA (durasi, ukuran, loudness, cek VO dengan whisper)
-- `out/sp01_sheet.jpg`: lembar frame untuk dicek sekilas
+- `out/video/sp01 - <judul>.mp4`: video siap unggah
+- `out/qc/sp01_report.md`: laporan QA (durasi, ukuran, loudness, cek VO dengan whisper)
+- `out/qc/sp01_sheet.jpg`: lembar frame untuk dicek sekilas
 
 ---
 
@@ -104,7 +104,7 @@ Hasilnya:
 | `npm run postprocess -- <id>` | Normalisasi loudness dan kompres sampai ≤ 30 MB |
 | `npm run stills -- <id> 40 165 385 --scale 1` | Render frame tertentu dalam ukuran penuh untuk dicek |
 | `npm run stills -- <id> --every 15` | Lembar frame tiap 15 frame |
-| `npm run review -- <id> [--no-render]` | Review visual: render draft, lalu lembar frame penting per scene (awal, transisi, setiap kata cue, akhir) + catatan checklist di `out/<id>_review.md` |
+| `npm run review -- <id> [--no-render]` | Review visual: render draft, lalu lembar frame penting per scene (awal, transisi, setiap kata cue, akhir) + catatan checklist di `out/review/<id>_review.md` |
 | `npm run skills:update` | Pasang / perbarui skill resmi Remotion untuk Claude Code (`.claude/skills/remotion-best-practices`) |
 | `npm run transcribe -- <video>` | Transkrip lokal dengan whisper (model diunduh sekali ke `.whisper/`) |
 | `npm test` | Validasi episode (cue, angka, highlight) dan test pipeline |
@@ -189,6 +189,13 @@ shifupo-reels/
 │  └─ schema.ts             Validasi episode
 ├─ tests/                   Test episode dan pipeline
 └─ out/                     Hasil render (tidak ikut ke Git)
+   ├─ video/                Video jadi: "<id> - <judul>.mp4"
+   ├─ produce/              Render mentah, draft, potongan render, log
+   ├─ review/               Catatan + lembar review per episode
+   ├─ qc/                   Laporan QA, frame sheet, transkrip whisper
+   ├─ look/                 Stills dan lembar lookdev
+   ├─ sound/                Take VO dan eksperimen audio
+   └─ archive/              Bahan lama
 ```
 
 ---

@@ -1,0 +1,621 @@
+{
+  "id": "sp07",
+  "product": "shifupo",
+  "prompt": "part 2 ramalan shio 2027, 2D kartun kertas lucu gaya Motion Format, lebih panjang",
+  "brief": {
+    "viewer": "Keluarga dan pemilik usaha yang menyiapkan Imlek 2027",
+    "problem": "Ingin tahu nasib tiap shio di tahun Kambing Api dengan jelas, bukan potongan",
+    "promise": "Semua 12 shio dibahas dalam satu menit: siapa hoki, stabil, dan perlu hati-hati",
+    "format": "2D kartun kertas: 12 karakter shio lucu, palet ceria, ±55 detik"
+  },
+  "targetSeconds": {
+    "min": 42,
+    "max": 62
+  },
+  "beats": [
+    {
+      "beat": "hook",
+      "feeling": "seru",
+      "shot": {
+        "camera": "push-in",
+        "subject": "12 karakter shio lucu",
+        "action": "semua karakter melompat masuk satu per satu dan mendarat dengan pantulan",
+        "secondary": [
+          "kedip mata",
+          "lentera berayun",
+          "petasan meletup"
+        ]
+      },
+      "environment": {
+        "setting": "panggung kertas Imlek ceria",
+        "layers": [
+          "langit kertas gradasi koral-krem dengan awan kertas",
+          "barisan 12 karakter shio di atas tanah kertas",
+          "lentera, petasan dan koin di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "petals"
+        ],
+        "lighting": {
+          "key": "cahaya hangat dari kiri atas",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "karakter shio",
+          "law": "gravity-bounce",
+          "note": "lompat, memipih saat mendarat"
+        },
+        {
+          "object": "lentera",
+          "law": "pendulum"
+        }
+      ],
+      "vo": {
+        "text": "Ramalan dua belas shio di tahun Kambing Api!",
+        "tone": "excited",
+        "cueWords": [
+          "shio"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "awal",
+          "sound": "pop beruntun"
+        },
+        {
+          "at": "shio",
+          "sound": "gong"
+        }
+      ],
+      "assets": [
+        {
+          "name": "12 karakter shio kertas (SVG)",
+          "tier": "hero",
+          "isNew": true
+        }
+      ],
+      "handoff": {
+        "object": "barisan karakter",
+        "into": "kamera mundur melihat dua baris"
+      },
+      "onScreenText": "12 SHIO 2027"
+    },
+    {
+      "beat": "context",
+      "feeling": "penasaran",
+      "shot": {
+        "camera": "pull-back",
+        "subject": "barisan dua baris karakter",
+        "action": "kamera mundur, semua karakter menoleh ke kamera",
+        "secondary": [
+          "kedip",
+          "ekor bergoyang"
+        ]
+      },
+      "environment": {
+        "setting": "panggung kertas Imlek ceria",
+        "layers": [
+          "langit kertas gradasi koral-krem dengan awan kertas",
+          "barisan 12 karakter shio di atas tanah kertas",
+          "lentera, petasan dan koin di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "petals"
+        ],
+        "lighting": {
+          "key": "cahaya hangat dari kiri atas",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "ekor",
+          "law": "wind-sway"
+        }
+      ],
+      "vo": {
+        "text": "Kita cek satu per satu, mulai yang paling hoki.",
+        "tone": "curious",
+        "cueWords": [
+          "hoki"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "hoki",
+          "sound": "chime"
+        }
+      ],
+      "assets": [
+        {
+          "name": "panah tulisan tangan (SVG)",
+          "tier": "support",
+          "isNew": true
+        }
+      ],
+      "handoff": {
+        "object": "panah tangan",
+        "into": "zoom ke Babi dan Kelinci"
+      }
+    },
+    {
+      "beat": "cause",
+      "feeling": "senang",
+      "shot": {
+        "camera": "dolly-in",
+        "subject": "Babi dan Kelinci",
+        "action": "keduanya melompat ke depan, stempel HOKI BESAR menghantam, koin berhamburan",
+        "secondary": [
+          "koin berputar",
+          "pipi merona"
+        ]
+      },
+      "environment": {
+        "setting": "panggung kertas Imlek ceria",
+        "layers": [
+          "langit kertas gradasi koral-krem dengan awan kertas",
+          "barisan 12 karakter shio di atas tanah kertas",
+          "lentera, petasan dan koin di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "petals"
+        ],
+        "lighting": {
+          "key": "cahaya hangat dari kiri atas",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "Babi dan Kelinci",
+          "law": "gravity-bounce",
+          "note": "lompat, memipih saat mendarat"
+        },
+        {
+          "object": "koin",
+          "law": "projectile"
+        }
+      ],
+      "vo": {
+        "text": "Babi dan Kelinci satu segitiga dengan Kambing. Peluang dan rezeki terbuka lebar.",
+        "tone": "excited",
+        "cueWords": [
+          "Babi",
+          "Kelinci",
+          "rezeki"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "Babi",
+          "sound": "pop"
+        },
+        {
+          "at": "Kelinci",
+          "sound": "pop"
+        },
+        {
+          "at": "rezeki",
+          "sound": "koin"
+        }
+      ],
+      "assets": [
+        {
+          "name": "stempel HOKI BESAR",
+          "tier": "support",
+          "isNew": true
+        }
+      ],
+      "handoff": {
+        "object": "koin emas",
+        "into": "koin mendarat di dekat Kuda"
+      },
+      "onScreenText": "HOKI BESAR"
+    },
+    {
+      "beat": "effect",
+      "feeling": "hangat",
+      "shot": {
+        "camera": "orbit",
+        "subject": "Kuda dan Kambing",
+        "action": "Kuda berlari kecil ke Kambing, hati kertas muncul di antara mereka",
+        "secondary": [
+          "hati berdenyut",
+          "surai bergoyang"
+        ]
+      },
+      "environment": {
+        "setting": "panggung kertas Imlek ceria",
+        "layers": [
+          "langit kertas gradasi koral-krem dengan awan kertas",
+          "barisan 12 karakter shio di atas tanah kertas",
+          "lentera, petasan dan koin di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "petals"
+        ],
+        "lighting": {
+          "key": "cahaya hangat dari kiri atas",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "Kuda",
+          "law": "sliding-friction"
+        },
+        {
+          "object": "hati",
+          "law": "spring-settle"
+        }
+      ],
+      "vo": {
+        "text": "Kuda, sahabat rahasia Kambing. Relasi dan kerja sama membawa untung.",
+        "tone": "warm",
+        "cueWords": [
+          "Kuda",
+          "untung"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "Kuda",
+          "sound": "pop"
+        },
+        {
+          "at": "untung",
+          "sound": "chime"
+        }
+      ],
+      "assets": [
+        {
+          "name": "hati kertas",
+          "tier": "support",
+          "isNew": true
+        }
+      ],
+      "handoff": {
+        "object": "hati kertas",
+        "into": "hati pecah jadi bintang di atas lima shio"
+      },
+      "onScreenText": "SAHABAT"
+    },
+    {
+      "beat": "context",
+      "feeling": "tenang",
+      "shot": {
+        "camera": "tracking",
+        "subject": "Macan, Naga, Ular, Monyet, Ayam",
+        "action": "kamera menyusuri barisan, tiap shio mengangguk saat namanya disebut, stempel STABIL",
+        "secondary": [
+          "celengan kertas bergoyang"
+        ]
+      },
+      "environment": {
+        "setting": "panggung kertas Imlek ceria",
+        "layers": [
+          "langit kertas gradasi koral-krem dengan awan kertas",
+          "barisan 12 karakter shio di atas tanah kertas",
+          "lentera, petasan dan koin di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "petals"
+        ],
+        "lighting": {
+          "key": "cahaya hangat dari kiri atas",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "lima shio",
+          "law": "gravity-bounce",
+          "note": "lompat, memipih saat mendarat"
+        },
+        {
+          "object": "celengan",
+          "law": "spring-settle"
+        }
+      ],
+      "vo": {
+        "text": "Macan, Naga, Ular, Monyet, dan Ayam cenderung stabil. Pas untuk menabung dan menata rencana.",
+        "tone": "calm",
+        "cueWords": [
+          "Macan",
+          "Naga",
+          "Ular",
+          "Monyet",
+          "Ayam",
+          "stabil"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "Macan",
+          "sound": "tick"
+        },
+        {
+          "at": "stabil",
+          "sound": "stamp"
+        }
+      ],
+      "assets": [
+        {
+          "name": "celengan kertas",
+          "tier": "support",
+          "isNew": true
+        }
+      ],
+      "handoff": {
+        "object": "celengan",
+        "into": "Kambing di tengah"
+      },
+      "onScreenText": "STABIL"
+    },
+    {
+      "beat": "fix",
+      "feeling": "peduli",
+      "shot": {
+        "camera": "push-in",
+        "subject": "Kambing sendiri",
+        "action": "Kambing maju ke tengah, plester hati dan termometer kecil muncul, stempel TAHUN SENDIRI",
+        "secondary": [
+          "Kambing mengangguk pelan"
+        ]
+      },
+      "environment": {
+        "setting": "panggung kertas Imlek ceria",
+        "layers": [
+          "langit kertas gradasi koral-krem dengan awan kertas",
+          "barisan 12 karakter shio di atas tanah kertas",
+          "lentera, petasan dan koin di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "petals"
+        ],
+        "lighting": {
+          "key": "cahaya hangat dari kiri atas",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "Kambing",
+          "law": "spring-settle"
+        }
+      ],
+      "vo": {
+        "text": "Kambing sendiri sedang di tahun shionya. Jaga kesehatan dan jangan gegabah.",
+        "tone": "thoughtful",
+        "cueWords": [
+          "sendiri",
+          "kesehatan"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "sendiri",
+          "sound": "chime"
+        },
+        {
+          "at": "kesehatan",
+          "sound": "pop"
+        }
+      ],
+      "assets": [
+        {
+          "name": "ikon kesehatan kertas",
+          "tier": "support",
+          "isNew": true
+        }
+      ],
+      "handoff": {
+        "object": "Kambing mundur",
+        "into": "Kerbau, Anjing, Tikus maju"
+      },
+      "onScreenText": "TAHUN SENDIRI"
+    },
+    {
+      "beat": "fix",
+      "feeling": "waspada",
+      "shot": {
+        "camera": "whip-pan",
+        "subject": "Kerbau, Anjing, Tikus",
+        "action": "Kerbau dan Kambing saling berhadapan, tanda seru merah melompat di atas tiga shio",
+        "secondary": [
+          "keringat kecil menetes"
+        ]
+      },
+      "environment": {
+        "setting": "panggung kertas Imlek ceria",
+        "layers": [
+          "langit kertas gradasi koral-krem dengan awan kertas",
+          "barisan 12 karakter shio di atas tanah kertas",
+          "lentera, petasan dan koin di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "petals"
+        ],
+        "lighting": {
+          "key": "cahaya hangat dari kiri atas",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "tiga shio",
+          "law": "gravity-bounce",
+          "note": "lompat, memipih saat mendarat"
+        },
+        {
+          "object": "tanda seru",
+          "law": "spring-settle"
+        }
+      ],
+      "vo": {
+        "text": "Kerbau berhadapan langsung. Anjing dan Tikus juga perlu lebih teliti.",
+        "tone": "serious",
+        "cueWords": [
+          "Kerbau",
+          "Anjing",
+          "Tikus",
+          "teliti"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "Kerbau",
+          "sound": "thump"
+        },
+        {
+          "at": "teliti",
+          "sound": "stamp"
+        }
+      ],
+      "assets": [
+        {
+          "name": "tanda seru kertas",
+          "tier": "support",
+          "isNew": true
+        }
+      ],
+      "handoff": {
+        "object": "tanda seru",
+        "into": "berubah jadi pilar"
+      },
+      "onScreenText": "HATI-HATI"
+    },
+    {
+      "beat": "payoff",
+      "feeling": "tercerahkan",
+      "shot": {
+        "camera": "crane-up",
+        "subject": "empat pilar BaZi",
+        "action": "empat pilar kertas tumbuh, Kambing duduk di pilar tahun",
+        "secondary": [
+          "bintang berkelip"
+        ]
+      },
+      "environment": {
+        "setting": "panggung kertas Imlek ceria",
+        "layers": [
+          "langit kertas gradasi koral-krem dengan awan kertas",
+          "barisan 12 karakter shio di atas tanah kertas",
+          "lentera, petasan dan koin di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "petals"
+        ],
+        "lighting": {
+          "key": "cahaya hangat dari kiri atas",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "pilar",
+          "law": "spring-settle"
+        }
+      ],
+      "vo": {
+        "text": "Ingat, shio hanya satu dari empat pilar BaZi Anda.",
+        "tone": "calm",
+        "cueWords": [
+          "empat"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "empat",
+          "sound": "lock"
+        }
+      ],
+      "assets": [
+        {
+          "name": "pilar kertas",
+          "tier": "support",
+          "isNew": true
+        }
+      ],
+      "handoff": {
+        "object": "pilar",
+        "into": "logo Shifu Po"
+      },
+      "onScreenText": "4 PILAR BAZI"
+    },
+    {
+      "beat": "cta",
+      "feeling": "percaya",
+      "shot": {
+        "camera": "dolly-in",
+        "subject": "logo Shifu Po dan tombol WhatsApp",
+        "action": "logo menyegel, 12 karakter melambai di bawah",
+        "secondary": [
+          "karakter melompat kecil"
+        ]
+      },
+      "environment": {
+        "setting": "panggung kertas Imlek ceria",
+        "layers": [
+          "langit kertas gradasi koral-krem dengan awan kertas",
+          "barisan 12 karakter shio di atas tanah kertas",
+          "lentera, petasan dan koin di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "petals"
+        ],
+        "lighting": {
+          "key": "cahaya hangat dari kiri atas",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "karakter",
+          "law": "gravity-bounce",
+          "note": "lompat, memipih saat mendarat"
+        }
+      ],
+      "vo": {
+        "text": "Mau tahu peruntungan lengkap Anda? Konsultasi via WhatsApp.",
+        "tone": "warm",
+        "cueWords": [
+          "WhatsApp"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "Konsultasi",
+          "sound": "stamp"
+        }
+      ],
+      "assets": [
+        {
+          "name": "logo resmi Shifu Po",
+          "tier": "hero",
+          "isNew": false
+        }
+      ]
+    }
+  ]
+}

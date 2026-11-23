@@ -1,0 +1,185 @@
+{
+  "id": "sp05",
+  "product": "shifupo",
+  "prompt": "meja kerja membelakangi pintu",
+  "brief": {
+    "viewer": "Pemilik usaha, manajer dan karyawan kantor yang sering merasa sulit fokus di meja kerjanya",
+    "problem": "Meja ditata asal muat, punggung menghadap pintu, tanpa sadar selalu waspada",
+    "promise": "Satu putaran meja ke posisi komando membuat ruang kerja terasa aman dan fokus",
+    "format": "cinematic 3D diorama (React Three Fiber, live di Remotion) + anotasi tangan gaya Motion Format"
+  },
+  "beats": [
+    {
+      "beat": "hook",
+      "feeling": "kaget, merasa tersindir",
+      "shot": {
+        "camera": "crane-down",
+        "subject": "meja kerja di diorama kantor miniatur",
+        "action": "kamera turun dari atas atap diorama ke balik kursi; pintu di belakang kursi terbuka sendiri, lingkaran coretan merah digambar mengitari pintu",
+        "secondary": ["daun tanaman bergoyang", "debu melayang di sinar jendela", "lampu meja berkedip hangat"]
+      },
+      "environment": {
+        "setting": "kantor kecil bergaya Asia modern, dinding krem, lantai kayu, sore hari",
+        "layers": ["dinding dan jendela belakang", "meja, kursi dan rak", "tanaman dan lampu di latar depan (bokeh)"],
+        "atmosphere": ["light-rays", "dust"],
+        "lighting": { "key": "matahari sore dari jendela, bayangan panjang", "rim": "cahaya pintu yang terbuka di belakang kursi", "mood": "hangat tapi janggal" }
+      },
+      "physics": [
+        { "object": "daun pintu", "law": "spring-settle", "note": "terbuka lalu sedikit memantul di engsel" },
+        { "object": "daun tanaman", "law": "wind-sway" }
+      ],
+      "handoff": { "object": "celah pintu yang terbuka", "into": "POV dari balik kursi ke arah pintu" },
+      "vo": { "text": "Meja Anda membelakangi pintu?", "tone": "curious", "cueWords": ["pintu"] },
+      "onScreenText": "MEMBELAKANGI PINTU?",
+      "sfx": [{ "at": "awal", "sound": "whoosh kamera turun" }, { "at": "pintu", "sound": "derit pintu + chime rendah" }],
+      "assets": [
+        { "name": "diorama kantor (R3F)", "tier": "hero", "isNew": true },
+        { "name": "meja dan kursi kerja (R3F)", "tier": "hero", "isNew": true },
+        { "name": "coretan lingkaran merah (SVG)", "tier": "support", "isNew": true }
+      ]
+    },
+    {
+      "beat": "context",
+      "feeling": "gelisah",
+      "shot": {
+        "camera": "pov",
+        "subject": "pintu yang terbuka di belakang kursi",
+        "action": "kamera menoleh pelan dari layar ke belakang bahu; bayangan panjang orang lewat menyapu lantai dari celah pintu",
+        "secondary": ["kursi berderit sedikit berputar", "kertas di meja bergetar"]
+      },
+      "environment": {
+        "setting": "di balik kursi kerja",
+        "layers": ["pintu dan lorong terang", "sandaran kursi buram di depan", "meja dan layar di sisi"],
+        "atmosphere": ["haze", "dust"],
+        "lighting": { "key": "cahaya lorong menembus pintu", "rim": "tepi sandaran kursi bercahaya", "mood": "waspada" }
+      },
+      "physics": [
+        { "object": "bayangan orang lewat", "law": "sliding-friction" },
+        { "object": "kursi", "law": "rigid-rotation", "note": "putaran kecil lalu berhenti" }
+      ],
+      "handoff": { "object": "sandaran kursi yang kosong", "into": "orbit mengitari kursi" },
+      "vo": { "text": "Rasanya selalu ada yang mengawasi dari belakang.", "tone": "thoughtful", "cueWords": ["belakang"] },
+      "onScreenText": "SELALU WASPADA",
+      "sfx": [{ "at": "belakang", "sound": "langkah kaki samar + whoosh pelan" }],
+      "assets": [{ "name": "bayangan orang lewat (R3F plane)", "tier": "support", "isNew": true }]
+    },
+    {
+      "beat": "cause",
+      "feeling": "paham, sedikit ngeri",
+      "shot": {
+        "camera": "orbit",
+        "subject": "punggung kursi tanpa sandaran dinding",
+        "action": "kamera mengitari kursi; aliran chi berupa butiran emas masuk dari pintu dan menabrak punggung kursi, ruang kosong di belakang kursi berubah kemerahan",
+        "secondary": ["butiran chi berputar", "debu berhamburan saat butiran menabrak"]
+      },
+      "environment": {
+        "setting": "ruang kosong antara kursi dan pintu",
+        "layers": ["pintu bercahaya", "aliran butiran chi", "kursi dan meja di depan"],
+        "atmosphere": ["particles", "light-rays"],
+        "lighting": { "key": "cahaya pintu", "rim": "merah samar di lantai belakang kursi", "mood": "terbuka, rentan" }
+      },
+      "physics": [
+        { "object": "butiran chi", "law": "fluid-flow" },
+        { "object": "butiran yang menabrak kursi", "law": "projectile", "note": "terpental lalu memudar" }
+      ],
+      "handoff": { "object": "butiran yang memantul ke meja", "into": "macro permukaan meja" },
+      "vo": { "text": "Kata feng shui punggung tanpa sandaran berarti tanpa dukungan.", "tone": "serious", "cueWords": ["sandaran", "dukungan"] },
+      "onScreenText": "TANPA SANDARAN",
+      "sfx": [{ "at": "sandaran", "sound": "whoosh butiran" }, { "at": "dukungan", "sound": "thump rendah" }],
+      "assets": [{ "name": "aliran chi partikel emas (R3F)", "tier": "hero", "isNew": true }]
+    },
+    {
+      "beat": "effect",
+      "feeling": "kehilangan",
+      "shot": {
+        "camera": "macro",
+        "subject": "koin emas dan kertas di atas meja",
+        "action": "kertas tersapu terbang dari meja, koin emas menggelinding jatuh dan memantul di lantai menuju pintu",
+        "secondary": ["bayangan koin berputar", "kertas berputar di udara"]
+      },
+      "environment": {
+        "setting": "permukaan meja kayu dari dekat",
+        "layers": ["pintu buram di latar", "koin dan kertas", "tepi meja tajam di depan"],
+        "atmosphere": ["bokeh", "dust"],
+        "lighting": { "key": "lampu meja hangat", "rim": "kilau emas di tepi koin", "mood": "menyesal" }
+      },
+      "physics": [
+        { "object": "koin emas", "law": "rolling", "note": "menggelinding lalu jatuh" },
+        { "object": "koin di lantai", "law": "gravity-bounce" },
+        { "object": "kertas", "law": "projectile", "note": "melayang dengan hambatan udara" }
+      ],
+      "handoff": { "object": "koin terakhir yang berhenti di depan pintu", "into": "top-down seluruh ruangan" },
+      "vo": { "text": "Fokus bocor, rezeki ikut keluar.", "tone": "whispers", "cueWords": ["bocor", "keluar"] },
+      "onScreenText": "REZEKI KELUAR",
+      "sfx": [{ "at": "bocor", "sound": "kertas tersapu" }, { "at": "keluar", "sound": "koin jatuh berdenting" }],
+      "assets": [{ "name": "koin emas fisika (R3F)", "tier": "hero", "isNew": true }, { "name": "kertas kerja (R3F)", "tier": "support", "isNew": false }]
+    },
+    {
+      "beat": "fix",
+      "feeling": "lega, berani",
+      "shot": {
+        "camera": "top-down",
+        "subject": "meja yang berputar ke posisi komando",
+        "action": "dari atas, meja dan kursi berputar 180 derajat dan memantul berhenti; punggung kini ke dinding, wajah ke pintu; koin melompat kembali ke meja",
+        "secondary": ["garis putus-putus emas dari kursi ke pintu", "tanaman bergoyang karena hentakan"]
+      },
+      "environment": {
+        "setting": "denah ruangan dilihat dari atas",
+        "layers": ["lantai kayu dan karpet", "meja, kursi, rak", "lampu gantung di depan kamera"],
+        "atmosphere": ["particles", "light-rays"],
+        "lighting": { "key": "cahaya jendela lembut", "rim": "kilau emas di meja", "mood": "rapi, percaya diri" }
+      },
+      "physics": [
+        { "object": "meja dan kursi", "law": "spring-settle", "note": "putaran dengan overshoot kecil" },
+        { "object": "koin yang kembali", "law": "gravity-bounce" }
+      ],
+      "handoff": { "object": "garis emas kursi-ke-pintu", "into": "pull-back ke seluruh diorama" },
+      "vo": { "text": "Putar meja: hadap pintu, punggung ke dinding.", "tone": "confident", "cueWords": ["Putar", "dinding"] },
+      "onScreenText": "HADAP PINTU",
+      "sfx": [{ "at": "Putar", "sound": "whoosh putaran" }, { "at": "dinding", "sound": "kunci kayu mantap" }],
+      "assets": [{ "name": "garis putus-putus emas (SVG)", "tier": "support", "isNew": true }]
+    },
+    {
+      "beat": "payoff",
+      "feeling": "tenang, kagum",
+      "shot": {
+        "camera": "pull-back",
+        "subject": "seluruh diorama kantor yang kini tertata",
+        "action": "kamera mundur keluar dari ruangan, lampu ruangan menyala hangat bertahap, aliran chi emas mengalir lembut dari pintu ke meja",
+        "secondary": ["butiran chi melingkar di atas meja", "matahari turun di jendela"]
+      },
+      "environment": {
+        "setting": "diorama utuh mengambang di ruang gelap hangat",
+        "layers": ["ruang gelap bergradasi", "diorama kantor", "butiran emas di depan kamera"],
+        "atmosphere": ["particles", "bokeh"],
+        "lighting": { "key": "lampu ruangan hangat", "rim": "garis cahaya di tepi diorama", "mood": "tenang megah" }
+      },
+      "physics": [{ "object": "butiran chi", "law": "fluid-flow" }],
+      "handoff": { "object": "butiran chi yang naik", "into": "stempel logo Shifu Po" },
+      "vo": { "text": "Itulah posisi komando yang tenang dan penuh peluang.", "tone": "calm", "cueWords": ["komando"] },
+      "onScreenText": "POSISI KOMANDO",
+      "sfx": [{ "at": "komando", "sound": "chime hangat naik" }],
+      "assets": [{ "name": "diorama kantor (R3F)", "tier": "hero", "isNew": false }]
+    },
+    {
+      "beat": "cta",
+      "feeling": "percaya",
+      "shot": {
+        "camera": "crane-up",
+        "subject": "logo Shifu Po dan tombol WhatsApp",
+        "action": "kamera naik meninggalkan diorama yang meredup, logo dan tombol muncul dengan pantulan pegas",
+        "secondary": ["butiran emas melayang naik", "kilau di logo"]
+      },
+      "environment": {
+        "setting": "ruang gelap hangat di atas diorama",
+        "layers": ["gradasi gelap", "diorama kecil di bawah", "butiran emas di depan"],
+        "atmosphere": ["particles", "bokeh"],
+        "lighting": { "key": "cahaya hangat dari bawah", "rim": "emas pada logo", "mood": "hangat premium" }
+      },
+      "physics": [{ "object": "logo", "law": "spring-settle" }],
+      "vo": { "text": "Konsultasi kantor Anda via WhatsApp.", "tone": "warm", "cueWords": ["WhatsApp"] },
+      "sfx": [{ "at": "Konsultasi", "sound": "stempel" }, { "at": "WhatsApp", "sound": "chime" }],
+      "assets": [{ "name": "logo resmi Shifu Po", "tier": "hero", "isNew": false }]
+    }
+  ]
+}

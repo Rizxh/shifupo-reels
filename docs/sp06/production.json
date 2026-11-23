@@ -1,0 +1,177 @@
+{
+  "id": "sp06",
+  "product": "shifupo",
+  "prompt": "ramalan shio 2027 tahun Kambing Api, 2D motion",
+  "brief": {
+    "viewer": "Keluarga Tionghoa-Indonesia dan pemilik usaha yang menyiapkan Imlek 2027",
+    "problem": "Ingin tahu shio mana yang beruntung di tahun Kambing Api, tapi ramalan di internet berserakan",
+    "promise": "Dalam 25 detik: shio yang didukung, shio yang perlu hati-hati, dan kenapa BaZi lengkap tetap penentu",
+    "format": "2D motion gaya Motion Format: satu roda 12 shio yang terus bergerak di dunia lukisan tinta"
+  },
+  "beats": [
+    {
+      "beat": "hook",
+      "feeling": "penasaran",
+      "shot": {
+        "camera": "push-in",
+        "subject": "roda 12 shio dari segel merah",
+        "action": "roda berputar masuk dari kecil dan berhenti dengan pantulan; segel Kambing Api membesar di tengah dengan nyala api",
+        "secondary": ["kelopak berguguran", "kabut tinta bergeser", "kilau emas di tepi segel"]
+      },
+      "environment": {
+        "setting": "lukisan tinta gunung saat senja keemasan",
+        "layers": ["kertas dan gunung jauh", "roda shio", "bambu dan kelopak di depan"],
+        "atmosphere": ["haze", "petals", "light-rays"],
+        "lighting": { "key": "cahaya emas dari kiri atas", "rim": "nyala api di belakang segel Kambing", "mood": "hangat, meriah" }
+      },
+      "physics": [
+        { "object": "roda shio", "law": "spring-settle", "note": "berhenti dengan overshoot kecil" },
+        { "object": "kelopak", "law": "wind-sway" }
+      ],
+      "handoff": { "object": "segel Kambing di tengah", "into": "kamera mendekat ke segel" },
+      "vo": { "text": "Shio Anda hoki di tahun Kambing Api?", "tone": "curious", "cueWords": ["Kambing"] },
+      "onScreenText": "2027 KAMBING API",
+      "sfx": [{ "at": "awal", "sound": "whoosh roda" }, { "at": "Kambing", "sound": "gong" }],
+      "assets": [
+        { "name": "roda 12 segel shio (SVG)", "tier": "hero", "isNew": true },
+        { "name": "nyala api tinta (SVG)", "tier": "support", "isNew": true }
+      ]
+    },
+    {
+      "beat": "context",
+      "feeling": "antisipasi",
+      "shot": {
+        "camera": "dolly-in",
+        "subject": "kartu tanggal Imlek",
+        "action": "kartu tanggal 6 Februari turun dan menghantam di atas roda, percikan emas",
+        "secondary": ["roda berputar pelan di belakang", "lentera berayun"]
+      },
+      "environment": {
+        "setting": "di depan roda shio",
+        "layers": ["gunung tinta", "roda buram", "kartu tanggal"],
+        "atmosphere": ["particles", "petals"],
+        "lighting": { "key": "cahaya emas", "rim": "kilau merah di tepi kartu", "mood": "meriah" }
+      },
+      "physics": [
+        { "object": "kartu tanggal", "law": "gravity-bounce" },
+        { "object": "lentera", "law": "pendulum" }
+      ],
+      "handoff": { "object": "kartu terlipat menjadi garis emas", "into": "garis menggambar segitiga" },
+      "vo": { "text": "Tahun Kambing Api dimulai enam Februari.", "tone": "thoughtful", "cueWords": ["Februari"] },
+      "onScreenText": "6 FEBRUARI",
+      "sfx": [{ "at": "Februari", "sound": "stamp" }],
+      "assets": [{ "name": "kartu tanggal (SVG)", "tier": "support", "isNew": true }]
+    },
+    {
+      "beat": "cause",
+      "feeling": "senang",
+      "shot": {
+        "camera": "pull-back",
+        "subject": "segitiga Babi, Kelinci, Kambing",
+        "action": "roda mundur menampilkan utuh; garis emas menggambar segitiga menghubungkan tiga segel yang menyala satu per satu",
+        "secondary": ["koin emas meletup di tiap sudut", "segel lain meredup"]
+      },
+      "environment": {
+        "setting": "roda utuh di tengah dunia tinta",
+        "layers": ["gunung", "roda", "partikel emas di depan"],
+        "atmosphere": ["particles", "light-rays"],
+        "lighting": { "key": "cahaya emas", "rim": "pendar pada segel yang menyala", "mood": "optimis" }
+      },
+      "physics": [
+        { "object": "segel yang menyala", "law": "spring-settle", "note": "squash lalu stretch" },
+        { "object": "koin emas", "law": "projectile" }
+      ],
+      "handoff": { "object": "segel Kambing", "into": "zoom ke Kambing dan Kuda" },
+      "vo": { "text": "Babi dan Kelinci satu segitiga dengan Kambing: peluang terbuka.", "tone": "excited", "cueWords": ["Babi", "Kelinci", "segitiga"] },
+      "onScreenText": "SEGITIGA HOKI",
+      "sfx": [{ "at": "Babi", "sound": "chime1" }, { "at": "Kelinci", "sound": "chime2" }, { "at": "segitiga", "sound": "shimmer" }],
+      "assets": [{ "name": "garis segitiga emas (SVG)", "tier": "support", "isNew": true }]
+    },
+    {
+      "beat": "effect",
+      "feeling": "hangat",
+      "shot": {
+        "camera": "orbit",
+        "subject": "Kuda dan Kambing",
+        "action": "roda berputar membawa Kuda dan Kambing ke tengah; pita merah mengikat keduanya",
+        "secondary": ["kelopak berputar", "kilau di pita"]
+      },
+      "environment": {
+        "setting": "close-up dua segel",
+        "layers": ["gunung buram", "dua segel", "kelopak di depan"],
+        "atmosphere": ["petals", "bokeh"],
+        "lighting": { "key": "cahaya emas lembut", "rim": "merah pita", "mood": "akrab" }
+      },
+      "physics": [{ "object": "pita merah", "law": "wind-sway" }, { "object": "roda", "law": "rigid-rotation" }],
+      "handoff": { "object": "roda berputar setengah", "into": "Kerbau di seberang" },
+      "vo": { "text": "Kuda jadi sahabat rahasianya, relasi membawa rezeki.", "tone": "warm", "cueWords": ["Kuda", "rezeki"] },
+      "onScreenText": "SAHABAT RAHASIA",
+      "sfx": [{ "at": "Kuda", "sound": "chime3" }, { "at": "rezeki", "sound": "coin" }],
+      "assets": [{ "name": "pita merah (SVG)", "tier": "support", "isNew": true }]
+    },
+    {
+      "beat": "fix",
+      "feeling": "waspada",
+      "shot": {
+        "camera": "whip-pan",
+        "subject": "Kerbau berhadapan dengan Kambing",
+        "action": "roda berputar cepat hingga Kerbau di bawah dan Kambing di atas; panah merah saling berhadapan, segel Kerbau bergetar",
+        "secondary": ["tinta memercik saat benturan", "langit sedikit meredup"]
+      },
+      "environment": {
+        "setting": "roda dengan sumbu bentrok vertikal",
+        "layers": ["gunung redup", "roda", "percikan tinta di depan"],
+        "atmosphere": ["haze", "dust"],
+        "lighting": { "key": "cahaya lebih dingin", "rim": "merah pada panah", "mood": "tegang tapi tenang" }
+      },
+      "physics": [{ "object": "segel Kerbau", "law": "spring-settle", "note": "getar lalu diam" }, { "object": "percikan tinta", "law": "projectile" }],
+      "handoff": { "object": "segel Kambing terangkat", "into": "masuk ke pilar tahun" },
+      "vo": { "text": "Kerbau berhadapan langsung, jadi lebih berhati-hati.", "tone": "serious", "cueWords": ["Kerbau", "berhati-hati"] },
+      "onScreenText": "PERLU HATI-HATI",
+      "sfx": [{ "at": "Kerbau", "sound": "thump" }, { "at": "berhati-hati", "sound": "tick" }],
+      "assets": [{ "name": "panah bentrok merah (SVG)", "tier": "support", "isNew": true }]
+    },
+    {
+      "beat": "payoff",
+      "feeling": "tercerahkan",
+      "shot": {
+        "camera": "crane-up",
+        "subject": "empat pilar BaZi",
+        "action": "roda mengecil, segel Kambing terbang masuk ke pilar tahun; tiga pilar lain naik dari bawah",
+        "secondary": ["tinta mengalir di pilar", "kelopak naik"]
+      },
+      "environment": {
+        "setting": "empat pilar di atas kertas",
+        "layers": ["gunung", "empat pilar", "kelopak di depan"],
+        "atmosphere": ["haze", "petals"],
+        "lighting": { "key": "cahaya emas", "rim": "tepi pilar", "mood": "bijak" }
+      },
+      "physics": [{ "object": "segel Kambing", "law": "projectile" }, { "object": "pilar", "law": "spring-settle" }],
+      "handoff": { "object": "pilar menyatu", "into": "stempel logo Shifu Po" },
+      "vo": { "text": "Tapi shio hanya satu dari empat pilar BaZi.", "tone": "calm", "cueWords": ["empat"] },
+      "onScreenText": "4 PILAR BAZI",
+      "sfx": [{ "at": "empat", "sound": "lock" }],
+      "assets": [{ "name": "pilar BaZi (komponen Pillars)", "tier": "hero", "isNew": false }]
+    },
+    {
+      "beat": "cta",
+      "feeling": "percaya",
+      "shot": {
+        "camera": "push-in",
+        "subject": "logo Shifu Po dan tombol WhatsApp",
+        "action": "logo menyegel layar, tombol muncul dengan pantulan pegas",
+        "secondary": ["kelopak", "kilau emas di logo"]
+      },
+      "environment": {
+        "setting": "kertas hangat dengan gunung tinta",
+        "layers": ["gunung", "logo", "kelopak di depan"],
+        "atmosphere": ["petals", "light-rays"],
+        "lighting": { "key": "cahaya emas", "rim": "emas pada logo", "mood": "hangat premium" }
+      },
+      "physics": [{ "object": "logo", "law": "spring-settle" }],
+      "vo": { "text": "Cek peruntungan Anda di tahun Kambing via WhatsApp.", "tone": "warm", "cueWords": ["WhatsApp"] },
+      "sfx": [{ "at": "Cek", "sound": "stamp" }],
+      "assets": [{ "name": "logo resmi Shifu Po", "tier": "hero", "isNew": false }]
+    }
+  ]
+}

@@ -10,12 +10,12 @@ Sebelumnya: [07-ANIMASI.md](07-ANIMASI.md) · Kembali ke: [README](../../README.
 
 ```bash
 npm run check                         # test + lint + typecheck
-npm run review -- <id>                # draft + lembar frame penting per scene + out/<id>_review.md
+npm run review -- <id>                # draft + lembar frame penting per scene + out/review/<id>_review.md
 npm run stills -- <id> <frame...> --scale 1   # crop 100% di frame penting
 npm run produce -- <id>               # final + laporan QA
 ```
 
-Ulangi review → perbaiki → review maksimal tiga putaran, dan isi checklist serta temuan di `out/<id>_review.md` setiap putaran. Kalau masih gagal, berhenti dan laporkan apa yang gagal. Jangan pernah menyatakan render atau perbaikan berhasil sebelum melihat hasilnya.
+Ulangi review → perbaiki → review maksimal tiga putaran, dan isi checklist serta temuan di `out/review/<id>_review.md` setiap putaran. Kalau masih gagal, berhenti dan laporkan apa yang gagal. Jangan pernah menyatakan render atau perbaikan berhasil sebelum melihat hasilnya.
 
 ## 2. Cek otomatis
 
@@ -28,7 +28,7 @@ Ulangi review → perbaiki → review maksimal tiga putaran, dan isi checklist s
 | Ukuran | `postprocess` | ≤ 30 MB (kompresi dinaikkan bertahap otomatis) |
 | Loudness | `postprocess` | −14 LUFS ±1 LU, true peak ≤ −1,5 dB |
 | VO sesuai naskah | `produce` (whisper) | ≥ 90% kata naskah terdengar berurutan |
-| Hasil lengkap | `out/<id>_report.md` | Tertulis "Semua cek lolos." |
+| Hasil lengkap | `out/qc/<id>_report.md` | Tertulis "Semua cek lolos." |
 
 ## 3. Cek visual (wajib, per frame)
 
@@ -79,7 +79,7 @@ Frame yang harus dilihat dalam ukuran penuh (`--scale 1`):
 
 ## 6. Sebelum dikirim
 
-- [ ] `out/<id>_report.md` menyatakan semua cek lolos
+- [ ] `out/qc/<id>_report.md` menyatakan semua cek lolos
 - [ ] Semua cek visual di bagian 3 dicentang
 - [ ] Klaim di JSON sudah dicek manusia (`reviewed: true`), atau user tahu masih `false`
 - [ ] Musik (kalau ada) tercatat di `public/audio/bgm/LICENSES.md`

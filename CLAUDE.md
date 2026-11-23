@@ -4,7 +4,7 @@ Remotion project for **Shifu Po (Feng Shui & BaZi consultant)** promotional Inst
 
 ## Output spec
 
-- 1080x1920, 30 fps, 15 to 30 seconds, H.264 + AAC, at most 30 MB.
+- 1080x1920, 30 fps, 15 to 60 seconds (the user asked for longer, clearer reels on 14 Nov 2026; keep short formats near 30 s), H.264 + AAC, at most 30 MB. Music videos (`mv`) follow their song, up to 90 s.
 - Every on-screen text stays inside `SAFE_AREA` in `src/lib/brand.ts` (x 64, y 314, w 792, h 1122).
 
 ## Hard rules
@@ -29,8 +29,8 @@ Work as a small studio, not as a programmer who stops when the code compiles. Fo
 | Storyboard artist | Scene actions, connecting objects, camera, sound per beat | Plan part 5 |
 | Asset designer | Reuse first; new SVG components; raster/3D only per `docs/guides/04`–`06` | `src/components/`, `public/assets/` |
 | Motion developer | Scenes, timing on cue words, transitions | `src/scenes/` |
-| Visual QA director | The review loop below | `out/<id>_review.md` filled in |
-| Finisher | Final render, loudness, report | `out/<id>_final.mp4`, `out/<id>_report.md` |
+| Visual QA director | The review loop below | `out/review/<id>_review.md` filled in |
+| Finisher | Final render, loudness, report | `out/video/<id> - <judul>.mp4`, `out/qc/<id>_report.md` |
 
 Never invent facts, numbers, logos or assets. Use only official numbers and real files.
 
@@ -38,10 +38,10 @@ Never invent facts, numbers, logos or assets. Use only official numbers and real
 
 Valid code is not a good video. A render that finishes is not a finished reel.
 
-1. `npm run review -- <id>`: draft render plus `out/<id>_review.jpg`, the frames that matter for every scene (start, wipe middle, every cue word and a beat after it, middle, end), and `out/<id>_review.md` listing them.
+1. `npm run review -- <id>`: draft render plus `out/review/<id>_review.jpg`, the frames that matter for every scene (start, wipe middle, every cue word and a beat after it, middle, end), and `out/review/<id>_review.md` listing them.
 2. Look at the sheet with the image reader. Open full-size frames (`npm run stills -- <id> <frame> --scale 1`) for every text card, every break-out moment and every transition.
-3. Fill in the checklist and findings in `out/<id>_review.md`; fix the source; run the review again. At most three rounds, then report what still fails.
-4. Only then `npm run produce -- <id>`. Read `out/<id>_report.md` and the final frame sheet before saying it is done.
+3. Fill in the checklist and findings in `out/review/<id>_review.md`; fix the source; run the review again. At most three rounds, then report what still fails.
+4. Only then `npm run produce -- <id>`. Read `out/qc/<id>_report.md` and the final frame sheet before saying it is done.
 
 Never claim a render, a fix or a check succeeded without having looked at its output.
 
@@ -61,11 +61,27 @@ Where it differs from this file, this file wins:
 - Motifs: cream paper, sumi-e mountains, gold luo pan, bamboo, red seals, koi, gold coins, blueprints, lattice corners.
 - Shifu Po figure: `public/assets/shifu/shifu.png` (spec in that folder). Until it exists, an ink silhouette stands in.
 
+## Output folders (`out/`, gitignored)
+
+Layout lives in `scripts/lib/paths.ts`; every script writes there:
+
+| Folder | Contents |
+|---|---|
+| `out/video/` | Finished reels, `<id> - <title>.mp4` (the only folder to hand over) |
+| `out/produce/` | Renders before loudness (`<id>.mp4`, `<id>_draft.mp4`), render chunks, `.props/`, `logs/` |
+| `out/review/` | Review loop: `<id>_review.md`, `<id>_review.jpg` |
+| `out/qc/` | Final QA: `<id>_report.md`, `<id>_sheet.jpg`, whisper transcripts, golden frames, checks |
+| `out/look/` | Lookdev: `stills/<id>/`, frame and look sheets |
+| `out/sound/` | VO takes and audio experiments |
+| `out/archive/` | Older material kept for reference |
+
+Never write loose files into `out/` itself.
+
 ## Commands
 
 - `npm run setup`: first-run check (Node, ffmpeg, `.env` filled or not, SFX, Shifu photo); creates `.env` from `.env.example` if missing
 - `npm run studio`: preview in Remotion Studio
-- `npm run produce -- sp01 [--draft] [--from <step>]`: whole pipeline (TTS, VO levels, SFX, render, loudness, whisper check) to `out/sp01_final.mp4` plus `out/sp01_report.md` and a frame sheet. Without `.env` it renders without VO on estimated timing.
+- `npm run produce -- sp01 [--draft] [--from <step>]`: whole pipeline (TTS, VO levels, SFX, render, loudness, whisper check) to `out/video/sp01 - <judul>.mp4` plus `out/qc/sp01_report.md` and a frame sheet. Without `.env` it renders without VO on estimated timing.
 - `npm run tts -- sp01`, `npm run vo-level -- sp01`, `npm run sfx`, `npm run render -- sp01 [--draft]`, `npm run postprocess -- sp01`
 - `npm run stills -- sp01 40 165 385 --scale 1`: full-size frames for checks
 - `npm run review -- <id> [--no-render]`: draft + scene-aware review sheet and notes (the visual review loop)
@@ -96,12 +112,36 @@ Step-by-step guides (Indonesian) in `docs/guides/`; follow the one for the step 
 | Content, episode JSON | `02-PLANNING-KONTEN.md` |
 | Scene by scene, adding a scene type | `03-SCENE-BY-SCENE.md` |
 | 2D assets | `04-ASET-2D.md` |
-| 3D assets (pre-rendered PNG sequences only) | `05-ASET-3D.md` |
+| 3D (React Three Fiber worlds in Remotion, never Blender) | `05-ASET-3D.md` |
 | Asset folders and frame placement | `06-PENEMPATAN-ASET.md` |
 | Animation | `07-ANIMASI.md` |
 | QA, clean and precise result | `08-QA-HASIL-BERSIH.md` |
 
+Live 3D worlds: `src/products/shifupo/worlds/` (episode `"world"`, scene `events` and `marks`; engine in `src/core/three/`).
+
+Music video format `mv` (sp09): `MvReel`, no voice over. Scenes are the song's lyric table (`shot`, `seconds`, `lyric`, `overlay`, `sfx` at a fraction of the scene); hard cuts with a light leak; world `ruko` (`worlds/ruko*.ts(x)`, registry `worlds/mv.ts`). Music under `public/audio/bgm/` (temporary bed: `npm run music`). The pipeline skips TTS, VO levels and whisper.
+
 Asset folders: `public/assets/shifu/`, `brand/`, `2d/common/`, `2d/<id>/`, `3d/<name>/`.
+
+## Toon format (3D cartoon, added 23 Nov 2026)
+
+This is a port of the domo-reels toon format, which the user approved via EP13 there. It puts 2D characters in a 3D world built with three.js inside Remotion, and it is independent of `src/core`.
+
+| Part | Location |
+|---|---|
+| Engine | `src/toon/*` |
+| Shared kit | `src/toon/kit/`. `modern.ts` holds the city street, the cabin car and the studio front with the logo sign. `rooms.ts` holds the `fengshui` studio, `office`, `vip` and `sultan` rooms. Keep it in sync with domo-reels and satuseo-reels. |
+| Brand | `src/toon/brand.ts` |
+| Starter story | `src/toon/shifu/` (sh00) |
+| Entry | `src/toon/entry.tsx` |
+| Formula and themes | `docs/toon/` |
+| Skill | `/buat-toon` |
+
+Scripts:
+
+- `scripts/toon/voice.ts`: uses `eleven_multilingual_v2` for Shifu's cloned voice.
+- `scripts/toon/stills.mjs`, `render.mjs`: chunked and resumable; run them in a retry loop.
+- `scripts/toon/qa.py`: pops and whips must be empty.
 
 ## New episodes
 

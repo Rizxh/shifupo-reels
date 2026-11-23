@@ -120,14 +120,19 @@ export const inkBlotPath = (
   cy: number,
   seed: string,
   maxRadius?: number,
+  startRadius: number = INK_WIPE.startRadius,
 ): string | undefined => {
-  const t = prog(frame, start, start + INK_WIPE.frames, EASE.inOut);
+  // Opens already the size of the subject that hands over (match move) and
+  // blooms fast, so a wipe never shows a dot on an empty page (core
+  // continuity rule, measured by scripts/qc-motion.ts).
+  const t = prog(frame, start, start + INK_WIPE.frames, EASE.out);
   if (t >= 1) {
     return undefined;
   }
   const maxR =
     maxRadius ?? Math.hypot(Math.max(cx, W - cx), Math.max(cy, H - cy)) * 1.15;
-  const r = maxR * t;
+  const r0 = Math.min(startRadius, maxR * 0.6);
+  const r = r0 + (maxR - r0) * t;
   const pts: string[] = [];
   for (let i = 0; i < INK_WIPE.points; i++) {
     const a = (i / INK_WIPE.points) * Math.PI * 2;

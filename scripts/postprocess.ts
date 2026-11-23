@@ -7,14 +7,13 @@
 // video stream untouched. Replaces the plan's postprocess.sh so it also runs
 // from npm on Windows.
 
-import { existsSync } from "node:fs";
-import path from "node:path";
+import { existsSync, mkdirSync, renameSync } from "node:fs";
 import { parseArgs } from "node:util";
 import { z } from "zod";
 import { LOUDNESS_TARGET } from "../src/lib/mix";
-import { REEL } from "../src/lib/timing";
+import { reelLimits } from "../src/lib/timing";
 import {
-  OUT_DIR,
+  loadEpisode,
   printProblems,
   probeMedia,
   rel,
@@ -26,6 +25,7 @@ import {
   QA,
   ScriptError,
 } from "./lib/common";
+import { finalVideoPath, OUT, outPaths } from "./lib/paths";
 
 // loudnorm upsamples internally, so the output rate must be set explicitly.
 const OUTPUT_SAMPLE_RATE = "48000";
@@ -46,7 +46,13 @@ const LOUDNORM_TARGET = `loudnorm=I=${I}:TP=${TP}:LRA=${LRA}`;
 // loudness gain, and AAC adds up to about 1 dB more. A limiter about 3 dB
 // under full scale, with a 10 ms attack so hits are rounded rather than
 // clipped, keeps the true peak inside the target for every format.
-const PEAK_GUARD = ",alimiter=limit=0.7:attack=10:release=80:level=false";
+const PEAK_LIMIT = 0.7;
+const peakGuard = (limit: number) => `,alimiter=limit=${limit.toFixed(4)}:attack=10:release=80:level=false`;
+// AAC overshoot depends on the material: dense, bright music (sp09) still
+// came out at -1.0 dBTP. When the true peak misses, only the audio is redone
+// with the limiter lowered by the excess plus this margin.
+const PEAK_MARGIN_DB = 0.4;
+const PEAK_RETRIES = 3;
 
 const measurementSchema = z.object({
   input_i: z.string(),
@@ -107,9 +113,11 @@ const main = async () => {
   );
   const base = episodeId;
   const prefilter = "";
-  const postfilter = PEAK_GUARD;
-  const input = path.join(OUT_DIR, `${base}.mp4`);
-  const output = path.join(OUT_DIR, `${base}_final.mp4`);
+  const postfilter = peakGuard(PEAK_LIMIT);
+  const input = outPaths(base).rendered;
+  // The finished reel goes to out/video/ under its title.
+  const output = finalVideoPath(base, loadEpisode(base).title);
+  mkdirSync(OUT.video, { recursive: true });
   if (!existsSync(input)) {
     throw new ScriptError(
       `${rel(input)} not found. Run: npm run render -- ${episodeId}`,
@@ -143,6 +151,7 @@ const main = async () => {
           "yuv420p",
         ];
   console.log(`Normalizing to ${I} LUFS / ${TP} dBTP`);
+  const normalize = `${prefilter}${LOUDNORM_TARGET}:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}:linear=true`;
   const encode = (crf: number | null) =>
     ffmpeg(
       [
@@ -155,7 +164,7 @@ const main = async () => {
         "0:a:0",
         ...videoArgs(crf),
         "-af",
-        `${prefilter}${LOUDNORM_TARGET}:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}:linear=true${postfilter}`,
+        `${normalize}${postfilter}`,
         "-ar",
         OUTPUT_SAMPLE_RATE,
         "-c:a",
@@ -184,10 +193,22 @@ const main = async () => {
     }
   }
 
-  const loudness = await verify(output);
+  let loudness = await verify(output);
+  let limit = PEAK_LIMIT;
+  for (let k = 0; k < PEAK_RETRIES && loudness.truePeak > TP; k++) {
+    limit *= 10 ** (-(loudness.truePeak - TP + PEAK_MARGIN_DB) / 20);
+    console.log(`  true peak ${loudness.truePeak.toFixed(1)} dB is over ${TP}; redoing the audio with the limiter at ${(20 * Math.log10(limit)).toFixed(1)} dBFS`);
+    const tmp = output.replace(/\.mp4$/, ".peak.mp4");
+    await ffmpeg(
+      ["-y", "-i", output, "-i", input, "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-af", `${normalize}${peakGuard(limit)}`, "-ar", OUTPUT_SAMPLE_RATE, "-c:a", "aac", "-b:a", AUDIO_BITRATE, "-movflags", "+faststart", tmp],
+      true,
+    );
+    renameSync(tmp, output);
+    loudness = await verify(output);
+  }
   const problems = reportMedia("Final", output, await probeMedia(output), {
-    min: REEL.minSeconds,
-    max: REEL.maxSeconds,
+    min: reelLimits(loadEpisode(episodeId).format).minSeconds,
+    max: reelLimits(loadEpisode(episodeId).format).maxSeconds,
   });
   console.log(
     `  loudness: ${loudness.integrated.toFixed(1)} LUFS, true peak ${loudness.truePeak.toFixed(1)} dBFS`,

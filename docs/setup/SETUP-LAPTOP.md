@@ -65,6 +65,6 @@ Buka folder proyek di Claude Code, lalu tulis:
 
 1. Claude menyusun planning (naskah, teks layar, storyboard, aset) dan bertanya satu kali: setuju atau revisi.
 2. Setelah disetujui, semuanya berjalan sendiri: VO ElevenLabs, animasi, SFX, render draft, cek mandiri dan perbaikan, render final, normalisasi audio, dan laporan QA.
-3. Hasil akhir: `out/<id>_final.mp4`, lembar frame, dan laporan QA.
+3. Hasil akhir: `out/video/<id> - <judul>.mp4`, lembar frame, dan laporan QA.
 
 Claude hanya berhenti kalau butuh aset dari Anda (foto, logo), kunci ElevenLabs, atau ada cek yang tetap gagal setelah 3 kali diperbaiki.

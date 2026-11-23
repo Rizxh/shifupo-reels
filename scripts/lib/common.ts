@@ -4,11 +4,12 @@ import { spawn } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { z } from "zod";
-import { FORMATS, formatOf, type AnyEpisode } from "../../src/schema";
+import { FORMATS, formatOf, isVoiced, type AnyEpisode } from "../../src/schema";
 
 export const ROOT = path.resolve(import.meta.dirname, "..", "..");
 export const PUBLIC_DIR = path.join(ROOT, "public");
-export const OUT_DIR = path.join(ROOT, "out");
+// Folder layout of out/: scripts/lib/paths.ts.
+export { OUT_DIR } from "./paths";
 export const EPISODES_DIR = path.join(ROOT, "data", "episodes");
 
 const BYTES_PER_MB = 1024 * 1024;
@@ -49,11 +50,16 @@ export const compositionFor = (episode: AnyEpisode): string =>
 export type VoScript = {
   id: string;
   title: string;
-  scenes: { type: string; vo: string }[];
+  scenes: { type: string; vo: string; tone?: import("../../src/core/audio/voiceDirection").VoTone }[];
 };
 
-export const loadVoScript = (episodeId: string): VoScript =>
-  loadEpisode(episodeId);
+export const loadVoScript = (episodeId: string): VoScript => {
+  const episode = loadEpisode(episodeId);
+  if (!isVoiced(episode)) {
+    throw new ScriptError(`${episodeId} is a music video: it has no voice over`);
+  }
+  return episode;
+};
 
 export const requireEpisodeId = (
   positionals: string[],

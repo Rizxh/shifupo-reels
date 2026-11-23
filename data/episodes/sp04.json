@@ -1,0 +1,192 @@
+{
+  "id": "sp04",
+  "format": "cinema",
+  "title": "Perang Feng Shui 2 Bank",
+  "brand": {
+    "name": "SHIFU PO",
+    "descriptor": "BUSINESS, LOVE & LIFE",
+    "sealGlyph": "風",
+    "handle": null,
+    "logo": "assets/brand/logo-shifupo-red.png"
+  },
+  "claims": [
+    {
+      "text": "Gedung HSBC di Hong Kong berdiri lebih dulu daripada Menara Bank of China",
+      "reviewed": false
+    },
+    {
+      "text": "Menara Bank of China bersudut tajam dan dalam cerita feng shui populer disebut mengarah ke gedung lain seperti pisau",
+      "reviewed": false
+    },
+    {
+      "text": "Dua derek pembersih di atap HSBC dalam cerita populer disebut sebagai 'meriam' balasan",
+      "reviewed": false
+    }
+  ],
+  "scenes": [
+    {
+      "type": "hook",
+      "vo": "Dua bank raksasa saling serang... tanpa senjata?",
+      "voHighlight": [
+        "serang"
+      ],
+      "tone": "curious",
+      "shot": "sp04-hook",
+      "lines": [
+        {
+          "text": "PERANG 2 BANK",
+          "cueWord": "bank",
+          "accent": "BANK"
+        }
+      ],
+      "sfx": [
+        {
+          "sound": "gong",
+          "cueWord": "serang"
+        }
+      ]
+    },
+    {
+      "type": "context",
+      "vo": "HSBC berdiri lebih dulu.",
+      "voHighlight": [
+        "HSBC"
+      ],
+      "tone": "thoughtful",
+      "shot": "sp04-context",
+      "kicker": "HONG KONG",
+      "lines": [
+        {
+          "text": "HSBC LEBIH DULU",
+          "cueWord": "berdiri"
+        }
+      ],
+      "sfx": [
+        {
+          "sound": "chime1",
+          "cueWord": "HSBC"
+        }
+      ]
+    },
+    {
+      "type": "cause",
+      "vo": "Lalu Bank of China membangun menara setajam pisau.",
+      "voHighlight": [
+        "pisau"
+      ],
+      "tone": "serious",
+      "shot": "sp04-cause",
+      "kicker": "RONDE 1",
+      "lines": [
+        {
+          "text": "GEDUNG PISAU",
+          "cueWord": "pisau",
+          "accent": "PISAU"
+        }
+      ],
+      "sfx": [
+        {
+          "sound": "whoosh",
+          "cueWord": "menara"
+        },
+        {
+          "sound": "thump",
+          "cueWord": "pisau"
+        }
+      ]
+    },
+    {
+      "type": "effect",
+      "vo": "Kata feng shui, itu panah racun.",
+      "voHighlight": [
+        "panah racun"
+      ],
+      "tone": "whispers",
+      "shot": "sp04-effect",
+      "lines": [
+        {
+          "text": "PANAH RACUN",
+          "cueWord": "racun",
+          "accent": "RACUN"
+        }
+      ],
+      "sfx": [
+        {
+          "sound": "whoosh",
+          "cueWord": "panah"
+        },
+        {
+          "sound": "shimmer",
+          "cueWord": "racun"
+        }
+      ]
+    },
+    {
+      "type": "fix",
+      "vo": "HSBC membalas dengan dua derek mirip meriam.",
+      "voHighlight": [
+        "meriam"
+      ],
+      "tone": "confident",
+      "shot": "sp04-fix",
+      "kicker": "RONDE 2",
+      "lines": [
+        {
+          "text": "2 MERIAM DI ATAP",
+          "cueWord": "meriam",
+          "accent": "MERIAM"
+        }
+      ],
+      "sfx": [
+        {
+          "sound": "lock",
+          "cueWord": "derek"
+        },
+        {
+          "sound": "thump",
+          "cueWord": "meriam"
+        }
+      ]
+    },
+    {
+      "type": "payoff",
+      "vo": "Bukan mitos: gedung saling membaca ruang.",
+      "voHighlight": [
+        "mitos"
+      ],
+      "tone": "calm",
+      "shot": "sp04-payoff",
+      "lines": [
+        {
+          "text": "BUKAN MITOS.",
+          "cueWord": "mitos"
+        }
+      ],
+      "sfx": [
+        {
+          "sound": "chime2",
+          "cueWord": "ruang"
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "vo": "Konsultasi ruang usaha Anda via WhatsApp.",
+      "voHighlight": [
+        "WhatsApp"
+      ],
+      "tone": "warm",
+      "shot": "sp04-cta",
+      "sfx": [
+        {
+          "sound": "stamp",
+          "cueWord": "Konsultasi"
+        }
+      ],
+      "button": {
+        "text": "Konsultasi via WhatsApp",
+        "cueWord": "WhatsApp"
+      }
+    }
+  ]
+}

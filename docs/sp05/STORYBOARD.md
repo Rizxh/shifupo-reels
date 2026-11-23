@@ -1,0 +1,17 @@
+# Storyboard sp05 (Director Engine)
+
+Prompt: "meja kerja membelakangi pintu"  
+Penonton: Pemilik usaha, manajer dan karyawan kantor yang sering merasa sulit fokus di meja kerjanya · Masalah: Meja ditata asal muat, punggung menghadap pintu, tanpa sadar selalu waspada · Janji: Satu putaran meja ke posisi komando membuat ruang kerja terasa aman dan fokus · Format: cinematic 3D diorama (React Three Fiber, live di Remotion) + anotasi tangan gaya Motion Format  
+Perkiraan durasi: 24.6 s
+
+| # | Beat | Kamera | Subjek & aksi | Lingkungan | Fisika | Penghubung | VO |
+|---|---|---|---|---|---|---|---|
+| 1 | hook | crane-down | meja kerja di diorama kantor miniatur: kamera turun dari atas atap diorama ke balik kursi; pintu di belakang kursi terbuka sendiri, lingkaran coretan merah digambar mengitari pintu | kantor kecil bergaya Asia modern, dinding krem, lantai kayu, sore hari; light-rays, dust | daun pintu (spring-settle); daun tanaman (wind-sway) | celah pintu yang terbuka → POV dari balik kursi ke arah pintu | [curious] Meja Anda membelakangi pintu? |
+| 2 | context | pov | pintu yang terbuka di belakang kursi: kamera menoleh pelan dari layar ke belakang bahu; bayangan panjang orang lewat menyapu lantai dari celah pintu | di balik kursi kerja; haze, dust | bayangan orang lewat (sliding-friction); kursi (rigid-rotation) | sandaran kursi yang kosong → orbit mengitari kursi | [thoughtful] Rasanya selalu ada yang mengawasi dari belakang. |
+| 3 | cause | orbit | punggung kursi tanpa sandaran dinding: kamera mengitari kursi; aliran chi berupa butiran emas masuk dari pintu dan menabrak punggung kursi, ruang kosong di belakang kursi berubah kemerahan | ruang kosong antara kursi dan pintu; particles, light-rays | butiran chi (fluid-flow); butiran yang menabrak kursi (projectile) | butiran yang memantul ke meja → macro permukaan meja | [serious] Feng shui bilang: punggung tanpa sandaran, tanpa dukungan. |
+| 4 | effect | macro | koin emas dan kertas di atas meja: kertas tersapu terbang dari meja, koin emas menggelinding jatuh dan memantul di lantai menuju pintu | permukaan meja kayu dari dekat; bokeh, dust | koin emas (rolling); koin di lantai (gravity-bounce); kertas (projectile) | koin terakhir yang berhenti di depan pintu → top-down seluruh ruangan | [whispers] Fokus bocor, rezeki ikut keluar. |
+| 5 | fix | top-down | meja yang berputar ke posisi komando: dari atas, meja dan kursi berputar 180 derajat dan memantul berhenti; punggung kini ke dinding, wajah ke pintu; koin melompat kembali ke meja | denah ruangan dilihat dari atas; particles, light-rays | meja dan kursi (spring-settle); koin yang kembali (gravity-bounce) | garis emas kursi-ke-pintu → pull-back ke seluruh diorama | [confident] Putar meja: hadap pintu, punggung ke dinding. |
+| 6 | payoff | pull-back | seluruh diorama kantor yang kini tertata: kamera mundur keluar dari ruangan, lampu ruangan menyala hangat bertahap, aliran chi emas mengalir lembut dari pintu ke meja | diorama utuh mengambang di ruang gelap hangat; particles, bokeh | butiran chi (fluid-flow) | butiran chi yang naik → stempel logo Shifu Po | [calm] Itulah posisi komando: tenang, semua peluang terlihat. |
+| 7 | cta | crane-up | logo Shifu Po dan tombol WhatsApp: kamera naik meninggalkan diorama yang meredup, logo dan tombol muncul dengan pantulan pegas | ruang gelap hangat di atas diorama; particles, bokeh | logo (spring-settle) | — | [warm] Konsultasi kantor Anda via WhatsApp. |
+
+Dibuat oleh `npm run direct`. Ubah `production.json`, bukan file ini.

@@ -1,5 +1,6 @@
 import { random, useCurrentFrame, useVideoConfig } from "remotion";
 import { COLORS, STAGE, VIDEO } from "../lib/brand";
+import { motionBlur, stretchFromSpeed } from "../core/motion/acting";
 import { drift, EASE, prog } from "../lib/motion";
 
 const W = VIDEO.width;
@@ -121,6 +122,18 @@ export const PusherScene: React.FC<{
     rest.y + (STAGE.cy - rest.y) * exit - Math.sin(exit * Math.PI) * 40;
   const boulderSpin = -deg(travel / BOULDER_R) - exit * 220;
   const boulderScale = 1 + exit * 0.9;
+  // Real velocity of the boulder (px/frame) drives stretch and motion blur.
+  const posAt = (f: number) => {
+    const e = prog(f, exitStart, exitEnd, EASE.inOut);
+    return {
+      x: rest.x + (STAGE.cx - rest.x) * e,
+      y: rest.y + (STAGE.cy - rest.y) * e - Math.sin(e * Math.PI) * 40,
+    };
+  };
+  const p0 = posAt(frame - 0.5);
+  const p1 = posAt(frame + 0.5);
+  const mb = motionBlur(p1.x - p0.x, p1.y - p0.y, 0.5, 4, 18);
+  const stretch = stretchFromSpeed(Math.hypot(p1.x - p0.x, p1.y - p0.y), 0.01, 0.3);
 
   const figurePos = onHill(FIGURE_ANGLE, -4);
   // Dust kicked up at each foot plant (every half cycle).
@@ -227,9 +240,17 @@ export const PusherScene: React.FC<{
           );
         })()}
       </g>
-      {/* Boulder. */}
+      {/* Boulder. While it is thrown toward the camera it stretches along its
+          path and gets a directional motion blur from its real velocity. */}
+      <filter id="boulder-mb" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation={mb.stdDeviation} />
+      </filter>
       <g
-        transform={`translate(${bx} ${by}) scale(${boulderScale}) rotate(${boulderSpin})`}
+        transform={`translate(${bx} ${by}) rotate(${mb.angleDeg}) scale(${stretch[1]} ${stretch[0]}) rotate(${-mb.angleDeg})`}
+        filter={mb.amount > 0 ? "url(#boulder-mb)" : undefined}
+      >
+      <g
+        transform={`scale(${boulderScale}) rotate(${boulderSpin})`}
         opacity={1 - prog(frame, exitEnd - 4, exitEnd)}
       >
         <circle r={BOULDER_R} fill="url(#boulder-shade)" />
@@ -256,6 +277,7 @@ export const PusherScene: React.FC<{
           fill={COLORS.paperDeep}
           opacity={0.12}
         />
+      </g>
       </g>
     </svg>
   );

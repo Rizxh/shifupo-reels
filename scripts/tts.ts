@@ -33,6 +33,7 @@ import {
   type VoScript,
 } from "./lib/common";
 import { measureLoudnessLufs } from "./lib/loudness";
+import { directedText, isV3Model } from "../src/core/audio/voiceDirection";
 
 const DEFAULT_API_BASE = "https://api.elevenlabs.io";
 const DEFAULT_MODEL_ID = "eleven_multilingual_v2";
@@ -191,13 +192,18 @@ const requestTts = async (
   const url = `${config.apiBase}/v1/text-to-speech/${encodeURIComponent(
     config.voiceId,
   )}/with-timestamps?output_format=${OUTPUT_FORMAT}`;
-  const body = JSON.stringify({
-    text,
-    model_id: config.modelId,
-    // Neighbouring lines keep intonation consistent across per-scene files.
-    previous_text: context.previousText,
-    next_text: context.nextText,
-  });
+  // eleven_v3 rejects previous/next text; its tone tags carry the delivery.
+  const body = JSON.stringify(
+    isV3Model(config.modelId)
+      ? { text, model_id: config.modelId }
+      : {
+          text,
+          model_id: config.modelId,
+          // Neighbouring lines keep intonation consistent across per-scene files.
+          previous_text: context.previousText,
+          next_text: context.nextText,
+        },
+  );
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     let res: Response;
@@ -263,7 +269,7 @@ const processScene = async (
   const label = `s${index + 1} (${scene.type})`;
   const audioFile = path.join(PUBLIC_DIR, voAudioPath(episodeId, index));
   const sidecarFile = path.join(PUBLIC_DIR, voAlignmentPath(episodeId, index));
-  const hash = textHash(config, scene.vo);
+  const hash = textHash(config, directedText(scene.vo, scene.tone, config.modelId));
 
   if (!force && existsSync(audioFile)) {
     const sidecar = readSidecar(sidecarFile);
@@ -282,7 +288,7 @@ const processScene = async (
     console.log(`${label}: generating`);
   }
 
-  const response = await requestTts(config, scene.vo, {
+  const response = await requestTts(config, directedText(scene.vo, scene.tone, config.modelId), {
     previousText: scenes[index - 1]?.vo,
     nextText: scenes[index + 1]?.vo,
   });

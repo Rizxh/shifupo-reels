@@ -18,6 +18,8 @@ import {
   TYPE,
   VIDEO,
 } from "../lib/brand";
+import { idle } from "../core/motion/acting";
+import { backOut, powOut, sineInOut, track } from "../core/motion/tracks";
 import { EASE, prog, springAt, SPRING } from "../lib/motion";
 import type { SceneOf } from "../schema";
 
@@ -36,6 +38,16 @@ const HOOK_SCALE = 1.28;
 // Scaling around a point above the hill pushes the picture down, clear of
 // the headline.
 const HOOK_ORIGIN_Y = 690;
+// Hook camera move (pilot of the shared core camera/motion, docs/core).
+const HOOK_CAM = {
+  openZoom: 1.16,
+  revealFrames: 30,
+  punch: 0.045,
+  openRollDeg: -2.4,
+  restRollDeg: -0.6,
+  handheldPx: 4,
+  handheldDeg: 0.35,
+} as const;
 
 export const HookScene: React.FC<Base & { scene: SceneOf<"hook"> }> = ({
   scene,
@@ -43,8 +55,25 @@ export const HookScene: React.FC<Base & { scene: SceneOf<"hook"> }> = ({
   end,
   cue,
 }) => {
+  const frame = useCurrentFrame();
   const [a, b] = scene.lines;
   const slamAt = cue(a.cueWord);
+  // Camera (core/motion): opens close on the struggle and eases back, punches
+  // in on the slam word, settles a slight dutch angle, with handheld life.
+  const reveal = track(frame, [
+    [start, HOOK_CAM.openZoom],
+    [start + HOOK_CAM.revealFrames, 1, powOut(3)],
+  ]);
+  const punch = track(frame, [
+    [slamAt - 1, 0],
+    [slamAt + 2, HOOK_CAM.punch, powOut(2)],
+    [slamAt + 16, 0, backOut(1.6)],
+  ]);
+  const roll = track(frame, [
+    [start, HOOK_CAM.openRollDeg],
+    [start + HOOK_CAM.revealFrames * 1.5, HOOK_CAM.restRollDeg, sineInOut],
+  ]);
+  const hand = idle("hook-cam", frame, HOOK_CAM.handheldPx, HOOK_CAM.handheldDeg);
   return (
     <>
       {/* Scaled up around the hilltop so the figure reads at phone size. */}
@@ -52,7 +81,7 @@ export const HookScene: React.FC<Base & { scene: SceneOf<"hook"> }> = ({
         style={{
           position: "absolute",
           inset: 0,
-          transform: `scale(${HOOK_SCALE})`,
+          transform: `translateY(${hand.y.toFixed(2)}px) rotate(${(roll + hand.rotate).toFixed(3)}deg) scale(${(HOOK_SCALE * (reveal + punch)).toFixed(4)})`,
           transformOrigin: `${STAGE.cx}px ${HOOK_ORIGIN_Y}px`,
         }}
       >

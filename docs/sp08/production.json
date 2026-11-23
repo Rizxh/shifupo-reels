@@ -1,0 +1,594 @@
+{
+  "id": "sp08",
+  "product": "shifupo",
+  "prompt": "animasi interaktif tema lain: kuis feng shui rumah",
+  "brief": {
+    "viewer": "Pemilik rumah dan keluarga muda yang suka tips rumah",
+    "problem": "Banyak kebiasaan menata rumah yang tanpa sadar dianggap kurang baik dalam feng shui",
+    "promise": "Tiga soal kuis yang bisa dijawab sendiri, lengkap dengan penjelasan singkat",
+    "format": "2D kartun kertas: kuis A/B dengan hitung mundur, tema rumah mint, host Kambing"
+  },
+  "targetSeconds": {
+    "min": 40,
+    "max": 60
+  },
+  "beats": [
+    {
+      "beat": "hook",
+      "feeling": "penasaran",
+      "shot": {
+        "camera": "push-in",
+        "subject": "maskot Kambing di ruang tamu",
+        "action": "Kambing melompat masuk, judul kuis terbanting",
+        "secondary": [
+          "lampu gantung berayun",
+          "daun tanaman bergoyang"
+        ]
+      },
+      "environment": {
+        "setting": "ruang tamu rumah kertas siang hari",
+        "layers": [
+          "dinding rumah mint dan jendela berlangit biru",
+          "kartu soal dan kartu jawaban kertas",
+          "tanaman dan lampu gantung di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "light-rays"
+        ],
+        "lighting": {
+          "key": "cahaya siang dari jendela",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "segar, ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "Kambing",
+          "law": "gravity-bounce",
+          "note": "jatuh lalu memantul"
+        },
+        {
+          "object": "lampu gantung",
+          "law": "pendulum"
+        }
+      ],
+      "vo": {
+        "text": "Kuis feng shui rumah! Bisa jawab tiga soal?",
+        "tone": "excited",
+        "cueWords": [
+          "tiga"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "awal",
+          "sound": "pop"
+        },
+        {
+          "at": "tiga",
+          "sound": "chime"
+        }
+      ],
+      "assets": [
+        {
+          "name": "maskot Kambing kertas",
+          "tier": "hero",
+          "isNew": false
+        }
+      ],
+      "handoff": {
+        "object": "kartu soal",
+        "into": "kartu turun ke tengah"
+      },
+      "onScreenText": "KUIS FENG SHUI"
+    },
+    {
+      "beat": "context",
+      "feeling": "berpikir",
+      "shot": {
+        "camera": "dolly-in",
+        "subject": "soal cermin dan dua kartu jawaban",
+        "action": "kartu A dan B jatuh bergantian, hitung mundur tiga detik",
+        "secondary": [
+          "cincin hitung mundur menyusut",
+          "Kambing mengetuk kaki"
+        ]
+      },
+      "environment": {
+        "setting": "ruang tamu rumah kertas siang hari",
+        "layers": [
+          "dinding rumah mint dan jendela berlangit biru",
+          "kartu soal dan kartu jawaban kertas",
+          "tanaman dan lampu gantung di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "light-rays"
+        ],
+        "lighting": {
+          "key": "cahaya siang dari jendela",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "segar, ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "kartu jawaban",
+          "law": "gravity-bounce",
+          "note": "jatuh lalu memantul"
+        },
+        {
+          "object": "cincin",
+          "law": "rigid-rotation"
+        }
+      ],
+      "vo": {
+        "text": "Cermin sebaiknya di mana? A, menghadap pintu. B, di samping pintu.",
+        "tone": "curious",
+        "cueWords": [
+          "A",
+          "B"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "A",
+          "sound": "pop"
+        },
+        {
+          "at": "B",
+          "sound": "pop"
+        }
+      ],
+      "assets": [
+        {
+          "name": "kartu jawaban kertas A/B + ilustrasi",
+          "tier": "hero",
+          "isNew": true
+        }
+      ],
+      "handoff": {
+        "object": "kartu benar",
+        "into": "kartu membesar dengan stempel"
+      },
+      "onScreenText": "SOAL 1"
+    },
+    {
+      "beat": "cause",
+      "feeling": "lega",
+      "shot": {
+        "camera": "push-in",
+        "subject": "kartu B benar",
+        "action": "kartu B melompat dengan stempel BENAR, kartu A bergetar dicoret",
+        "secondary": [
+          "percikan konfeti",
+          "Kambing bersorak"
+        ]
+      },
+      "environment": {
+        "setting": "ruang tamu rumah kertas siang hari",
+        "layers": [
+          "dinding rumah mint dan jendela berlangit biru",
+          "kartu soal dan kartu jawaban kertas",
+          "tanaman dan lampu gantung di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "light-rays"
+        ],
+        "lighting": {
+          "key": "cahaya siang dari jendela",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "segar, ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "kartu B",
+          "law": "spring-settle"
+        },
+        {
+          "object": "kartu A",
+          "law": "spring-settle",
+          "note": "getar"
+        }
+      ],
+      "vo": {
+        "text": "Jawabannya B. Cermin menghadap pintu memantulkan rezeki keluar.",
+        "tone": "warm",
+        "cueWords": [
+          "Jawabannya"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "Jawabannya",
+          "sound": "stamp"
+        }
+      ],
+      "assets": [
+        {
+          "name": "stempel BENAR",
+          "tier": "support",
+          "isNew": true
+        }
+      ],
+      "handoff": {
+        "object": "kartu keluar",
+        "into": "soal kedua"
+      },
+      "onScreenText": "BENAR: B"
+    },
+    {
+      "beat": "context",
+      "feeling": "berpikir",
+      "shot": {
+        "camera": "pull-back",
+        "subject": "soal tempat tidur",
+        "action": "kartu baru jatuh, hitung mundur",
+        "secondary": [
+          "cincin menyusut",
+          "Kambing berpikir"
+        ]
+      },
+      "environment": {
+        "setting": "ruang tamu rumah kertas siang hari",
+        "layers": [
+          "dinding rumah mint dan jendela berlangit biru",
+          "kartu soal dan kartu jawaban kertas",
+          "tanaman dan lampu gantung di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "light-rays"
+        ],
+        "lighting": {
+          "key": "cahaya siang dari jendela",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "segar, ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "kartu jawaban",
+          "law": "gravity-bounce",
+          "note": "jatuh lalu memantul"
+        }
+      ],
+      "vo": {
+        "text": "Tempat tidur yang dianjurkan? A, kaki ke arah pintu. B, kepala ke dinding.",
+        "tone": "curious",
+        "cueWords": [
+          "A",
+          "B"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "A",
+          "sound": "pop"
+        },
+        {
+          "at": "B",
+          "sound": "pop"
+        }
+      ],
+      "assets": [
+        {
+          "name": "kartu jawaban kertas A/B + ilustrasi",
+          "tier": "hero",
+          "isNew": true
+        }
+      ],
+      "handoff": {
+        "object": "kartu benar",
+        "into": "stempel"
+      },
+      "onScreenText": "SOAL 2"
+    },
+    {
+      "beat": "effect",
+      "feeling": "paham",
+      "shot": {
+        "camera": "orbit",
+        "subject": "kartu B benar",
+        "action": "stempel BENAR, kartu A dicoret",
+        "secondary": [
+          "konfeti"
+        ]
+      },
+      "environment": {
+        "setting": "ruang tamu rumah kertas siang hari",
+        "layers": [
+          "dinding rumah mint dan jendela berlangit biru",
+          "kartu soal dan kartu jawaban kertas",
+          "tanaman dan lampu gantung di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "light-rays"
+        ],
+        "lighting": {
+          "key": "cahaya siang dari jendela",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "segar, ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "kartu B",
+          "law": "spring-settle"
+        }
+      ],
+      "vo": {
+        "text": "Jawabannya B. Kepala bersandar ke dinding, tidur lebih tenang.",
+        "tone": "thoughtful",
+        "cueWords": [
+          "Jawabannya"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "Jawabannya",
+          "sound": "stamp"
+        }
+      ],
+      "assets": [
+        {
+          "name": "stempel BENAR",
+          "tier": "support",
+          "isNew": false
+        }
+      ],
+      "handoff": {
+        "object": "kartu keluar",
+        "into": "soal terakhir"
+      },
+      "onScreenText": "BENAR: B"
+    },
+    {
+      "beat": "context",
+      "feeling": "seru",
+      "shot": {
+        "camera": "tracking",
+        "subject": "soal tanaman",
+        "action": "kartu jatuh, hitung mundur terakhir",
+        "secondary": [
+          "cincin menyusut",
+          "Kambing gelisah"
+        ]
+      },
+      "environment": {
+        "setting": "ruang tamu rumah kertas siang hari",
+        "layers": [
+          "dinding rumah mint dan jendela berlangit biru",
+          "kartu soal dan kartu jawaban kertas",
+          "tanaman dan lampu gantung di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "light-rays"
+        ],
+        "lighting": {
+          "key": "cahaya siang dari jendela",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "segar, ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "kartu jawaban",
+          "law": "gravity-bounce",
+          "note": "jatuh lalu memantul"
+        }
+      ],
+      "vo": {
+        "text": "Tanaman di rumah sebaiknya? A, hidup dan terawat. B, kering sebagai hiasan.",
+        "tone": "curious",
+        "cueWords": [
+          "A",
+          "B"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "A",
+          "sound": "pop"
+        },
+        {
+          "at": "B",
+          "sound": "pop"
+        }
+      ],
+      "assets": [
+        {
+          "name": "kartu jawaban kertas A/B + ilustrasi",
+          "tier": "hero",
+          "isNew": true
+        }
+      ],
+      "handoff": {
+        "object": "kartu benar",
+        "into": "stempel"
+      },
+      "onScreenText": "SOAL 3"
+    },
+    {
+      "beat": "fix",
+      "feeling": "senang",
+      "shot": {
+        "camera": "dolly-out",
+        "subject": "kartu A benar",
+        "action": "stempel BENAR, daun tanaman tumbuh",
+        "secondary": [
+          "daun bergoyang"
+        ]
+      },
+      "environment": {
+        "setting": "ruang tamu rumah kertas siang hari",
+        "layers": [
+          "dinding rumah mint dan jendela berlangit biru",
+          "kartu soal dan kartu jawaban kertas",
+          "tanaman dan lampu gantung di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "light-rays"
+        ],
+        "lighting": {
+          "key": "cahaya siang dari jendela",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "segar, ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "kartu A",
+          "law": "spring-settle"
+        }
+      ],
+      "vo": {
+        "text": "Jawabannya A. Tanaman hidup membawa energi segar.",
+        "tone": "excited",
+        "cueWords": [
+          "Jawabannya"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "Jawabannya",
+          "sound": "stamp"
+        }
+      ],
+      "assets": [
+        {
+          "name": "tanaman kertas",
+          "tier": "support",
+          "isNew": true
+        }
+      ],
+      "handoff": {
+        "object": "tiga bintang",
+        "into": "skor"
+      },
+      "onScreenText": "BENAR: A"
+    },
+    {
+      "beat": "payoff",
+      "feeling": "terlibat",
+      "shot": {
+        "camera": "crane-up",
+        "subject": "tiga bintang skor dan gelembung komentar",
+        "action": "bintang menyala satu per satu, gelembung komentar melompat",
+        "secondary": [
+          "Kambing melambai"
+        ]
+      },
+      "environment": {
+        "setting": "ruang tamu rumah kertas siang hari",
+        "layers": [
+          "dinding rumah mint dan jendela berlangit biru",
+          "kartu soal dan kartu jawaban kertas",
+          "tanaman dan lampu gantung di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "light-rays"
+        ],
+        "lighting": {
+          "key": "cahaya siang dari jendela",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "segar, ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "bintang",
+          "law": "spring-settle"
+        }
+      ],
+      "vo": {
+        "text": "Berapa skor Anda? Tulis di kolom komentar!",
+        "tone": "playful",
+        "cueWords": [
+          "komentar"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "komentar",
+          "sound": "pop"
+        }
+      ],
+      "assets": [
+        {
+          "name": "bintang dan gelembung komentar",
+          "tier": "support",
+          "isNew": true
+        }
+      ],
+      "handoff": {
+        "object": "gelembung komentar",
+        "into": "logo"
+      },
+      "onScreenText": "SKOR ANDA?"
+    },
+    {
+      "beat": "cta",
+      "feeling": "percaya",
+      "shot": {
+        "camera": "push-in",
+        "subject": "logo Shifu Po dan tombol WhatsApp",
+        "action": "logo menyegel, Kambing melambai",
+        "secondary": [
+          "konfeti"
+        ]
+      },
+      "environment": {
+        "setting": "ruang tamu rumah kertas siang hari",
+        "layers": [
+          "dinding rumah mint dan jendela berlangit biru",
+          "kartu soal dan kartu jawaban kertas",
+          "tanaman dan lampu gantung di depan"
+        ],
+        "atmosphere": [
+          "particles",
+          "light-rays"
+        ],
+        "lighting": {
+          "key": "cahaya siang dari jendela",
+          "rim": "bayangan kertas lembut di bawah tiap potongan",
+          "mood": "segar, ceria"
+        }
+      },
+      "physics": [
+        {
+          "object": "logo",
+          "law": "gravity-bounce",
+          "note": "jatuh lalu memantul"
+        }
+      ],
+      "vo": {
+        "text": "Mau rumah Anda dicek langsung? Konsultasi via WhatsApp.",
+        "tone": "warm",
+        "cueWords": [
+          "WhatsApp"
+        ]
+      },
+      "sfx": [
+        {
+          "at": "Konsultasi",
+          "sound": "stamp"
+        }
+      ],
+      "assets": [
+        {
+          "name": "logo resmi Shifu Po",
+          "tier": "hero",
+          "isNew": false
+        }
+      ]
+    }
+  ]
+}

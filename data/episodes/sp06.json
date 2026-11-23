@@ -1,0 +1,110 @@
+{
+  "id": "sp06",
+  "format": "shio",
+  "title": "Shio Hoki di Tahun Kambing Api",
+  "yearSign": "goat",
+  "yearLabel": "KAMBING API",
+  "brand": {
+    "name": "SHIFU PO",
+    "descriptor": "BUSINESS, LOVE & LIFE",
+    "sealGlyph": "風",
+    "handle": null,
+    "logo": "assets/brand/logo-shifupo-red.png"
+  },
+  "claims": [
+    {
+      "text": "Tahun Kambing Api (丁未) dimulai pada Imlek 6 Februari 2027 (chinatravel.com, thatsmandarin.com)",
+      "reviewed": true
+    },
+    {
+      "text": "Babi, Kelinci dan Kambing satu kelompok San He (亥卯未) menurut hubungan shio tradisional",
+      "reviewed": false
+    },
+    {
+      "text": "Kuda adalah pasangan Liu He (午未, 'sahabat rahasia') bagi Kambing",
+      "reviewed": false
+    },
+    {
+      "text": "Kerbau berlawanan langsung (Chong, 丑未) dengan Kambing, sehingga disarankan lebih berhati-hati",
+      "reviewed": false
+    }
+  ],
+  "scenes": [
+    {
+      "type": "hook",
+      "vo": "Shio Anda hoki di tahun Kambing Api?",
+      "voHighlight": ["hoki"],
+      "kicker": "IMLEK 2027",
+      "lines": [{ "text": "KAMBING API", "cueWord": "Kambing", "accent": "API" }],
+      "sfx": [{ "sound": "gong", "cueWord": "Kambing" }]
+    },
+    {
+      "type": "year",
+      "vo": "Tahun Kambing Api dimulai enam Februari.",
+      "voHighlight": ["enam", "Februari."],
+      "card": { "text": "6 FEBRUARI", "sub": "2027", "cueWord": "enam" },
+      "sfx": [
+        { "sound": "whoosh", "cueWord": "dimulai" },
+        { "sound": "stamp", "cueWord": "enam" }
+      ]
+    },
+    {
+      "type": "trine",
+      "vo": "Babi dan Kelinci satu segitiga dengan Kambing: peluang terbuka.",
+      "voHighlight": ["segitiga", "peluang"],
+      "lines": [{ "text": "SEGITIGA HOKI", "cueWord": "peluang", "accent": "HOKI" }],
+      "signs": [
+        { "sign": "pig", "label": "BABI", "cueWord": "Babi" },
+        { "sign": "rabbit", "label": "KELINCI", "cueWord": "Kelinci" }
+      ],
+      "link": { "kind": "trine", "cueWord": "segitiga" },
+      "sfx": [
+        { "sound": "chime1", "cueWord": "Babi" },
+        { "sound": "chime2", "cueWord": "Kelinci" },
+        { "sound": "shimmer", "cueWord": "segitiga" }
+      ]
+    },
+    {
+      "type": "ally",
+      "vo": "Kuda jadi sahabat rahasianya, relasi membawa rezeki.",
+      "voHighlight": ["sahabat", "rezeki."],
+      "lines": [{ "text": "SAHABAT RAHASIA", "cueWord": "rahasianya,", "accent": "RAHASIA" }],
+      "signs": [{ "sign": "horse", "label": "KUDA", "cueWord": "Kuda" }],
+      "link": { "kind": "ally", "cueWord": "sahabat" },
+      "sfx": [
+        { "sound": "chime3", "cueWord": "Kuda" },
+        { "sound": "coin", "cueWord": "rezeki." }
+      ]
+    },
+    {
+      "type": "clash",
+      "vo": "Kerbau berhadapan langsung, jadi lebih berhati-hati.",
+      "voHighlight": ["berhadapan", "berhati-hati."],
+      "kicker": "PERLU",
+      "lines": [{ "text": "HATI-HATI", "cueWord": "berhati-hati." }],
+      "signs": [{ "sign": "ox", "label": "KERBAU", "cueWord": "Kerbau" }],
+      "link": { "kind": "clash", "cueWord": "berhadapan" },
+      "sfx": [{ "sound": "thump", "cueWord": "berhadapan" }]
+    },
+    {
+      "type": "pillar",
+      "vo": "Tapi shio hanya satu dari empat pilar BaZi.",
+      "voHighlight": ["empat", "BaZi."],
+      "lines": [{ "text": "4 PILAR BAZI", "cueWord": "empat", "accent": "BAZI" }],
+      "pillars": [
+        { "glyph": "羊", "label": "TAHUN" },
+        { "glyph": "月", "label": "BULAN" },
+        { "glyph": "日", "label": "HARI" },
+        { "glyph": "時", "label": "JAM" }
+      ],
+      "sfx": [{ "sound": "lock", "cueWord": "pilar" }]
+    },
+    {
+      "type": "cta",
+      "vo": "Cek peruntungan Anda di tahun Kambing via WhatsApp.",
+      "voHighlight": ["WhatsApp."],
+      "sfx": [{ "sound": "stamp", "cueWord": "Cek" }],
+      "button": { "text": "Konsultasi via WhatsApp", "cueWord": "WhatsApp." }
+    }
+  ]
+}

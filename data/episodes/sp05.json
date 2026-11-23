@@ -1,0 +1,111 @@
+{
+  "id": "sp05",
+  "format": "cinema",
+  "title": "Meja Membelakangi Pintu",
+  "world": "office",
+  "brand": {
+    "name": "SHIFU PO",
+    "descriptor": "BUSINESS, LOVE & LIFE",
+    "sealGlyph": "風",
+    "handle": null,
+    "logo": "assets/brand/logo-shifupo-red.png"
+  },
+  "claims": [
+    {
+      "text": "Dalam feng shui, posisi meja yang membelakangi pintu dianggap kurang mendukung; posisi ideal ('posisi komando') menghadap pintu dengan punggung ke dinding",
+      "reviewed": false
+    }
+  ],
+  "scenes": [
+    {
+      "type": "hook",
+      "vo": "Meja Anda membelakangi pintu?",
+      "voHighlight": ["membelakangi", "pintu?"],
+      "tone": "curious",
+      "shot": "office-hook",
+      "lines": [{ "text": "MEMBELAKANGI PINTU?", "cueWord": "membelakangi", "accent": "PINTU?" }],
+      "sfx": [
+        { "sound": "whoosh", "cueWord": "Meja" },
+        { "sound": "chime1", "cueWord": "pintu" }
+      ],
+      "events": [{ "name": "door-open", "cueWord": "pintu" }],
+      "marks": [{ "kind": "circle", "anchor": "door", "cueWord": "pintu" }]
+    },
+    {
+      "type": "context",
+      "vo": "Rasanya selalu ada yang mengawasi dari belakang.",
+      "voHighlight": ["mengawasi"],
+      "tone": "thoughtful",
+      "shot": "office-context",
+      "lines": [{ "text": "SELALU WASPADA", "cueWord": "mengawasi" }],
+      "sfx": [{ "sound": "whoosh", "cueWord": "belakang" }],
+      "events": [{ "name": "walker", "cueWord": "mengawasi" }],
+      "marks": [{ "kind": "arrow", "anchor": "doorway", "cueWord": "belakang", "text": "siapa itu?" }]
+    },
+    {
+      "type": "cause",
+      "vo": "Kata feng shui punggung tanpa sandaran berarti tanpa dukungan.",
+      "voHighlight": ["sandaran", "dukungan."],
+      "tone": "serious",
+      "shot": "office-cause",
+      "lines": [{ "text": "TANPA SANDARAN", "cueWord": "sandaran", "accent": "SANDARAN" }],
+      "sfx": [
+        { "sound": "shimmer", "cueWord": "punggung" },
+        { "sound": "thump", "cueWord": "dukungan." }
+      ],
+      "events": [{ "name": "chi-hit", "cueWord": "punggung" }],
+      "marks": [{ "kind": "circle", "anchor": "chair-back", "cueWord": "sandaran" }]
+    },
+    {
+      "type": "effect",
+      "vo": "Fokus bocor, rezeki ikut keluar.",
+      "voHighlight": ["bocor,", "keluar."],
+      "tone": "whispers",
+      "shot": "office-effect",
+      "lines": [{ "text": "REZEKI KELUAR", "cueWord": "rezeki", "accent": "KELUAR" }],
+      "sfx": [{ "sound": "whoosh", "cueWord": "bocor," }],
+      "events": [
+        { "name": "papers-fly", "cueWord": "bocor," },
+        { "name": "coins-fall", "cueWord": "rezeki" }
+      ],
+      "marks": [{ "kind": "arrow", "anchor": "coin-exit", "cueWord": "keluar.", "text": "keluar!" }]
+    },
+    {
+      "type": "fix",
+      "vo": "Putar meja: hadap pintu, punggung ke dinding.",
+      "voHighlight": ["hadap", "pintu,"],
+      "tone": "confident",
+      "shot": "office-fix",
+      "lines": [{ "text": "HADAP PINTU", "cueWord": "hadap", "accent": "PINTU" }],
+      "sfx": [
+        { "sound": "whoosh", "cueWord": "Putar" },
+        { "sound": "lock", "cueWord": "dinding." }
+      ],
+      "events": [
+        { "name": "desk-turn", "cueWord": "Putar" },
+        { "name": "sightline", "cueWord": "pintu," },
+        { "name": "coins-return", "cueWord": "dinding." }
+      ]
+    },
+    {
+      "type": "payoff",
+      "vo": "Itulah posisi komando yang tenang dan penuh peluang.",
+      "voHighlight": ["komando"],
+      "tone": "calm",
+      "shot": "office-payoff",
+      "lines": [{ "text": "POSISI KOMANDO", "cueWord": "komando", "accent": "KOMANDO" }],
+      "sfx": [{ "sound": "chime2", "cueWord": "komando" }],
+      "events": [{ "name": "lights-on", "cueWord": "tenang" }],
+      "marks": [{ "kind": "stamp", "anchor": "desk", "cueWord": "peluang.", "text": "AMAN" }]
+    },
+    {
+      "type": "cta",
+      "vo": "Konsultasi kantor Anda via WhatsApp.",
+      "voHighlight": ["WhatsApp."],
+      "tone": "warm",
+      "shot": "office-cta",
+      "sfx": [{ "sound": "stamp", "cueWord": "Konsultasi" }],
+      "button": { "text": "Konsultasi via WhatsApp", "cueWord": "WhatsApp." }
+    }
+  ]
+}

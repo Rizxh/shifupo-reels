@@ -1,0 +1,166 @@
+{
+  "id": "sp04",
+  "product": "shifupo",
+  "prompt": "video perang feng shui dua bank di Hong Kong",
+  "brief": {
+    "viewer": "Pemilik usaha dan karyawan kantor yang penasaran feng shui",
+    "problem": "Mengira feng shui hanya urusan dalam rumah",
+    "promise": "Feng shui juga dipakai gedung raksasa untuk 'membaca' ruang di sekitarnya",
+    "format": "cinematic 3D (render Blender) + teks 2D brand"
+  },
+  "beats": [
+    {
+      "beat": "hook",
+      "feeling": "penasaran, tegang",
+      "shot": {
+        "camera": "crane-down",
+        "subject": "Pelabuhan Victoria saat senja",
+        "action": "kamera menembus awan, kota menyala di bawah, dua menara saling berhadapan masuk frame",
+        "secondary": ["kapal feri melaju", "lampu kota berkedip", "awan bergeser"]
+      },
+      "environment": {
+        "setting": "Hong Kong senja, langit jingga-ungu",
+        "layers": ["langit dengan awan volumetrik", "deretan gedung pencakar langit", "air pelabuhan beriak", "awan tipis di depan kamera"],
+        "atmosphere": ["clouds", "haze", "light-rays"],
+        "lighting": { "key": "matahari rendah dari barat, bayangan panjang", "rim": "pantulan langit di kaca gedung", "mood": "dramatis hangat" }
+      },
+      "physics": [
+        { "object": "awan", "law": "wind-sway" },
+        { "object": "feri", "law": "sliding-friction", "note": "meninggalkan jejak riak" }
+      ],
+      "handoff": { "object": "puncak menara HSBC", "into": "dolly ke fasad HSBC" },
+      "vo": { "text": "Dua bank raksasa saling serang... tanpa senjata?", "tone": "curious", "cueWords": ["serang"] },
+      "onScreenText": "PERANG 2 BANK",
+      "sfx": [{ "at": "awal", "sound": "angin + whoosh awan" }, { "at": "serang", "sound": "gong rendah" }],
+      "assets": [{ "name": "skyline Hong Kong PBR", "tier": "hero", "isNew": true }, { "name": "awan volumetrik", "tier": "support", "isNew": true }]
+    },
+    {
+      "beat": "context",
+      "feeling": "tenang, membangun",
+      "shot": {
+        "camera": "dolly-in",
+        "subject": "Gedung HSBC",
+        "action": "kamera mendekat ke struktur baja dan eskalator miring di lobi",
+        "secondary": ["orang kecil berjalan", "kilau kaca bergeser"]
+      },
+      "environment": {
+        "setting": "kaki gedung HSBC, alun-alun",
+        "layers": ["langit senja", "fasad baja HSBC", "pohon dan orang di alun-alun"],
+        "atmosphere": ["haze", "particles"],
+        "lighting": { "key": "cahaya senja samping", "rim": "lampu lobi hangat dari dalam", "mood": "megah" }
+      },
+      "physics": [{ "object": "pejalan kaki", "law": "sliding-friction" }],
+      "handoff": { "object": "pantulan menara lain di kaca HSBC", "into": "orbit menara Bank of China" },
+      "vo": { "text": "HSBC berdiri lebih dulu.", "tone": "thoughtful", "cueWords": ["HSBC"] },
+      "sfx": [{ "at": "HSBC", "sound": "dentang logam lembut" }],
+      "assets": [{ "name": "gedung HSBC", "tier": "hero", "isNew": true }]
+    },
+    {
+      "beat": "cause",
+      "feeling": "terancam",
+      "shot": {
+        "camera": "orbit",
+        "subject": "Menara Bank of China",
+        "action": "kamera mengitari menara, sudut-sudut tajamnya berkilat seperti bilah",
+        "secondary": ["kilau matahari menyapu sudut", "burung terbang"]
+      },
+      "environment": {
+        "setting": "langit di antara gedung",
+        "layers": ["langit dan awan", "menara Bank of China", "gedung lain buram di depan"],
+        "atmosphere": ["clouds", "light-rays"],
+        "lighting": { "key": "matahari tepat di tepi menara (flare)", "rim": "garis cahaya di setiap sudut", "mood": "tajam dingin" }
+      },
+      "physics": [{ "object": "kilau kaca", "law": "rigid-rotation" }, { "object": "burung", "law": "projectile" }],
+      "handoff": { "object": "sudut menara", "into": "push-in ke garis tajam" },
+      "vo": { "text": "Lalu Bank of China membangun menara setajam pisau.", "tone": "serious", "cueWords": ["pisau"] },
+      "onScreenText": "GEDUNG \"PISAU\"",
+      "sfx": [{ "at": "pisau", "sound": "desing bilah" }],
+      "assets": [{ "name": "menara Bank of China", "tier": "hero", "isNew": true }]
+    },
+    {
+      "beat": "effect",
+      "feeling": "seram",
+      "shot": {
+        "camera": "push-in",
+        "subject": "garis energi dari sudut menara",
+        "action": "panah cahaya merah tipis melesat dari sudut menuju HSBC",
+        "secondary": ["kabut bergulung", "lampu jendela meredup"]
+      },
+      "environment": {
+        "setting": "ruang di antara dua gedung",
+        "layers": ["langit gelap", "dua menara", "kabut tipis depan"],
+        "atmosphere": ["fog", "sparks"],
+        "lighting": { "key": "cahaya merah dari panah", "rim": "biru dingin dari langit", "mood": "tegang" }
+      },
+      "physics": [{ "object": "panah energi", "law": "projectile" }, { "object": "kabut", "law": "fluid-flow" }],
+      "handoff": { "object": "panah menghantam atap HSBC", "into": "low-angle atap" },
+      "vo": { "text": "Kata feng shui, itu panah racun.", "tone": "whispers", "cueWords": ["racun"] },
+      "sfx": [{ "at": "racun", "sound": "dengung rendah + desis" }],
+      "assets": [{ "name": "panah energi (FX)", "tier": "support", "isNew": true }]
+    },
+    {
+      "beat": "fix",
+      "feeling": "berani",
+      "shot": {
+        "camera": "low-angle",
+        "subject": "dua derek pembersih di atap HSBC",
+        "action": "derek berputar dan terkunci mengarah ke Bank of China seperti meriam",
+        "secondary": ["kabel berayun", "awan cepat di belakang"]
+      },
+      "environment": {
+        "setting": "atap HSBC",
+        "layers": ["langit dramatis", "derek atap", "tepi atap dekat kamera"],
+        "atmosphere": ["clouds", "light-rays"],
+        "lighting": { "key": "matahari dari belakang derek (siluet)", "rim": "kilau logam derek", "mood": "heroik" }
+      },
+      "physics": [{ "object": "lengan derek", "law": "spring-settle", "note": "berhenti dengan sedikit pantulan" }, { "object": "kabel", "law": "pendulum" }],
+      "handoff": { "object": "moncong derek", "into": "pull-back ke dua menara" },
+      "vo": { "text": "HSBC membalas dengan dua derek mirip meriam.", "tone": "confident", "cueWords": ["meriam"] },
+      "onScreenText": "2 \"MERIAM\" DI ATAP",
+      "sfx": [{ "at": "meriam", "sound": "kunci logam berat + dentum" }],
+      "assets": [{ "name": "derek atap", "tier": "hero", "isNew": true }]
+    },
+    {
+      "beat": "payoff",
+      "feeling": "kagum",
+      "shot": {
+        "camera": "pull-back",
+        "subject": "dua menara di cakrawala",
+        "action": "kamera mundur, matahari tenggelam di antara dua menara, lampu kota menyala bertahap",
+        "secondary": ["jendela menyala satu per satu", "awan berubah ungu"]
+      },
+      "environment": {
+        "setting": "skyline Hong Kong saat matahari terbenam",
+        "layers": ["matahari dan awan", "skyline", "air pelabuhan dengan pantulan"],
+        "atmosphere": ["clouds", "haze", "water-ripples"],
+        "lighting": { "key": "matahari tenggelam di tengah", "rim": "kota yang mulai menyala", "mood": "tenang megah" }
+      },
+      "physics": [{ "object": "riak air", "law": "fluid-flow" }],
+      "handoff": { "object": "matahari terbenam", "into": "stempel logo Shifu Po" },
+      "vo": { "text": "Bukan mitos: gedung saling membaca ruang.", "tone": "calm", "cueWords": ["mitos"] },
+      "onScreenText": "BUKAN MITOS.",
+      "sfx": [{ "at": "mitos", "sound": "pad hangat naik" }],
+      "assets": [{ "name": "skyline Hong Kong PBR", "tier": "hero", "isNew": false }]
+    },
+    {
+      "beat": "cta",
+      "feeling": "percaya",
+      "shot": {
+        "camera": "crane-up",
+        "subject": "logo Shifu Po dan tombol WhatsApp",
+        "action": "kamera naik ke langit malam, stempel logo dan tombol muncul",
+        "secondary": ["bintang berkelip", "kilau emas di stempel"]
+      },
+      "environment": {
+        "setting": "langit malam di atas kota",
+        "layers": ["langit bintang", "awan tipis", "lampu kota buram di bawah"],
+        "atmosphere": ["stars", "bokeh"],
+        "lighting": { "key": "cahaya bulan", "rim": "emas pada logo", "mood": "hangat premium" }
+      },
+      "physics": [{ "object": "stempel logo", "law": "spring-settle" }],
+      "vo": { "text": "Konsultasi ruang usaha Anda via WhatsApp.", "tone": "warm", "cueWords": ["WhatsApp"] },
+      "sfx": [{ "at": "WhatsApp", "sound": "stempel + chime" }],
+      "assets": [{ "name": "logo resmi Shifu Po", "tier": "hero", "isNew": false }]
+    }
+  ]
+}

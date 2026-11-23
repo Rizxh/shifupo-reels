@@ -22,7 +22,8 @@ import {
   installWhisperCpp,
 } from "@remotion/install-whisper-cpp";
 import { z } from "zod";
-import { OUT_DIR, ROOT, run, runMain, ScriptError } from "./lib/common";
+import { ROOT, run, runMain, ScriptError } from "./lib/common";
+import { OUT } from "./lib/paths";
 
 // Self-contained: the first run downloads whisper.cpp and the ~1.6 GB model
 // into this project's .whisper/.
@@ -79,8 +80,8 @@ const transcribeRange = async (
   language: string,
 ): Promise<Word[]> => {
   // installWhisperCpp refuses a pre-existing folder, so work files go to out/.
-  mkdirSync(OUT_DIR, { recursive: true });
-  const base = path.join(OUT_DIR, "transcribe-16k");
+  mkdirSync(OUT.qc, { recursive: true });
+  const base = path.join(OUT.qc, "transcribe-16k");
   const ffmpeg = await run("ffmpeg", [
     "-v",
     "error",

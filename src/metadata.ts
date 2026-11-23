@@ -10,8 +10,18 @@ import {
   layoutBeats,
   type VoLine,
 } from "./lib/timeline";
-import { FPS, POP_PACING, REEL, secondsToFrames } from "./lib/timing";
+import { CINEMA_PACING, FPS, mvStarts, POP_PACING, REEL, secondsToFrames } from "./lib/timing";
 import {
+  mvReelPropsSchema,
+  type MvReelProps,
+  quizReelPropsSchema,
+  type QuizReelProps,
+  paradeReelPropsSchema,
+  type ParadeReelProps,
+  shioReelPropsSchema,
+  type ShioReelProps,
+  cinemaReelPropsSchema,
+  type CinemaReelProps,
   popReelPropsSchema,
   reelPropsSchema,
   type PopReelProps,
@@ -81,7 +91,7 @@ const measureLine = async (
 
 type TimedProps = {
   id: string;
-  scenes: { vo: string }[];
+  scenes: { vo: string; holdSeconds?: number }[];
   beats?: unknown;
 };
 
@@ -95,7 +105,10 @@ const metadataFor =
   async ({ props }) => {
     const episode = parse(props);
     const lines = await Promise.all(
-      episode.scenes.map((scene, i) => measureLine(episode.id, i, scene.vo)),
+      episode.scenes.map(async (scene, i) => ({
+        ...(await measureLine(episode.id, i, scene.vo)),
+        holdFrames: secondsToFrames(scene.holdSeconds ?? 0, FPS),
+      })),
     );
     const { beats, durationInFrames } = layoutBeats(lines, FPS, {
       outroHoldSeconds: options.outroHoldSeconds,
@@ -124,3 +137,26 @@ export const calculatePopReelMetadata = metadataFor<PopReelProps>(
     minSeconds: POP_PACING.minSeconds,
   },
 );
+
+export const calculateQuizMetadata = metadataFor<QuizReelProps>((p) => quizReelPropsSchema.parse(p), {
+  outroHoldSeconds: CINEMA_PACING.outroHoldSeconds,
+});
+
+export const calculateParadeMetadata = metadataFor<ParadeReelProps>((p) => paradeReelPropsSchema.parse(p), {
+  outroHoldSeconds: CINEMA_PACING.outroHoldSeconds,
+});
+
+export const calculateShioMetadata = metadataFor<ShioReelProps>((p) => shioReelPropsSchema.parse(p), {
+  outroHoldSeconds: CINEMA_PACING.outroHoldSeconds,
+});
+
+export const calculateCinemaMetadata = metadataFor<CinemaReelProps>((p) => cinemaReelPropsSchema.parse(p), {
+  outroHoldSeconds: CINEMA_PACING.outroHoldSeconds,
+});
+
+// Music video: no voice over, the lyric table sets every scene length.
+export const calculateMvMetadata: CalculateMetadataFunction<MvReelProps> = ({ props }) => {
+  const episode = mvReelPropsSchema.parse(props);
+  const starts = mvStarts(episode.scenes.map((s) => s.seconds), FPS);
+  return { durationInFrames: starts[starts.length - 1], fps: FPS, props: episode };
+};

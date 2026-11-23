@@ -1,0 +1,165 @@
+{
+  "id": "sp07",
+  "format": "parade",
+  "title": "Ramalan 12 Shio 2027 (Part 2)",
+  "yearSign": "goat",
+  "names": {
+    "rat": "TIKUS",
+    "ox": "KERBAU",
+    "tiger": "MACAN",
+    "rabbit": "KELINCI",
+    "dragon": "NAGA",
+    "snake": "ULAR",
+    "horse": "KUDA",
+    "goat": "KAMBING",
+    "monkey": "MONYET",
+    "rooster": "AYAM",
+    "dog": "ANJING",
+    "pig": "BABI"
+  },
+  "brand": {
+    "name": "SHIFU PO",
+    "descriptor": "BUSINESS, LOVE & LIFE",
+    "sealGlyph": "風",
+    "handle": null,
+    "logo": "assets/brand/logo-shifupo-red.png"
+  },
+  "claims": [
+    { "text": "Tahun Kambing Api (丁未) dimulai pada Imlek 6 Februari 2027", "reviewed": true },
+    { "text": "Babi dan Kelinci satu kelompok San He (亥卯未) dengan Kambing", "reviewed": false },
+    { "text": "Kuda pasangan Liu He (午未) bagi Kambing", "reviewed": false },
+    { "text": "Macan, Naga, Ular, Monyet dan Ayam tidak punya hubungan khusus dengan Kambing, sehingga disebut cenderung stabil", "reviewed": false },
+    { "text": "Kambing berada di tahun shionya sendiri (Ben Ming Nian), saran umum: jaga kesehatan dan tidak gegabah", "reviewed": false },
+    { "text": "Kerbau bentrok (Chong 丑未), Anjing (Xing/Po 戌未) dan Tikus (Hai 子未) disarankan lebih teliti", "reviewed": false }
+  ],
+  "scenes": [
+    {
+      "type": "hook",
+      "vo": "Ramalan dua belas shio di tahun Kambing Api!",
+      "voHighlight": ["dua belas shio"],
+      "tone": "excited",
+      "kicker": "IMLEK 2027",
+      "lines": [{ "text": "12 SHIO", "cueWord": "shio", "accent": "SHIO" }],
+      "sfx": [{ "sound": "gong", "cueWord": "Api!" }]
+    },
+    {
+      "type": "intro",
+      "vo": "Kita cek satu per satu, mulai yang paling hoki.",
+      "voHighlight": ["paling hoki."],
+      "tone": "curious",
+      "lines": [{ "text": "SATU PER SATU", "cueWord": "cek" }],
+      "sfx": [{ "sound": "chime1", "cueWord": "hoki." }]
+    },
+    {
+      "type": "group",
+      "vo": "Babi dan Kelinci satu segitiga dengan Kambing. Peluang dan rezeki terbuka lebar.",
+      "voHighlight": ["rezeki"],
+      "tone": "excited",
+      "lines": [{ "text": "SEGITIGA HOKI", "cueWord": "segitiga", "accent": "HOKI" }],
+      "signs": [
+        { "sign": "pig", "cueWord": "Babi" },
+        { "sign": "rabbit", "cueWord": "Kelinci" }
+      ],
+      "mood": "happy",
+      "stamp": { "text": "HOKI BESAR", "cueWord": "rezeki" },
+      "sfx": [
+        { "sound": "pop", "cueWord": "Babi" },
+        { "sound": "pop", "cueWord": "Kelinci" },
+        { "sound": "coin", "cueWord": "rezeki" }
+      ]
+    },
+    {
+      "type": "group",
+      "vo": "Kuda, sahabat rahasia Kambing. Relasi dan kerja sama membawa untung.",
+      "voHighlight": ["sahabat rahasia", "untung."],
+      "tone": "warm",
+      "lines": [{ "text": "SAHABAT RAHASIA", "cueWord": "sahabat", "accent": "RAHASIA" }],
+      "signs": [{ "sign": "horse", "cueWord": "Kuda," }],
+      "mood": "wink",
+      "stamp": { "text": "SAHABAT", "cueWord": "untung." },
+      "sfx": [
+        { "sound": "pop", "cueWord": "Kuda," },
+        { "sound": "chime2", "cueWord": "untung." }
+      ]
+    },
+    {
+      "type": "group",
+      "vo": "Macan, Naga, Ular, Monyet, dan Ayam cenderung stabil. Pas untuk menabung dan menata rencana.",
+      "voHighlight": ["stabil.", "menabung"],
+      "tone": "calm",
+      "lines": [{ "text": "TENANG & STABIL", "cueWord": "cenderung", "accent": "STABIL" }],
+      "signs": [
+        { "sign": "tiger", "cueWord": "Macan," },
+        { "sign": "dragon", "cueWord": "Naga," },
+        { "sign": "snake", "cueWord": "Ular," },
+        { "sign": "monkey", "cueWord": "Monyet," },
+        { "sign": "rooster", "cueWord": "Ayam" }
+      ],
+      "mood": "happy",
+      "stamp": { "text": "STABIL", "cueWord": "menabung" },
+      "sfx": [
+        { "sound": "pop", "cueWord": "Macan," },
+        { "sound": "pop", "cueWord": "Naga," },
+        { "sound": "pop", "cueWord": "Ular," },
+        { "sound": "pop", "cueWord": "Monyet," },
+        { "sound": "pop", "cueWord": "Ayam" },
+        { "sound": "stamp", "cueWord": "menabung" }
+      ]
+    },
+    {
+      "type": "group",
+      "vo": "Kambing sendiri sedang di tahun shionya. Jaga kesehatan dan jangan gegabah.",
+      "voHighlight": ["kesehatan"],
+      "tone": "thoughtful",
+      "lines": [{ "text": "JAGA KESEHATAN", "cueWord": "kesehatan", "accent": "KESEHATAN" }],
+      "signs": [{ "sign": "goat", "cueWord": "Kambing" }],
+      "mood": "closed",
+      "stamp": { "text": "TAHUN SENDIRI", "cueWord": "shionya." },
+      "sfx": [
+        { "sound": "chime3", "cueWord": "Kambing" },
+        { "sound": "stamp", "cueWord": "shionya." }
+      ]
+    },
+    {
+      "type": "group",
+      "vo": "Kerbau berhadapan langsung. Anjing dan Tikus juga perlu lebih teliti.",
+      "voHighlight": ["berhadapan", "teliti."],
+      "tone": "serious",
+      "lines": [{ "text": "PERLU TELITI", "cueWord": "perlu", "accent": "TELITI" }],
+      "signs": [
+        { "sign": "ox", "cueWord": "Kerbau" },
+        { "sign": "dog", "cueWord": "Anjing" },
+        { "sign": "rat", "cueWord": "Tikus" }
+      ],
+      "mood": "wow",
+      "stamp": { "text": "HATI-HATI", "cueWord": "teliti." },
+      "sfx": [
+        { "sound": "thump", "cueWord": "Kerbau" },
+        { "sound": "pop", "cueWord": "Anjing" },
+        { "sound": "pop", "cueWord": "Tikus" }
+      ]
+    },
+    {
+      "type": "payoff",
+      "vo": "Ingat, shio hanya satu dari empat pilar BaZi Anda.",
+      "voHighlight": ["empat pilar"],
+      "tone": "calm",
+      "lines": [{ "text": "4 PILAR BAZI", "cueWord": "empat", "accent": "BAZI" }],
+      "pillars": [
+        { "glyph": "羊", "label": "TAHUN" },
+        { "glyph": "月", "label": "BULAN" },
+        { "glyph": "日", "label": "HARI" },
+        { "glyph": "時", "label": "JAM" }
+      ],
+      "sfx": [{ "sound": "lock", "cueWord": "pilar" }]
+    },
+    {
+      "type": "cta",
+      "vo": "Mau tahu peruntungan lengkap Anda? Konsultasi via WhatsApp.",
+      "voHighlight": ["WhatsApp."],
+      "tone": "warm",
+      "sfx": [{ "sound": "stamp", "cueWord": "Konsultasi" }],
+      "button": { "text": "Konsultasi via WhatsApp", "cueWord": "WhatsApp." }
+    }
+  ]
+}

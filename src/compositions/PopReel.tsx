@@ -29,6 +29,7 @@ import {
 } from "../lib/sfx";
 import { cameraAt, WINDOW } from "../lib/space";
 import { cueFrame, type Beat } from "../lib/timeline";
+import { CONTINUITY } from "../core/timeline/continuity";
 import type { PopReelProps, PopScene } from "../schema";
 import {
   chartCrossing,
@@ -159,7 +160,10 @@ export const PopReel: React.FC<PopReelProps> = ({
     popLayers(scene, {
       frame,
       fps,
-      start: beats[i].startFrame,
+      // Entrances start before the wipe reveals the scene (core continuity
+      // rule): the window never opens on an empty stage, and the first scene
+      // is already moving at frame 0.
+      start: beats[i].startFrame - (i === 0 ? CONTINUITY.firstScenePreroll : CONTINUITY.entrancePreroll),
       end: beats[i].endFrame,
       cue: cueOf(scene, beats[i]),
       cam,

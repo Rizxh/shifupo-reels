@@ -1,0 +1,307 @@
+{
+  "id": "sp10",
+  "format": "mv",
+  "title": "KITA PAY JAY SEN",
+  "world": "ruko2d",
+  "music": "audio/bgm/pay-jay-sen-temp.wav",
+  "tagline": "Rezeki tumbuh dari usaha, kejujuran, dan berbagi.",
+  "brand": {
+    "name": "SHIFU PO",
+    "descriptor": "BUSINESS, LOVE & LIFE",
+    "sealGlyph": "風",
+    "handle": null,
+    "logo": "assets/brand/logo-shifupo-red.png"
+  },
+  "claims": [
+    {
+      "text": "Cai Shen (Dewa Rezeki) dihormati dalam tradisi Tionghoa dengan dupa dan doa untuk kelancaran usaha",
+      "reviewed": false
+    },
+    {
+      "text": "Lirik lagu 'KITA PAY JAY SEN' dan tagline dari storyboard klien; musik di video ini sementara (placeholder) sampai lagu asli tersedia",
+      "reviewed": false
+    }
+  ],
+  "scenes": [
+    {
+      "shot": "intro",
+      "seconds": 4,
+      "overlay": "smoke-title",
+      "sfx": [
+        {
+          "sound": "gong",
+          "at": 0.02
+        }
+      ],
+      "lyric": "KITA PAY JAY SEN"
+    },
+    {
+      "shot": "hands",
+      "seconds": 2,
+      "lyric": "KITA PAY JAY SEN",
+      "overlay": "smoke-title",
+      "sfx": [
+        {
+          "sound": "shimmer",
+          "at": 0.05
+        }
+      ]
+    },
+    {
+      "shot": "face",
+      "seconds": 2,
+      "lyric": "KITA PAY JAY SEN",
+      "overlay": "smoke-title",
+      "sfx": []
+    },
+    {
+      "shot": "door",
+      "seconds": 4,
+      "lyric": "PINTU TERBUKA",
+      "overlay": "none",
+      "sfx": [
+        {
+          "sound": "chime2",
+          "at": 0.25
+        }
+      ]
+    },
+    {
+      "shot": "bless",
+      "seconds": 4,
+      "lyric": "KAYA DAN JAYA",
+      "overlay": "none",
+      "sfx": [
+        {
+          "sound": "shimmer",
+          "at": 0.2
+        }
+      ]
+    },
+    {
+      "shot": "shutter",
+      "seconds": 1,
+      "lyric": "ADA SEBABNYA",
+      "overlay": "icon-clock",
+      "sfx": [
+        {
+          "sound": "pop",
+          "at": 0.05
+        }
+      ]
+    },
+    {
+      "shot": "shelf",
+      "seconds": 1,
+      "lyric": "ADA SEBABNYA",
+      "overlay": "icon-goods",
+      "sfx": [
+        {
+          "sound": "pop",
+          "at": 0.05
+        }
+      ]
+    },
+    {
+      "shot": "sweep",
+      "seconds": 1,
+      "lyric": "ADA SEBABNYA",
+      "overlay": "icon-broom",
+      "sfx": [
+        {
+          "sound": "pop",
+          "at": 0.05
+        }
+      ]
+    },
+    {
+      "shot": "ledger",
+      "seconds": 1,
+      "lyric": "ADA SEBABNYA",
+      "overlay": "icon-scale",
+      "sfx": [
+        {
+          "sound": "pop",
+          "at": 0.05
+        }
+      ]
+    },
+    {
+      "shot": "market",
+      "seconds": 4,
+      "lyric": "SIKON MENUNJANG",
+      "overlay": "none",
+      "sfx": []
+    },
+    {
+      "shot": "friendly",
+      "seconds": 4,
+      "lyric": "RAMAH ORANGNYA",
+      "overlay": "none",
+      "sfx": [
+        {
+          "sound": "chime1",
+          "at": 0.3
+        }
+      ]
+    },
+    {
+      "shot": "busy",
+      "seconds": 4,
+      "lyric": "GIAT USAHA",
+      "overlay": "none",
+      "sfx": []
+    },
+    {
+      "shot": "blessing",
+      "seconds": 4,
+      "lyric": "BERKAT BERLIMPAH",
+      "overlay": "none",
+      "sfx": [
+        {
+          "sound": "shimmer",
+          "at": 0.1
+        }
+      ]
+    },
+    {
+      "shot": "altar",
+      "seconds": 4,
+      "lyric": "PAY JAY SEN",
+      "overlay": "none",
+      "sfx": [
+        {
+          "sound": "chime3",
+          "at": 0.35
+        }
+      ]
+    },
+    {
+      "shot": "share",
+      "seconds": 4,
+      "lyric": "DAPAT PAHALA",
+      "overlay": "none",
+      "sfx": []
+    },
+    {
+      "shot": "yuanbao",
+      "seconds": 4,
+      "lyric": "PAY JAY SEN",
+      "overlay": "none",
+      "sfx": [
+        {
+          "sound": "coin",
+          "at": 0.3
+        },
+        {
+          "sound": "chime4",
+          "at": 0.6
+        }
+      ]
+    },
+    {
+      "shot": "river",
+      "seconds": 4,
+      "lyric": "HARTA MERUAH",
+      "overlay": "none",
+      "sfx": [
+        {
+          "sound": "coin",
+          "at": 0.1
+        },
+        {
+          "sound": "coin",
+          "at": 0.45
+        },
+        {
+          "sound": "coin",
+          "at": 0.8
+        }
+      ]
+    },
+    {
+      "shot": "pray",
+      "seconds": 4,
+      "lyric": "PAY JAY SEN",
+      "overlay": "none",
+      "sfx": []
+    },
+    {
+      "shot": "kids",
+      "seconds": 1.33,
+      "lyric": "HOKGI BERTAMBAH",
+      "overlay": "sparkle-word",
+      "sfx": [
+        {
+          "sound": "shimmer",
+          "at": 0.05
+        }
+      ],
+      "word": "HOKGI"
+    },
+    {
+      "shot": "customer",
+      "seconds": 1.33,
+      "lyric": "HOKGI BERTAMBAH",
+      "overlay": "none",
+      "sfx": [
+        {
+          "sound": "pop",
+          "at": 0.05
+        }
+      ]
+    },
+    {
+      "shot": "dinner",
+      "seconds": 1.34,
+      "lyric": "HOKGI BERTAMBAH",
+      "overlay": "none",
+      "sfx": [
+        {
+          "sound": "pop",
+          "at": 0.05
+        }
+      ]
+    },
+    {
+      "shot": "rise",
+      "seconds": 4,
+      "lyric": "PAY JAY SEN",
+      "overlay": "smoke-word",
+      "sfx": [
+        {
+          "sound": "shimmer",
+          "at": 0.2
+        }
+      ],
+      "word": "JAY SEN"
+    },
+    {
+      "shot": "golden",
+      "seconds": 4,
+      "lyric": "HOKGI BERTAMBAH",
+      "overlay": "hokgi",
+      "sfx": [
+        {
+          "sound": "stamp",
+          "at": 0.08
+        },
+        {
+          "sound": "shimmer",
+          "at": 0.15
+        }
+      ]
+    },
+    {
+      "shot": "outro",
+      "seconds": 4,
+      "overlay": "outro",
+      "sfx": [
+        {
+          "sound": "gong",
+          "at": 0.02
+        }
+      ]
+    }
+  ]
+}

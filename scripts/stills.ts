@@ -11,7 +11,6 @@ import { parseArgs } from "node:util";
 import {
   compositionFor,
   loadEpisode,
-  OUT_DIR,
   rel,
   requireEpisodeId,
   ROOT,
@@ -19,6 +18,7 @@ import {
   runMain,
   ScriptError,
 } from "./lib/common";
+import { OUT, outPaths } from "./lib/paths";
 
 const REMOTION_CLI = path.join(
   ROOT,
@@ -44,9 +44,9 @@ const main = async () => {
     "npm run stills -- <id> [frames...] [--every n] [--scale s]",
   );
   const episode = loadEpisode(id);
-  const dir = path.join(OUT_DIR, "stills", id);
+  const dir = outPaths(id).stills;
   mkdirSync(dir, { recursive: true });
-  const propsFile = path.join(OUT_DIR, ".props", `${id}-stills.json`);
+  const propsFile = path.join(OUT.props, `${id}-stills.json`);
   mkdirSync(path.dirname(propsFile), { recursive: true });
   writeFileSync(propsFile, JSON.stringify({ ...episode, debug: false }));
 
@@ -64,13 +64,15 @@ const main = async () => {
       // Frames only: skip audio mixing.
       "--muted",
       "--image-format=jpeg",
+      // Slow Google Fonts loads (CJK subsets) exceeded the 30 s default.
+      "--timeout=120000",
       `--scale=${values.scale}`,
       `--every-nth-frame=${every}`,
     ]);
     if (code !== 0) {
       throw new ScriptError("Remotion sequence render failed");
     }
-    const sheet = path.join(OUT_DIR, `${id}_frames.jpg`);
+    const sheet = outPaths(id).frames;
     const tile = await run(
       "ffmpeg",
       [
@@ -112,6 +114,8 @@ const main = async () => {
       `--props=${propsFile}`,
       `--scale=${values.scale}`,
       "--image-format=jpeg",
+      // Slow Google Fonts loads (CJK subsets) exceeded the 30 s default.
+      "--timeout=120000",
       "--log=error",
     ]);
     if (code !== 0) {

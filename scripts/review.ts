@@ -10,7 +10,7 @@
 // and out/<id>_review.md: what every tile is, plus the checklist from
 // docs/guides/08-QA-HASIL-BERSIH.md to fill in before the final render.
 
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { parseArgs } from "node:util";
 import {
@@ -27,17 +27,26 @@ import {
   layoutBeats,
   type VoLine,
 } from "../src/lib/timeline";
-import { FPS, POP_PACING, secondsToFrames } from "../src/lib/timing";
+import { CINEMA_PACING, FPS, mvStarts, POP_PACING, secondsToFrames } from "../src/lib/timing";
 import {
+  cinemaCues,
+  shioCues,
+  paradeCues,
+  quizCues,
   popSceneCues,
   sceneCues,
   type AnyEpisode,
+  isVoiced,
+  type MvEpisode,
+  type CinemaScene,
+  type ShioScene,
+  type ParadeScene,
+  type QuizScene,
   type PopScene,
   type Scene,
 } from "../src/schema";
 import {
   loadEpisode,
-  OUT_DIR,
   probeMedia,
   PUBLIC_DIR,
   rel,
@@ -47,6 +56,7 @@ import {
   runMain,
   ScriptError,
 } from "./lib/common";
+import { OUT, outPaths } from "./lib/paths";
 
 const USAGE = "npm run review -- <id> [--no-render]";
 const TSX_CLI = path.join(ROOT, "node_modules", "tsx", "dist", "cli.mjs");
@@ -104,11 +114,42 @@ const measureLine = async (
 const cuesOf = (episode: AnyEpisode, index: number): string[] =>
   episode.format === "popout"
     ? popSceneCues(episode.scenes[index] as PopScene)
-    : sceneCues(episode.scenes[index] as Scene);
+    : episode.format === "cinema"
+      ? [...new Set(cinemaCues(episode.scenes[index] as CinemaScene))]
+      : episode.format === "shio"
+        ? [...new Set(shioCues(episode.scenes[index] as ShioScene))]
+        : episode.format === "parade"
+          ? [...new Set(paradeCues(episode.scenes[index] as ParadeScene))]
+          : episode.format === "quiz"
+            ? [...new Set(quizCues(episode.scenes[index] as QuizScene))]
+      : sceneCues(episode.scenes[index] as Scene);
+
+// Music video: every shot's start, middle and end (no cue words).
+const mvMarks = (episode: MvEpisode) => {
+  const starts = mvStarts(episode.scenes.map((s) => s.seconds));
+  const marks: Mark[] = episode.scenes.flatMap((s, i) => {
+    const a = starts[i];
+    const b = starts[i + 1];
+    const what = s.lyric ? `"${s.lyric}"` : s.overlay;
+    return [
+      { frame: a + EDGE_FRAMES, scene: s.shot, what: `awal shot, ${what}` },
+      { frame: Math.round((a + b) / 2), scene: s.shot, what: "tengah shot" },
+      { frame: b - EDGE_FRAMES, scene: s.shot, what: "akhir shot" },
+    ];
+  });
+  return { marks, durationInFrames: starts[starts.length - 1] };
+};
 
 const marksFor = async (episode: AnyEpisode) => {
+  if (!isVoiced(episode)) {
+    return mvMarks(episode);
+  }
   const lines = await Promise.all(
-    episode.scenes.map((s, i) => measureLine(episode.id, i, s.vo)),
+    episode.scenes.map(async (s, i) => ({
+      ...(await measureLine(episode.id, i, s.vo)),
+      // Quiz countdown pause after the line (same as src/metadata.ts).
+      holdFrames: secondsToFrames((s as { holdSeconds?: number }).holdSeconds ?? 0, FPS),
+    })),
   );
   const { beats, durationInFrames } = layoutBeats(
     lines,
@@ -118,7 +159,9 @@ const marksFor = async (episode: AnyEpisode) => {
           outroHoldSeconds: POP_PACING.outroHoldSeconds,
           minFrames: secondsToFrames(POP_PACING.minSeconds, FPS),
         }
-      : {},
+      : episode.format === "cinema" || episode.format === "shio" || episode.format === "parade" || episode.format === "quiz"
+        ? { outroHoldSeconds: CINEMA_PACING.outroHoldSeconds }
+        : {},
   );
   const marks: Mark[] = [];
   episode.scenes.forEach((scene, i) => {
@@ -172,7 +215,8 @@ const main = async () => {
   });
   const id = requireEpisodeId(positionals, USAGE);
   const episode = loadEpisode(id);
-  const draft = path.join(OUT_DIR, `${id}_draft.mp4`);
+  const draft = outPaths(id, true).rendered;
+  mkdirSync(OUT.review, { recursive: true });
 
   if (!values["no-render"]) {
     const render = await run(process.execPath, [
@@ -192,7 +236,7 @@ const main = async () => {
   const { marks, durationInFrames } = await marksFor(episode);
   const rows = Math.ceil(marks.length / COLUMNS);
   const select = marks.map((m) => `eq(n\\,${m.frame})`).join("+");
-  const sheet = path.join(OUT_DIR, `${id}_review.jpg`);
+  const sheet = outPaths(id).reviewJpg;
   const ffmpeg = await run(
     "ffmpeg",
     [
@@ -239,7 +283,7 @@ const main = async () => {
     "- ",
     "",
   ];
-  const report = path.join(OUT_DIR, `${id}_review.md`);
+  const report = outPaths(id).reviewMd;
   writeFileSync(report, lines.join("\n"));
   console.log(`Review sheet: ${rel(sheet)}`);
   console.log(`Review notes: ${rel(report)}`);
